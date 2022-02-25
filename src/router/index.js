@@ -14,6 +14,97 @@ const routes = [
         path: "/",
         name: "dashboard",
         component: DashboardOverview,
+      },
+
+      /**
+       * Staff Routes
+       */
+      {
+        path: "/staff/list",
+        name: "staff-list",
+        component: DashboardOverview,
+      },
+      {
+        path: "/staff/departments",
+        name: "staff-departments",
+        component: DashboardOverview,
+      },
+
+
+      /**
+       * Budget Routes
+       */
+      {
+        path: "/budgets/list",
+        name: "budget-list",
+        component: DashboardOverview,
+      },
+      {
+        path: "/budgets/approvals",
+        name: "budget-approval-requests",
+        component: DashboardOverview,
+      },
+      {
+        path: "/budgets/categories",
+        name: "budget-categories",
+        component: DashboardOverview,
+      },
+
+      /**
+       * Expense Routes
+       */
+      {
+        path: "/expense/list",
+        name: "expense-list",
+        component: DashboardOverview,
+      },
+      {
+        path: "/expense/approvals",
+        name: "expense-approval-requests",
+        component: DashboardOverview,
+      },
+
+      /**
+       * Settings Routes
+       */
+      {
+        path: "/settings/profile",
+        name: "profile",
+        component: DashboardOverview,
+      },
+      {
+        path: "/settings/preference",
+        name: "preference",
+        component: DashboardOverview,
+      },
+      {
+        path: "/settings/security",
+        name: "security",
+        component: DashboardOverview,
+      },
+      {
+        path: "/settings/roles",
+        name: "roles",
+        component: DashboardOverview,
+      },
+      {
+        path: "/settings/workflows",
+        name: "workflows",
+        component: DashboardOverview,
+      },
+      
+      /**
+       * Report Routes
+       */
+      {
+        path: "/reports/response-time",
+        name: "response-time",
+        component: DashboardOverview,
+      },
+      {
+        path: "/reports/activity-log",
+        name: "activity-log",
+        component: DashboardOverview,
       }
     ],
   },

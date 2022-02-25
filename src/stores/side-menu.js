@@ -15,7 +15,7 @@ export const useSideMenuStore = defineStore("sideMenu", {
         subMenu: [
           {
             icon: "",
-            pageName: "departments",
+            pageName: "staff-departments",
             title: "Departments",
           },
           {
@@ -77,7 +77,7 @@ export const useSideMenuStore = defineStore("sideMenu", {
           },
           {
             icon: "",
-            pageName: "audit-trail",
+            pageName: "activity-log",
             title: "Activity Log",
           }
         ],
