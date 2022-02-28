@@ -48,6 +48,80 @@
   </div>
   <!-- END: HTML Table Data -->
 
+<!-- MODAL -->
+    <div
+      id="rejctBudgetModal"
+      class="modal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="p-5 text-center">
+              <XCircleIcon class="w-16 h-16 text-danger mx-auto mt-3" />
+              <div class="text-3xl mt-5">Are you sure?</div>
+              <div class="text-slate-500 mt-2">
+                Do you really want to reject this budget?.
+              </div>
+            </div>
+            <!-- Form -->
+            <div class="grid grid-cols-12 gap-4 p-4">
+              <div class="col-span-12 sm:col-span-12">
+                  <label for="modal-form-4" class="form-label">Reason for Rejection</label>
+                  <textarea
+                      id="modal-form-4"
+                      type="text"
+                      class="form-control"
+                  ></textarea>
+              </div>
+            </div>
+            <div class="px-5 pb-8 text-center">
+              <button
+                type="button"
+                data-tw-dismiss="modal"
+                class="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button type="button" class="btn btn-danger w-24">
+                Reject
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="approveBudgetModal"
+      class="modal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="p-5 text-center">
+              <div class="text-xl mt-5">Are you sure you want to approve this?</div>
+            </div>
+            <!-- Form -->
+            <div class="px-5 pb-8 text-center">
+              <button
+                type="button"
+                data-tw-dismiss="modal"
+                class="btn btn-outline-secondary w-24 mr-1"
+              >
+                Cancel
+              </button>
+              <button type="button" class="btn btn-primary w-24">
+                Approve
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </template>
 
 <script setup>
@@ -149,12 +223,20 @@ const initTabulator = () => {
                 <div class="dropdown-menu w-56">
                     <ul class="dropdown-content">               
                         <li>
-                        <a href="javascript:;" class="dropdown-item text-primary">
+                        <a 
+                          data-tw-toggle="modal"
+                          data-tw-target="#approveBudgetModal" 
+                          href="javascript:;" 
+                          class="dropdown-item text-primary">
                             Approve
                         </a>
                         </li>
                         <li>
-                        <a href="javascript:;" class="dropdown-item text-danger">
+                        <a 
+                            data-tw-toggle="modal"
+                            data-tw-target="#rejctBudgetModal" 
+                            href="javascript:;" 
+                            class="dropdown-item text-danger">
                             Reject
                         </a>
                         </li>

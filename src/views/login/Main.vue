@@ -5,14 +5,14 @@
       <div class="block xl:grid grid-cols-2 gap-4">
         <!-- BEGIN: Login Info -->
         <div class="hidden xl:flex flex-col min-h-screen">
-          <a href="" class="-intro-x flex items-center pt-5">
+          <router-link :to="{name: 'dashboard'}" class="-intro-x flex items-center pt-5">
             <img
               alt="Nigerian Office for Trade Negotiations"
               class="w-6"
               src="@/assets/images/notn-logo.png"
             />
             <span class="text-white text-lg ml-3"> NOTN </span>
-          </a>
+          </router-link>
           <div class="my-auto">
             <img
               alt="Nigerian Office for Trade Negotiations"

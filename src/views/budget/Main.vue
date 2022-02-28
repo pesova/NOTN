@@ -3,7 +3,6 @@
     <h2 class="text-lg font-medium mr-auto">Budget</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
         <button 
-         @click="newBudget" 
             data-tw-toggle="modal"
             data-tw-target="#newBudgetModal" 
             class="btn btn-primary shadow-md mr-2">
@@ -185,13 +184,106 @@
         </div>
         </div>
     </div>
+
+    <div
+        id="editBudgetModal"
+        class="modal"
+        tabindex="-1"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <!-- BEGIN: Modal Header -->
+            <div class="modal-header">
+                <h2 class="font-medium text-base mr-auto">
+                    Edit Budget
+                </h2>
+
+            </div>
+            <!-- END: Modal Header -->
+            <!-- BEGIN: Modal Body -->
+            <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-1" class="form-label">Title</label>
+                    <input
+                        id="modal-form-1"
+                        type="text"
+                        class="form-control"
+                        placeholder="Title of budget"
+                    />
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-2" class="form-label">Description</label>
+                    <input
+                        id="modal-form-2"
+                        max="150"
+                        type="text"
+                        class="form-control"
+                        placeholder="Description of budget"
+                    />
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-3" class="form-label">Type</label
+                    >
+                    <select id="modal-form-6" class="form-select">
+                        <option>Copex</option>
+                        <option>Opex</option>
+                    </select>
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-5" class="form-label"
+                    >Budget Head Title</label>
+                    <select id="modal-form-6"  class="form-select mt-2 sm:mr-2">
+                        <option>Accessories</option>
+                        <option>Housing</option>
+                        <option>Miscellenous</option>
+                        <option>Feeding</option>
+                    </select>
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-4" class="form-label"
+                    >Budget Amount (NGN)</label>
+                    <input
+                        id="modal-form-4"
+                        type="number"
+                        class="form-control"
+                    />
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-4" class="form-label"
+                    >Quantity</label
+                    >
+                    <input
+                        id="modal-form-4"
+                        type="number"
+                        class="form-control"
+                    />
+                </div>
+            </div>
+            <!-- END: Modal Body -->
+            <!-- BEGIN: Modal Footer -->
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    data-tw-dismiss="modal"
+                    class="btn btn-outline-secondary w-20 mr-1"
+                >
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-primary w-20">
+                    Update
+                </button>
+            </div>
+            <!-- END: Modal Footer -->
+        </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
 import Tabulator from "tabulator-tables";
-import dom from "@left4code/tw-starter/dist/js/dom";
 
 const tableRef = ref();
 const tabulator = ref();
@@ -292,7 +384,9 @@ const initTabulator = () => {
                 <div class="dropdown-menu w-56">
                     <ul class="dropdown-content">               
                         <li>
-                        <a href="javascript:;" class="dropdown-item">
+                        <a data-tw-toggle="modal"
+                            data-tw-target="#editBudgetModal" href="javascript:;"
+                            class="dropdown-item">
                             Edit
                         </a>
                         </li>
