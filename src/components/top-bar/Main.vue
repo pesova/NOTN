@@ -63,7 +63,7 @@
             >
               <div class="w-8 h-8 image-fit">
                 <img
-                  alt="Rubick Tailwind HTML Admin Template"
+                  alt="NOTN"
                   class="rounded-full"
                   :src="faker.photos[0]"
                 />
@@ -85,7 +85,7 @@
           >
             <div class="w-8 h-8 image-fit">
               <img
-                alt="Rubick Tailwind HTML Admin Template"
+                alt="NOTN"
                 class="rounded-full"
                 :src="faker.images[0]"
               />
@@ -122,7 +122,7 @@
           >
             <div class="w-12 h-12 flex-none image-fit mr-1">
               <img
-                alt="Rubick Tailwind HTML Admin Template"
+                alt="NOTN"
                 class="rounded-full"
                 :src="faker.photos[0]"
               />
@@ -157,7 +157,7 @@
         data-tw-toggle="dropdown"
       >
         <img
-          alt="Rubick Tailwind HTML Admin Template"
+          alt="NOTN"
           :src="$f()[9].photos[0]"
         />
       </div>
@@ -192,9 +192,9 @@
           </li>
           <li><hr class="dropdown-divider border-white/[0.08]" /></li>
           <li>
-            <a href="" class="dropdown-item hover:bg-white/5">
+            <router-link :to="{ name: 'login' }" class="dropdown-item hover:bg-white/5">
               <ToggleRightIcon class="w-4 h-4 mr-2" /> Logout
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
