@@ -103,7 +103,7 @@
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="p-5 text-center">
-              <div class="text-xl mt-5">Are you sure you want to approve this?</div>
+              <div class="text-xl mt-5">Are you sure you want to approve this budget?</div>
             </div>
             <!-- Form -->
             <div class="px-5 pb-8 text-center">
