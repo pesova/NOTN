@@ -6,7 +6,11 @@ import Budget from "../views/budget/Main.vue";
 import BudgetHead from "../views/budget/budget-head.vue";
 import BudgetApprovalRequest from "../views/budget/approval-request.vue";
 
-import Login from "../views/login/Main.vue";
+import Auth from "../views/login/Main.vue";
+import Login from "../views/login/login.vue";
+import forgotPassword from "../views/forgot-password/Main.vue";
+import resetPassword from "../views/forgot-password/reset-password.vue";
+
 import ErrorPage from "../views/error-page/Main.vue";
 
 const routes = [
@@ -115,8 +119,26 @@ const routes = [
   
   {
     path: "/login",
-    name: "login",
-    component: Login,
+    component: Auth,
+    children: [
+      {
+        path: "/login",
+        name: "login",
+        component: Login,
+
+      },
+      {
+        path: "/forgot-password",
+        name: "forgot-password",
+        component: forgotPassword,
+      },
+      {
+        path: "/reset-password",
+        name: "reset-password",
+        component: resetPassword,
+      }
+    ],
+
   },
   {
     path: "/error-page",
