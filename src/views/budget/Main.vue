@@ -430,12 +430,12 @@ const initTabulator = () => {
         width: 120,
         formatter(cell) {
             if (cell.getData().status == 'approved') {
-                return `<p class="py-1 px-2 rounded-full text-sm bg-success inline-block font-bold text-white"> Approved </p>`
+                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
             }
             if (cell.getData().status == 'rejected') {
-                return `<p class="py-1 px-2 rounded-full text-sm bg-danger inline-block font-bold text-white"> Rejected </p>`
+                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
             }
-          return `<p class="py-1 px-2 rounded-full text-sm bg-info inline-block font-bold text-white"> Pending </p>`;
+          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
         },
         
       },

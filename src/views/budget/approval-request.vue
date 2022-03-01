@@ -84,7 +84,7 @@
               >
                 Cancel
               </button>
-              <button type="button" class="btn btn-danger w-24">
+              <button @click="rejectSuccess" type="button" class="btn btn-danger w-24">
                 Reject
               </button>
             </div>
@@ -136,7 +136,7 @@
             <CheckCircleIcon
               class="w-16 h-16 text-success mx-auto mt-3"
             />
-            <div class="text-3xl mt-5">Budget succesfully approved</div>
+            <div class="text-3xl mt-5">Budget succesfully {{ actionType }}</div>
           </div>
           <div class="px-5 pb-8 text-center">
             <button
@@ -165,6 +165,17 @@ const filter = reactive({
   type: "like",
   value: "",
 });
+
+let actionType = ref();
+
+const rejectSuccess = () => {
+  actionType.value = 'rejected';
+  const rejectBudgetModal = document.querySelector("#rejctBudgetModal");
+  tailwind.Modal.getOrCreateInstance(rejectBudgetModal).hide();
+
+  const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
+  tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
+};
 
 
 let tabledata = [
@@ -234,13 +245,13 @@ const initTabulator = () => {
         vertAlign: "middle",
         width: 120,
         formatter(cell) {
-            if (cell.getData().status == 'approved') {
-                return `<p class="py-1 px-2 rounded-full text-sm bg-success font-bold text-white"> Approved </p>`
+             if (cell.getData().status == 'approved') {
+                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
             }
             if (cell.getData().status == 'rejected') {
-                return `<p class="py-1 px-2 rounded-full text-sm bg-danger font-bold text-white"> Rejected </p>`
+                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
             }
-          return `<p class="text-info text-sm font-bold"> Pending </p>`;
+          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
         },
         
       },
@@ -255,7 +266,7 @@ const initTabulator = () => {
                   <a 
                     data-tw-toggle="modal"
                     data-tw-target="#approveBudgetModal"  
-                    class="btn btn-primary w-24 inline-block mr-1" 
+                    class="btn bg-green-500 w-24 inline-block mr-1" 
                     href="javascript:;">
                      Approve
                   </a>
@@ -312,6 +323,7 @@ const moneyFormat = (x) => {
 }
 
 const approvedSuccess = () => {
+    actionType.value = 'approved';
   const approveBudgetModal = document.querySelector("#approveBudgetModal");
   tailwind.Modal.getOrCreateInstance(approveBudgetModal).hide();
 
