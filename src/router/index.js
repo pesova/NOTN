@@ -1,6 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import SideMenu from "../layouts/side-menu/Main.vue";
 import DashboardOverview from "../views/dashboard/Main.vue";
+import StaffIndex from "../views/staff/Index.vue";
+import DepartmentIndex from "../views/department/Index.vue";
+import Settings from "../views/setting/Index.vue";
 
 import Login from "../views/login/Main.vue";
 import ErrorPage from "../views/error-page/Main.vue";
@@ -22,14 +25,13 @@ const routes = [
       {
         path: "/staff/list",
         name: "staff-list",
-        component: DashboardOverview,
+        component: StaffIndex,
       },
       {
         path: "/staff/departments",
         name: "staff-departments",
-        component: DashboardOverview,
+        component: DepartmentIndex,
       },
-
 
       /**
        * Budget Routes
@@ -68,31 +70,11 @@ const routes = [
        * Settings Routes
        */
       {
-        path: "/settings/profile",
-        name: "profile",
-        component: DashboardOverview,
+        path: "/settings",
+        name: "setting-index",
+        component: Settings,
       },
-      {
-        path: "/settings/preference",
-        name: "preference",
-        component: DashboardOverview,
-      },
-      {
-        path: "/settings/security",
-        name: "security",
-        component: DashboardOverview,
-      },
-      {
-        path: "/settings/roles",
-        name: "roles",
-        component: DashboardOverview,
-      },
-      {
-        path: "/settings/workflows",
-        name: "workflows",
-        component: DashboardOverview,
-      },
-      
+
       /**
        * Report Routes
        */
@@ -105,10 +87,10 @@ const routes = [
         path: "/reports/activity-log",
         name: "activity-log",
         component: DashboardOverview,
-      }
+      },
     ],
   },
-  
+
   {
     path: "/login",
     name: "login",
