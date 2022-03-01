@@ -16,6 +16,15 @@
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
 
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+          <select
+            id="tabulator-html-filter-field"
+            v-model="filter.field"
+            class="form-select w-full 2xl:w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto"
+          >
+            <option value="title">Title</option>
+            <option value="year">Year</option>
+          </select>
+
           <input
             id="tabulator-html-filter-value"
             v-model="filter.value"
@@ -118,16 +127,7 @@
                         placeholder="Title of budget"
                     />
                 </div>
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-2" class="form-label">Description</label>
-                    <input
-                        id="modal-form-2"
-                        max="150"
-                        type="text"
-                        class="form-control"
-                        placeholder="Description of budget"
-                    />
-                </div>
+                
                 <div class="col-span-12 sm:col-span-6">
                     <label for="modal-form-3" class="form-label">Type</label
                     >
@@ -137,33 +137,53 @@
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-5" class="form-label"
-                    >Budget Head Title</label>
-                    <select id="modal-form-6"  class="form-select mt-2 sm:mr-2">
+                  <label for="modal-form-4" class="form-label">Quantity</label>
+                  <input
+                      id="modal-form-4"
+                      type="number"
+                      class="form-control"
+                  />
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
+                    <input
+                        id="modal-form-4"
+                        type="number"
+                        class="form-control"
+                    />
+                </div>
+
+                <div class="col-span-12 sm:col-span-6">
+                  <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-5" class="form-label">Budget Head Title</label>
+                    <select id="modal-form-6"  class="form-select sm:mr-2">
                         <option>Accessories</option>
                         <option>Housing</option>
                         <option>Miscellenous</option>
                         <option>Feeding</option>
                     </select>
+                  </div>
+                  <div class="col-span-12 sm:col-span-12">
+                    <label for="modal-form-7" class="form-label mt-2">Year</label>
+                    <input 
+                      type="month"
+                      class="form-control"
+                      readonly
+                      id="datepicker"
+                      :value="getYearandMonth()"
+                    />
+                  </div>
+
                 </div>
                 <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-4" class="form-label"
-                    >Budget Amount (NGN)</label>
-                    <input
-                        id="modal-form-4"
-                        type="number"
+                    <label for="modal-form-2" class="form-label">Description</label>
+                    <textarea
+                        id="modal-form-2"
+                        maxlength="150"
+                        rows="5"
+                        type="text"
                         class="form-control"
-                    />
-                </div>
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-4" class="form-label"
-                    >Quantity</label
-                    >
-                    <input
-                        id="modal-form-4"
-                        type="number"
-                        class="form-control"
-                    />
+                    ></textarea>
                 </div>
             </div>
             <!-- END: Modal Body -->
@@ -176,7 +196,7 @@
                 >
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary w-20">
+                <button @click="createdBudget" type="button" class="btn btn-primary w-20">
                     Create
                 </button>
             </div>
@@ -212,16 +232,7 @@
                         placeholder="Title of budget"
                     />
                 </div>
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-2" class="form-label">Description</label>
-                    <input
-                        id="modal-form-2"
-                        max="150"
-                        type="text"
-                        class="form-control"
-                        placeholder="Description of budget"
-                    />
-                </div>
+                
                 <div class="col-span-12 sm:col-span-6">
                     <label for="modal-form-3" class="form-label">Type</label
                     >
@@ -231,33 +242,53 @@
                     </select>
                 </div>
                 <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-5" class="form-label"
-                    >Budget Head Title</label>
-                    <select id="modal-form-6"  class="form-select mt-2 sm:mr-2">
+                  <label for="modal-form-4" class="form-label">Quantity</label>
+                  <input
+                      id="modal-form-4"
+                      type="number"
+                      class="form-control"
+                  />
+                </div>
+                <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
+                    <input
+                        id="modal-form-4"
+                        type="number"
+                        class="form-control"
+                    />
+                </div>
+
+                <div class="col-span-12 sm:col-span-6">
+                  <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-5" class="form-label">Budget Head Title</label>
+                    <select id="modal-form-6"  class="form-select sm:mr-2">
                         <option>Accessories</option>
                         <option>Housing</option>
                         <option>Miscellenous</option>
                         <option>Feeding</option>
                     </select>
+                  </div>
+                  <div class="col-span-12 sm:col-span-12">
+                    <label for="modal-form-7" class="form-label mt-2">Year</label>
+                    <input 
+                      type="month"
+                      class="form-control"
+                      readonly
+                      id="datepicker"
+                      :value="getYearandMonth()"
+                    />
+                  </div>
+
                 </div>
                 <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-4" class="form-label"
-                    >Budget Amount (NGN)</label>
-                    <input
-                        id="modal-form-4"
-                        type="number"
+                    <label for="modal-form-2" class="form-label">Description</label>
+                    <textarea
+                        id="modal-form-2"
+                        maxlength="150"
+                        rows="5"
+                        type="text"
                         class="form-control"
-                    />
-                </div>
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-4" class="form-label"
-                    >Quantity</label
-                    >
-                    <input
-                        id="modal-form-4"
-                        type="number"
-                        class="form-control"
-                    />
+                    ></textarea>
                 </div>
             </div>
             <!-- END: Modal Body -->
@@ -278,6 +309,35 @@
         </div>
         </div>
     </div>
+
+  <div
+    id="budgetCreated"
+    class="modal"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="p-5 text-center">
+            <CheckCircleIcon
+              class="w-16 h-16 text-success mx-auto mt-3"
+            />
+            <div class="text-3xl mt-5">Budget succesfully created</div>
+          </div>
+          <div class="px-5 pb-8 text-center">
+            <button
+              type="button"
+              data-tw-dismiss="modal"
+              class="btn btn-primary w-24"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -293,12 +353,21 @@ const filter = reactive({
   value: "",
 });
 
+const getYearandMonth = () => {
+    const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  if (month < 10) {
+    return `${year}-0${month}`;
+  }
+  return `${year}-${month}`;
+};
 
-var tabledata = [
-    {title:"Build Road", description:"description of Build Road", type:"Copex", quantity:1, budget_head:"Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved"},
-    {title:"Rent House", description:"description of Rent House", type:"Opex", quantity:2, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected"},
-    {title:"IT specs", description:"description of IT specs", type:"Copex", quantity:4, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
-    {title:"Company Rebrand", description:"description of Company Rebrand", type:"Opex", quantity:1, budget_head:"Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved"}
+let tabledata = [
+    {id: 1, title:"Build Road", description:"description of Build Road", year:2022, budget_head:"Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved"},
+    {id: 2, title:"Rent House", description:"description of Rent House", year:2022, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected"},
+    {id: 3, title:"IT specs", description:"description of IT specs", year:2022, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
+    {id: 4, title:"Company Rebrand", description:"description of Company Rebrand", year:2021, budget_head:"Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved"}
 ];
 
 const initTabulator = () => {
@@ -312,6 +381,13 @@ const initTabulator = () => {
     columns: [
       // For HTML table
       {
+        title: "#",
+        field: "id",
+        vertAlign: "middle",
+        hozAlign:"right",
+        width: 40,
+      },
+      {
         title: "Title",
         field: "title",
         vertAlign: "middle",
@@ -319,20 +395,13 @@ const initTabulator = () => {
       {
         title: "Description",
         field: "description",
-        widthGrow: 2,
         formatter(cell) {
-          return ` ${truncate(cell.getData().description, 42)}`;
+          return ` ${truncate(cell.getData().description, 22)}`;
         },
       },
       {
-        title: "Type",
-        field: "type",
-        width: 100,
-        hozAlign:"center",
-      },
-      {
-        title: "Quantity",
-        field: "quantity",
+        title: "Year",
+        field: "year",
         width: 100,
         hozAlign:"center",
       },
@@ -358,14 +427,15 @@ const initTabulator = () => {
       {
         title: "Status",
         field: "status",
+        width: 120,
         formatter(cell) {
             if (cell.getData().status == 'approved') {
-                return `<p class="text-primary"> ${cell.getData().status} </p>`
+                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
             }
             if (cell.getData().status == 'rejected') {
-                return `<p class="text-danger"> ${cell.getData().status} </p>`
+                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
             }
-          return `<p> ${cell.getData().status} </p>`;
+          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
         },
         
       },
@@ -441,6 +511,14 @@ const onExportCsv = () => {
 
 const onExportJson = () => {
   tabulator.value.download("json", "data.json");
+};
+
+const createdBudget = () => {
+  const newBudget = document.querySelector("#newBudgetModal");
+  tailwind.Modal.getOrCreateInstance(newBudget).hide();
+
+  const budgetCreated = document.querySelector("#budgetCreated");
+  tailwind.Modal.getOrCreateInstance(budgetCreated).show();
 };
 
 

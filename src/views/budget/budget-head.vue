@@ -105,13 +105,42 @@
                 >
                     Cancel
                 </button>
-                <button type="button" class="btn btn-primary w-20">
+                <button @click="createdBudgetHead" type="button" class="btn btn-primary w-20">
                     Create
                 </button>
             </div>
         </div>
         </div>
     </div>
+
+    <div
+    id="budgetHeadCreated"
+    class="modal"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="p-5 text-center">
+            <CheckCircleIcon
+              class="w-16 h-16 text-success mx-auto mt-3"
+            />
+            <div class="text-3xl mt-5">Budget Head succesfully created</div>
+          </div>
+          <div class="px-5 pb-8 text-center">
+            <button
+              type="button"
+              data-tw-dismiss="modal"
+              class="btn btn-primary w-24"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -122,19 +151,19 @@ export default {
     setup() {
         const budget_heads = ref([{
           title: "Accessories",
-          description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero, eveniet corrupti doloremque eaque labore sint commodi possimus officiis similique iusto illum odit officia natus laborum. ",
+          description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero. ",
           total_expense: "100000",
           id: 1,
         },
         {
           title: "Housing",
-          description: "Housing Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero, eveniet corrupti doloremque eaque labore sint commodi possimus officiis similique iusto illum odit officia natus laborum.",
+          description: "Housing Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero.",
           total_expense: "70000",
           id: 2,
         },
         {
           title: "Miscellenous",
-          description: "Miscellenous Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero, eveniet corrupti doloremque eaque labore sint commodi possimus officiis similique iusto illum odit officia natus laborum.",
+          description: "Miscellenous Lorem ipsum, dolor sit amet adipisicing elit. Mollitia odio accusamus minima laboriosam vero.",
           total_expense: "340000",
           id: 3,
         }]);
@@ -146,8 +175,17 @@ export default {
     methods: {
       moneyFormat(x) {
         return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+      },
+      createdBudgetHead(){
+        const newBudgetHead = document.querySelector("#newBudgetHeadModal");
+        tailwind.Modal.getOrCreateInstance(newBudgetHead).hide();
+
+        const budgetHeadCreated = document.querySelector("#budgetHeadCreated");
+        tailwind.Modal.getOrCreateInstance(budgetHeadCreated).show();
       }
     }
 }
+
+
 
 </script>
