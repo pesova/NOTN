@@ -114,7 +114,7 @@
               >
                 Cancel
               </button>
-              <button type="button" class="btn btn-primary w-24">
+              <button @click="approvedSuccess" type="button" class="btn btn-primary w-24">
                 Approve
               </button>
             </div>
@@ -122,6 +122,35 @@
         </div>
       </div>
     </div>
+
+  <div
+    id="approvedSuccessModal"
+    class="modal"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="p-5 text-center">
+            <CheckCircleIcon
+              class="w-16 h-16 text-success mx-auto mt-3"
+            />
+            <div class="text-3xl mt-5">Budget succesfully approved</div>
+          </div>
+          <div class="px-5 pb-8 text-center">
+            <button
+              type="button"
+              data-tw-dismiss="modal"
+              class="btn btn-primary w-24"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -138,9 +167,9 @@ const filter = reactive({
 });
 
 
-var tabledata = [
-    {title:"Rent House", description:"description of Rent House", type:"Opex", quantity:2, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "pending"},
-    {title:"IT specs", description:"description of IT specs", type:"Copex", quantity:4, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
+let tabledata = [
+    {id: 1,title:"Rent House", description:"description of Rent House", year:2022, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "pending"},
+    {id: 2,title:"IT specs", description:"description of IT specs", year:2022, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
 ];
 
 const initTabulator = () => {
@@ -151,6 +180,13 @@ const initTabulator = () => {
     columns: [
       // For HTML table
       {
+        title: "#",
+        field: "id",
+        vertAlign: "middle",
+        hozAlign:"right",
+        width: 40,
+      },
+      {
         title: "Title",
         field: "title",
         vertAlign: "middle",
@@ -158,30 +194,27 @@ const initTabulator = () => {
       {
         title: "Description",
         field: "description",
-        widthGrow: 2,
+        vertAlign: "middle",
         formatter(cell) {
-          return ` ${truncate(cell.getData().description, 42)}`;
+          return ` ${truncate(cell.getData().description, 22)}`;
         },
       },
       {
-        title: "Type",
-        field: "type",
+        title: "Year",
+        field: "year",
         width: 100,
         hozAlign:"center",
-      },
-      {
-        title: "Quantity",
-        field: "quantity",
-        width: 100,
-        hozAlign:"center",
+        vertAlign: "middle",
       },
       {
         title: "Budget Head",
-        field: "budget_head", 
+        field: "budget_head",
+        vertAlign: "middle",
       },
       {
         title: "Budget Amount",
         field: "budget_amount",
+        vertAlign: "middle",
         formatter(cell) {
           return ` ${moneyFormat(cell.getData().budget_amount)}`;
         },        
@@ -189,6 +222,7 @@ const initTabulator = () => {
       {
         title: "Budget Balance",
         field: "budget_balance",
+        vertAlign: "middle",
         formatter(cell) {
           return ` ${moneyFormat(cell.getData().budget_balance)}`;
         },
@@ -197,14 +231,16 @@ const initTabulator = () => {
       {
         title: "Status",
         field: "status",
+        vertAlign: "middle",
+        width: 120,
         formatter(cell) {
             if (cell.getData().status == 'approved') {
-                return `<p class="text-primary"> ${cell.getData().status} </p>`
+                return `<p class="py-1 px-2 rounded-full text-sm bg-success font-bold text-white"> Approved </p>`
             }
             if (cell.getData().status == 'rejected') {
-                return `<p class="text-danger"> ${cell.getData().status} </p>`
+                return `<p class="py-1 px-2 rounded-full text-sm bg-danger font-bold text-white"> Rejected </p>`
             }
-          return `<p> ${cell.getData().status} </p>`;
+          return `<p class="text-info text-sm font-bold"> Pending </p>`;
         },
         
       },
@@ -212,38 +248,25 @@ const initTabulator = () => {
         title: "Action",
         responsive: 1,
         download: false,
+        width: 200,
         formatter() {
-                return `<div class="dropdown ml-auto"">
-                <a class="dropdown-toggle w-7 h-7 flex items-center mr-3"
-                    href="javascript:;"
-                    aria-expanded="false"
-                    data-tw-toggle="dropdown">
-                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
-                </a>
-                <div class="dropdown-menu w-56">
-                    <ul class="dropdown-content">               
-                        <li>
-                        <a 
-                          data-tw-toggle="modal"
-                          data-tw-target="#approveBudgetModal" 
-                          href="javascript:;" 
-                          class="dropdown-item text-primary">
-                            Approve
-                        </a>
-                        </li>
-                        <li>
-                        <a 
-                            data-tw-toggle="modal"
-                            data-tw-target="#rejctBudgetModal" 
-                            href="javascript:;" 
-                            class="dropdown-item text-danger">
-                            Reject
-                        </a>
-                        </li>
-                    </ul>
-                </div>
-                
-              </div>`
+                return `
+                <div class="flex lg:justify-center items-center">
+                  <a 
+                    data-tw-toggle="modal"
+                    data-tw-target="#approveBudgetModal"  
+                    class="btn btn-primary w-24 inline-block mr-1" 
+                    href="javascript:;">
+                     Approve
+                  </a>
+                  <a 
+                    data-tw-toggle="modal"
+                    data-tw-target="#rejctBudgetModal" 
+                    class="btn btn-danger w-24 inline-block mr-1" 
+                    href="javascript:;">
+                     Reject
+                  </a>
+                </div>`
         },
         
       }
@@ -287,6 +310,14 @@ const truncate = (str, n) => {
 const moneyFormat = (x) => {
     return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
+
+const approvedSuccess = () => {
+  const approveBudgetModal = document.querySelector("#approveBudgetModal");
+  tailwind.Modal.getOrCreateInstance(approveBudgetModal).hide();
+
+  const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
+  tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
+};
 
 onMounted(() => {
   initTabulator();

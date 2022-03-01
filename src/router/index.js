@@ -8,6 +8,7 @@ import BudgetApprovalRequest from "../views/budget/approval-request.vue";
 
 import Auth from "../views/login/Main.vue";
 import Login from "../views/login/login.vue";
+import twoFAPassword from "../views/login/2fa-password.vue";
 import forgotPassword from "../views/forgot-password/Main.vue";
 import resetPassword from "../views/forgot-password/reset-password.vue";
 
@@ -136,6 +137,11 @@ const routes = [
         path: "/reset-password",
         name: "reset-password",
         component: resetPassword,
+      },
+      {
+        path: "/2fa-password",
+        name: "2fa-password",
+        component: twoFAPassword,
       }
     ],
 
