@@ -84,35 +84,8 @@ export const useSideMenuStore = defineStore("sideMenu", {
       },
       {
         icon: "SettingsIcon",
-        pageName: "settings",
-        title: "Settings",
-        subMenu: [
-          {
-            icon: "",
-            pageName: "profile",
-            title: "Profile",
-          },
-          {
-            icon: "",
-            pageName: "preference",
-            title: "Preference",
-          },
-          {
-            icon: "",
-            pageName: "security",
-            title: "Security",
-          },
-          {
-            icon: "",
-            pageName: "roles",
-            title: "Roles",
-          },
-          {
-            icon: "",
-            pageName: "workflows",
-            title: "Workflows",
-          }
-        ],
+        pageName: "setting-index",
+        title: "Settings"
       },
     ],
   }),
