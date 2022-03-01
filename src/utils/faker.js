@@ -5,6 +5,147 @@ const imageAssets = import.meta.globEager(
   `/src/assets/images/*.{jpg,jpeg,png,svg}`
 );
 const fakers = {
+  fakeStaff() {
+    const staffData = [
+      {
+        id: 1,
+        name: "Donchi Chisom",
+        email: "chisom@gmail.com",
+        phone: "07065114740",
+        avatar: imageAssets["/src/assets/images/profile-1.jpg"].default,
+        department: "",
+        role: "",
+      },
+      {
+        id: 2,
+        name: "John Pacino",
+        email: "john@gmail.com",
+        phone: "07065114741",
+        avatar: imageAssets["/src/assets/images/profile-1.jpg"].default,
+        department: "",
+        role: "",
+      },
+      {
+        id: 3,
+        name: "Ebere Chinedu",
+        email: "Ebere@gmail.com",
+        phone: "07065114742",
+        avatar: imageAssets["/src/assets/images/profile-1.jpg"].default,
+        department: "",
+        role: "",
+      },
+      {
+        id: 4,
+        name: "Kevin Spacey",
+        email: "Kevin@gmail.com",
+        phone: "07065114743",
+        avatar: "",
+        department: "",
+        role: "",
+      },
+      {
+        id: 5,
+        name: "Angelina Jolie",
+        email: "Angelina@gmail.com",
+        phone: "070651147404",
+        avatar: "",
+        department: "",
+        role: "",
+      },
+      {
+        id: 6,
+        name: "Tom Cruise",
+        email: "Tom@gmail.com",
+        phone: "07065114745",
+        avatar: "07065114740",
+        department: "",
+        role: "",
+      },
+      {
+        id: 7,
+        name: "John Travolta",
+        email: "Travolta@gmail.com",
+        phone: "07065114746",
+        avatar: "",
+        department: "",
+        role: "",
+      },
+      {
+        id: 9,
+        name: "Sylvester Stallone",
+        email: "Sylvester@gmail.com",
+        phone: "07065114747",
+        avatar: "",
+        department: "",
+        role: "",
+      },
+      {
+        id: 10,
+        name: "Kate Winslet",
+        email: "Kate@gmail.com",
+        phone: "07065114748",
+        avatar: "07065114740",
+        department: "",
+        role: "",
+      },
+    ];
+
+    return _.sampleSize(staffData).map((staff) => {
+      return {
+        id: staff.id,
+        name: staff.name,
+        email: _.toLower(_.replace(staff.name, / /g, "") + "@notn.com"),
+        phone: staff.phone,
+        avatar:
+          imageAssets["/src/assets/images/profile-" + staff.id + ".jpg"]
+            .default,
+        department: this.fakeDepartments()[0].name,
+        role: this.fakeRoles()[0].name,
+        status: this.fakeTrueFalse()[0],
+      };
+    });
+  },
+
+  fakeDepartments() {
+    const departments = [
+      { name: "Policy Research / Analysis Advocacy", id: 1 },
+      { name: "Free Trade Agreements", id: 2 },
+      { name: "Trade in Services", id: 2 },
+      { name: "TRIPS / Rules", id: 3 },
+      { name: "TRIPS / Rules", id: 4 },
+      { name: "Finance", id: 5 },
+    ].map((v) => ({ ...v, status: this.fakeTrueFalse()[0] }));
+
+    return _.shuffle(departments);
+  },
+
+  fakeRoles() {
+    const roles = [
+      {
+        name: "Departmental Budget Officer",
+        id: 1,
+        description: "role description ",
+      },
+      { name: "HOD", id: 2, description: "role description" },
+      { name: "Finance Officer", id: 2, description: "role description" },
+      { name: "Head Of Budget", id: 3, description: "role description" },
+      { name: "Head Of Budget", id: 4, description: "role description" },
+    ].map((v) => ({ ...v, status: this.fakeTrueFalse()[0] }));
+    return _.shuffle(roles);
+  },
+
+  fakeWorkflows() {
+    return [
+      {
+        name: "Expense",
+        flow: "Departmental Budget Officer -> HOD -> Head Of Budget -> DG",
+      },
+      {
+        name: "Budget",
+        flow: "HOD -> Finance Officer -> Head Of Budget -> DG",
+      },
+    ];
+  },
   fakeUsers() {
     const users = [
       { name: "Johnny Depp", gender: "male" },
@@ -40,26 +181,26 @@ const fakers = {
     ];
 
     const departments = [
-      'Policy Research / Analysis Advocacy',
-      'Free Trade Agreements',
-      'Trade in Goods',
-      'Trade in Services',
-      'TRIPS / Rules',
-      'Adminstrative Department',
-      'Finance'
+      "Policy Research / Analysis Advocacy",
+      "Free Trade Agreements",
+      "Trade in Goods",
+      "Trade in Services",
+      "TRIPS / Rules",
+      "Adminstrative Department",
+      "Finance",
     ];
 
     const roles = [
-      'Departmental Budget Officer',
-      'HOD',
-      'Finance Officer',
-      'Head Of Budget',
-      'DG'
+      "Departmental Budget Officer",
+      "HOD",
+      "Finance Officer",
+      "Head Of Budget",
+      "DG",
     ];
 
     const workflows = [
-      'Departmental Budget Officer -> HOD -> Head Of Budget -> DG',
-      'HOD -> Finance Officer -> Head Of Budget -> DG'
+      "Departmental Budget Officer -> HOD -> Head Of Budget -> DG",
+      "HOD -> Finance Officer -> Head Of Budget -> DG",
     ];
 
     return _.sampleSize(users, 3).map((user) => {
@@ -276,6 +417,10 @@ for (let i = 0; i < 20; i++) {
     jobs: fakers.fakeJobs(),
     notificationCount: fakers.fakeNotificationCount(),
     foods: fakers.fakeFoods(),
+    staffs: fakers.fakeStaff(),
+    departments: fakers.fakeDepartments(),
+    roles: fakers.fakeRoles(),
+    workflow: fakers.fakeWorkflows(),
   };
 }
 
