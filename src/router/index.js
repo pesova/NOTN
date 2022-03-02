@@ -4,6 +4,9 @@ import DashboardOverview from "../views/dashboard/Main.vue";
 import StaffIndex from "../views/staff/Index.vue";
 import DepartmentIndex from "../views/department/Index.vue";
 import Settings from "../views/setting/Index.vue";
+import ExpenseList from "../views/expense/list/Main.vue";
+import ExpenseCreate from "../views/expense/create/Main.vue";
+import ExpenseRequests from "../views/expense/requests/Main.vue";
 
 import Budget from "../views/budget/Main.vue";
 import BudgetHead from "../views/budget/budget-head.vue";
@@ -65,14 +68,19 @@ const routes = [
        * Expense Routes
        */
       {
+        path: "/expense/create",
+        name: "create-expense",
+        component: ExpenseCreate,
+      },
+      {
         path: "/expense/list",
         name: "expense-list",
-        component: DashboardOverview,
+        component: ExpenseList,
       },
       {
         path: "/expense/approvals",
         name: "expense-approval-requests",
-        component: DashboardOverview,
+        component: ExpenseRequests,
       },
 
       /**

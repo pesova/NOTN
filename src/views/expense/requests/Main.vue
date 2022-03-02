@@ -1,6 +1,6 @@
 <template>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Budget Approval Request</h2>
+    <h2 class="text-lg font-medium mr-auto">Expense Approval Request</h2>
 
   </div>
   <!-- BEGIN: HTML Table Data -->
@@ -50,7 +50,7 @@
 
 <!-- MODAL -->
     <div
-      id="rejctBudgetModal"
+      id="rejctExpenseModal"
       class="modal"
       tabindex="-1"
       aria-hidden="true"
@@ -62,7 +62,7 @@
               <XCircleIcon class="w-16 h-16 text-danger mx-auto mt-3" />
               <div class="text-3xl mt-5">Are you sure?</div>
               <div class="text-slate-500 mt-2">
-                Do you really want to reject this budget?.
+                Do you really want to reject this expense?.
               </div>
             </div>
             <!-- Form -->
@@ -94,7 +94,7 @@
     </div>
 
     <div
-      id="approveBudgetModal"
+      id="approveExpenseModal"
       class="modal"
       tabindex="-1"
       aria-hidden="true"
@@ -103,7 +103,7 @@
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="p-5 text-center">
-              <div class="text-xl mt-5">Are you sure you want to approve this budget?</div>
+              <div class="text-xl mt-5">Are you sure you want to approve this expense?</div>
             </div>
             <!-- Form -->
             <div class="px-5 pb-8 text-center">
@@ -136,7 +136,7 @@
             <CheckCircleIcon
               class="w-16 h-16 text-success mx-auto mt-3"
             />
-            <div class="text-3xl mt-5">Budget succesfully {{ actionType }}</div>
+            <div class="text-3xl mt-5">Expense succesfully {{ actionType }}</div>
           </div>
           <div class="px-5 pb-8 text-center">
             <button
@@ -170,8 +170,8 @@ let actionType = ref();
 
 const rejectSuccess = () => {
   actionType.value = 'rejected';
-  const rejectBudgetModal = document.querySelector("#rejctBudgetModal");
-  tailwind.Modal.getOrCreateInstance(rejectBudgetModal).hide();
+  const rejectExpenseModal = document.querySelector("#rejctExpenseModal");
+  tailwind.Modal.getOrCreateInstance(rejectExpenseModal).hide();
 
   const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
   tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
@@ -179,8 +179,8 @@ const rejectSuccess = () => {
 
 
 let tabledata = [
-    {id: 1,title:"Rent House", description:"description of Rent House", year:2022, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "pending"},
-    {id: 2,title:"IT specs", description:"description of IT specs", year:2022, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
+    {id: 1,title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "pending"},
+    {id: 2,title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
 ];
 
 const initTabulator = () => {
@@ -218,24 +218,24 @@ const initTabulator = () => {
         vertAlign: "middle",
       },
       {
-        title: "Budget Head",
-        field: "budget_head",
+        title: "Expense Head",
+        field: "expense_head",
         vertAlign: "middle",
       },
       {
-        title: "Budget Amount",
-        field: "budget_amount",
+        title: "Expense Amount",
+        field: "expense_amount",
         vertAlign: "middle",
         formatter(cell) {
-          return ` ${moneyFormat(cell.getData().budget_amount)}`;
+          return ` ${moneyFormat(cell.getData().expense_amount)}`;
         },        
       },
       {
-        title: "Budget Balance",
-        field: "budget_balance",
+        title: "Expense Balance",
+        field: "expense_balance",
         vertAlign: "middle",
         formatter(cell) {
-          return ` ${moneyFormat(cell.getData().budget_balance)}`;
+          return ` ${moneyFormat(cell.getData().expense_balance)}`;
         },
         
       },
@@ -265,14 +265,14 @@ const initTabulator = () => {
                 <div class="flex lg:justify-center items-center">
                   <a 
                     data-tw-toggle="modal"
-                    data-tw-target="#approveBudgetModal"  
+                    data-tw-target="#approveExpenseModal"  
                     class="btn btn-success text-white w-24 inline-block mr-1" 
                     href="javascript:;">
                      Approve
                   </a>
                   <a 
                     data-tw-toggle="modal"
-                    data-tw-target="#rejctBudgetModal" 
+                    data-tw-target="#rejctExpenseModal" 
                     class="btn btn-danger w-24 inline-block mr-1" 
                     href="javascript:;">
                      Reject
@@ -324,8 +324,8 @@ const moneyFormat = (x) => {
 
 const approvedSuccess = () => {
     actionType.value = 'approved';
-  const approveBudgetModal = document.querySelector("#approveBudgetModal");
-  tailwind.Modal.getOrCreateInstance(approveBudgetModal).hide();
+  const approveExpenseModal = document.querySelector("#approveExpenseModal");
+  tailwind.Modal.getOrCreateInstance(approveExpenseModal).hide();
 
   const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
   tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();

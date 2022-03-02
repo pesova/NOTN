@@ -15,7 +15,7 @@
               <UsersIcon class="report-box__icon text-success" />
               <div class="ml-auto"></div>
             </div>
-            <div class="text-3xl font-medium leading-8 mt-6">3.721</div>
+            <div class="text-3xl font-medium leading-8 mt-6">3,721</div>
             <div class="text-base text-slate-500 mt-1">Total Staff</div>
           </div>
         </div>
@@ -27,7 +27,7 @@
               <UserIcon class="report-box__icon text-warning" />
               <div class="ml-auto"></div>
             </div>
-            <div class="text-3xl font-medium leading-8 mt-6">2.149</div>
+            <div class="text-3xl font-medium leading-8 mt-6">2,149</div>
             <div class="text-base text-slate-500 mt-1">Inactive Staff</div>
           </div>
         </div>
@@ -39,7 +39,7 @@
               <UserIcon class="report-box__icon text-success" />
               <div class="ml-auto"></div>
             </div>
-            <div class="text-3xl font-medium leading-8 mt-6">152.040</div>
+            <div class="text-3xl font-medium leading-8 mt-6">140</div>
             <div class="text-base text-slate-500 mt-1">Active Staff</div>
           </div>
         </div>

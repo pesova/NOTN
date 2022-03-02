@@ -1,7 +1,7 @@
 <template>
   <div class="py-2">
     <DarkModeSwitcher />
-    <MainColorSwitcher />
+    <!-- <MainColorSwitcher /> -->
     <MobileMenu />
     <div class="flex">
       <!-- BEGIN: Side Menu -->
@@ -153,7 +153,7 @@ import { useSideMenuStore } from "@/stores/side-menu";
 import TopBar from "@/components/top-bar/Main.vue";
 import MobileMenu from "@/components/mobile-menu/Main.vue";
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main.vue";
-import MainColorSwitcher from "@/components/main-color-switcher/Main.vue";
+// import MainColorSwitcher from "@/components/main-color-switcher/Main.vue";
 import SideMenuTooltip from "@/components/side-menu-tooltip/Main.vue";
 import { linkTo, nestedMenu, enter, leave } from "./index";
 import dom from "@left4code/tw-starter/dist/js/dom";
