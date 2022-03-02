@@ -2,6 +2,7 @@
   "name": "notn",
   "version": "0.0.0",
   "scripts": {
+    "start": "vite build",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
