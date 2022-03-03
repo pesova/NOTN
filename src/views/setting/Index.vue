@@ -153,54 +153,13 @@
                           type="text"
                           class="form-control"
                           placeholder="Input text"
-                          :value="$f()[0].users[0].name"
+                          :value="$f()[0].staffs[0].name"
                           disabled
                         />
                       </div>
-                      <div class="mt-3">
-                        <label for="update-profile-form-2" class="form-label"
-                          >Nearest MRT Station</label
-                        >
-                        <TomSelect
-                          id="update-profile-form-2"
-                          v-model="select"
-                          class="w-full"
-                        >
-                          <option value="1">Admiralty</option>
-                          <option value="2">Aljunied</option>
-                          <option value="3">Ang Mo Kio</option>
-                          <option value="4">Bartley</option>
-                          <option value="5">Beauty World</option>
-                        </TomSelect>
-                      </div>
                     </div>
                     <div class="col-span-12 2xl:col-span-6">
-                      <div class="mt-3 2xl:mt-0">
-                        <label for="update-profile-form-3" class="form-label"
-                          >Postal Code</label
-                        >
-                        <TomSelect
-                          id="update-profile-form-3"
-                          v-model="select"
-                          class="w-full"
-                        >
-                          <option value="1">
-                            018906 - 1 STRAITS BOULEVARD SINGA...
-                          </option>
-                          <option value="2">
-                            018910 - 5A MARINA GARDENS DRIVE...
-                          </option>
-                          <option value="3">
-                            018915 - 100A CENTRAL BOULEVARD...
-                          </option>
-                          <option value="4">
-                            018925 - 21 PARK STREET MARINA...
-                          </option>
-                          <option value="5">
-                            018926 - 23 PARK STREET MARINA...
-                          </option>
-                        </TomSelect>
-                      </div>
+                      
                       <div class="mt-3">
                         <label for="update-profile-form-4" class="form-label"
                           >Phone Number</label
@@ -210,7 +169,7 @@
                           type="text"
                           class="form-control"
                           placeholder="Input text"
-                          value="65570828"
+                          value="07030233033"
                         />
                       </div>
                     </div>
@@ -223,8 +182,7 @@
                           id="update-profile-form-5"
                           class="form-control"
                           placeholder="Adress"
-                        >
-10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore</textarea
+                        > 158 Broad street, Marina Lagos</textarea
                         >
                       </div>
                     </div>
@@ -247,8 +205,8 @@
                     >
                       <img
                         class="rounded-md"
-                        alt="Rubick Tailwind HTML Admin Template"
-                        :src="$f()[0].photos[0]"
+                        alt="Nigerian Office for Trade Negotiations"
+                        :src="$f()[0].staffs[0].avatar"
                       />
                       <Tippy
                         tag="div"
