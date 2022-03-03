@@ -26,34 +26,7 @@
       </a>
       <div class="search-result" :class="{ show: searchDropdown }">
         <div class="search-result__content">
-          <div class="search-result__content__title">Pages</div>
-          <div class="mb-5">
-            <a href="" class="flex items-center">
-              <div
-                class="w-8 h-8 bg-success/20 dark:bg-success/10 text-success flex items-center justify-center rounded-full"
-              >
-                <InboxIcon class="w-4 h-4" />
-              </div>
-              <div class="ml-3">Mail Settings</div>
-            </a>
-            <a href="" class="flex items-center mt-2">
-              <div
-                class="w-8 h-8 bg-pending/10 text-pending flex items-center justify-center rounded-full"
-              >
-                <UsersIcon class="w-4 h-4" />
-              </div>
-              <div class="ml-3">Users & Permissions</div>
-            </a>
-            <a href="" class="flex items-center mt-2">
-              <div
-                class="w-8 h-8 bg-primary/10 dark:bg-primary/20 text-primary/80 flex items-center justify-center rounded-full"
-              >
-                <CreditCardIcon class="w-4 h-4" />
-              </div>
-              <div class="ml-3">Transactions Report</div>
-            </a>
-          </div>
-          <div class="search-result__content__title">Users</div>
+          <div class="search-result__content__title">Staff</div>
           <div class="mb-5">
             <a
               v-for="(faker, fakerKey) in $_.take($f(), 4)"
@@ -76,27 +49,27 @@
               </div>
             </a>
           </div>
-          <div class="search-result__content__title">Products</div>
-          <a
-            v-for="(faker, fakerKey) in $_.take($f(), 4)"
-            :key="fakerKey"
-            href
-            class="flex items-center mt-2"
-          >
-            <div class="w-8 h-8 image-fit">
-              <img
-                alt="NOTN"
-                class="rounded-full"
-                :src="faker.images[0]"
-              />
-            </div>
-            <div class="ml-3">{{ faker.products[0].name }}</div>
-            <div
-              class="ml-auto w-48 truncate text-slate-500 text-xs text-right"
-            >
-              {{ faker.products[0].category }}
-            </div>
-          </a>
+
+          <div class="search-result__content__title">Budgets</div>
+          <div class="mb-5">
+            <a href class="flex  mt-2">
+              <div class="ml-3">Budget title</div>
+              <div
+                class="ml-auto w-48 truncate text-slate-500 text-xs text-right"
+              >
+                Budget description
+              </div>
+            </a>
+          </div>
+          <div class="search-result__content__title">Expenses</div>
+          <a href class="flex  mt-2">
+              <div class="ml-3">Expense title</div>
+              <div
+                class="ml-auto w-48 truncate text-slate-500 text-xs text-right"
+              >
+                Expense description
+              </div>
+            </a>
         </div>
       </div>
     </div>
