@@ -15,13 +15,13 @@ export const useSideMenuStore = defineStore("sideMenu", {
         subMenu: [
           {
             icon: "",
-            pageName: "staff-departments",
-            title: "Departments",
+            pageName: "staff-list",
+            title: "All Staff",
           },
           {
             icon: "",
-            pageName: "staff-list",
-            title: "Staff List",
+            pageName: "staff-departments",
+            title: "Departments",
           }
         ],
       },
@@ -33,7 +33,7 @@ export const useSideMenuStore = defineStore("sideMenu", {
           {
             icon: "",
             pageName: "budget-list",
-            title: "List",
+            title: "List Budgets",
           },
           {
             icon: "",
@@ -54,8 +54,13 @@ export const useSideMenuStore = defineStore("sideMenu", {
         subMenu: [
           {
             icon: "",
+            pageName: "create-expense",
+            title: "Create Expense",
+          },
+          {
+            icon: "",
             pageName: "expense-list",
-            title: "List",
+            title: "List Expenses",
           },
           {
             icon: "",

@@ -42,16 +42,14 @@
               <option value="3">Others</option>
           </TomSelect>
         </div>
-        <div class="intro-y col-span-12 sm:col-span-6">
-          <label for="input-wizard-3" class="form-label">Amount</label>
-          <input
-            id="input-wizard-3"
-            type="number"
-            class="form-control"
-            placeholder="₦1,000,000"
-          />
-        </div>
-        <div class="intro-y col-span-12 sm:col-span-6">
+      </div>
+
+      <div class="font-medium text-base  mt-8">
+        <hr/> <br/>
+        Amount
+      </div>
+      <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
+        <!-- <div class="intro-y col-span-12 sm:col-span-6">
           <label for="input-wizard-4" class="form-label">Quantity (Optional)</label>
           <input
             id="input-wizard-4"
@@ -59,7 +57,71 @@
             class="form-control"
             placeholder=""
           />
+        </div> -->
+        <div class="intro-y col-span-12 sm:col-span-6">
+          <label for="input-wizard-3" class="form-label">Total Expense Amount</label>
+          <input
+            id="input-wizard-3"
+            type="number"
+            class="form-control"
+            placeholder="₦1,000,000"
+          />
         </div>
+
+        <div class="intro-y col-span-12 sm:col-span-6">
+            <div
+              class="form-check form-switch flex flex-col items-start mt-3"
+            >
+              <label
+                for="post-form-5"
+                class="form-check-label ml-0 mb-2"
+                >Enable Shared Expense</label
+              >
+              <input
+                id="post-form-5"
+                class="form-check-input"
+                type="checkbox"
+                @change="sharedExpense($event)"
+              />
+            </div>
+        </div>
+        
+        <div id="multiple-select" :class="{hidden : openOnExpenseShare}" class="intro-y col-span-12 sm:col-span-6" >
+          <label for="input-wizard-2" class="form-label">Shared Expense Departments</label>
+            <TomSelect
+              v-model="selectMultiple"
+              :options="{
+                placeholder: 'Select departments to share expense',
+              }"
+              class="w-full"
+              multiple
+            >
+              <option value="Finance">Finance</option>
+              <option value="Policy Research / Analysis Advocacy">Policy Research / Analysis Advocacy</option>
+              <option value="Free Trade Agreements">Free Trade Agreements</option>
+              <option value="Trade in Goods">Trade in Goods</option>
+              <option value="Trade in Services">Trade in Services</option>
+              <option value="Adminstrative Department">Adminstrative Department</option>
+
+            </TomSelect>
+        </div>
+
+        <div v-for="(department, index) in selectMultiple" :key="index" class="intro-y col-span-12 sm:col-span-6">
+          <label for="input-wizard-3" class="form-label">Expense amount in {{department}}</label>
+          <input
+            id="input-wizard-3"
+            type="number"
+            class="form-control"
+            placeholder="₦100,000"
+          />
+        </div>
+      </div>
+
+      <div class="font-medium text-base  mt-8">
+        <hr/> <br/>
+        Bank Details
+        </div>
+      <div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
         <div class="intro-y col-span-12 sm:col-span-6">
           <label for="input-wizard-1" class="form-label">Beneficiary Name</label>
           <input
@@ -94,56 +156,6 @@
           />
         </div>
 
-
-
-        <div id="multiple-select" :class="{hidden : openOnExpenseShare}" class="intro-y col-span-12 sm:col-span-6" >
-          <label for="input-wizard-2" class="form-label">Departments</label>
-            <TomSelect
-              v-model="selectMultiple"
-              :options="{
-                placeholder: 'Select departments to share expense',
-              }"
-              class="w-full"
-              multiple
-            >
-              <option value="Finance">Finance</option>
-              <option value="Policy Research / Analysis Advocacy">Policy Research / Analysis Advocacy</option>
-              <option value="Free Trade Agreements">Free Trade Agreements</option>
-              <option value="Trade in Goods">Trade in Goods</option>
-              <option value="Trade in Services">Trade in Services</option>
-              <option value="Adminstrative Department">Adminstrative Department</option>
-
-            </TomSelect>
-        </div>
-
-        <div v-for="(department, index) in selectMultiple" :key="index" class="intro-y col-span-12 sm:col-span-6">
-          <label for="input-wizard-3" class="form-label">Expense amount in {{department}}</label>
-          <input
-            id="input-wizard-3"
-            type="number"
-            class="form-control"
-            placeholder="₦100,000"
-          />
-        </div>
-
-
-        <div class="intro-y col-span-12 sm:col-span-6">
-            <div
-              class="form-check form-switch flex flex-col items-start mt-3"
-            >
-              <label
-                for="post-form-5"
-                class="form-check-label ml-0 mb-2"
-                >Enable Shared Expense</label
-              >
-              <input
-                id="post-form-5"
-                class="form-check-input"
-                type="checkbox"
-                @change="sharedExpense($event)"
-              />
-            </div>
-        </div>
         <div
           class="intro-y col-span-12 flex items-center justify-center sm:justify-end mt-5"
         >
