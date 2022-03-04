@@ -2,13 +2,13 @@
   <!-- BEGIN: Mobile Menu -->
   <div class="mobile-menu md:hidden">
     <div class="mobile-menu-bar">
-      <a href="" class="flex mr-auto">
+      <router-link :to="{ name: 'dashboard' }" class="flex mr-auto">
         <img
           alt="Nigerian Office for Trade Negotiations"
           class="w-6"
           src="@/assets/images/notn-logo.png"
         />
-      </a>
+      </router-link>
       <a href="javascript:;" id="mobile-menu-toggler">
         <BarChart2Icon
           class="w-8 h-8 text-white transform -rotate-90"

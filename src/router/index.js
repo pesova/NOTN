@@ -4,8 +4,11 @@ import DashboardOverview from "../views/dashboard/Main.vue";
 import StaffIndex from "../views/staff/Index.vue";
 import DepartmentIndex from "../views/department/Index.vue";
 import Settings from "../views/setting/Index.vue";
+
 import ExpenseList from "../views/expense/list/Main.vue";
 import ExpenseCreate from "../views/expense/create/Main.vue";
+import ExpenseMainCreate from "../views/expense/create/expense-create.vue";
+import ExpensePreviewCreate from "../views/expense/create/preview.vue";
 import ExpenseRequests from "../views/expense/requests/Main.vue";
 
 import Budget from "../views/budget/Main.vue";
@@ -69,8 +72,19 @@ const routes = [
        */
       {
         path: "/expense/create",
-        name: "create-expense",
         component: ExpenseCreate,
+        children: [
+          {
+            path: "/expense/create",
+            name: "create-expense",
+            component: ExpenseMainCreate,
+          },
+          {
+            path: "/expense/preview",
+            name: "preview-expense",
+            component: ExpensePreviewCreate,
+          },
+        ],
       },
       {
         path: "/expense/list",
