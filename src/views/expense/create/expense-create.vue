@@ -42,6 +42,24 @@
               <option value="3">Others</option>
           </TomSelect>
         </div>
+         <!-- FIle upload -->
+          <div class="intro-y col-span-12 sm:col-span-6">
+            <label for="input-wizard-3" class="form-label">Upload Expense receipt</label>
+            <Dropzone
+              ref-key="dropzoneSingleRef"
+              :options="{
+                url: 'https://httpbin.org/post',
+                thumbnailWidth: 50,
+                maxFilesize: 0.5,
+                maxFiles: 1,
+              }"
+              class="dropzone"
+            >
+              <div class="text-lg font-medium">
+                Drop files here or click to upload.
+              </div>
+            </Dropzone>
+          </div>
       </div>
 
       <div class="font-medium text-base  mt-8">
@@ -168,7 +186,7 @@
 
 
 <script setup>
-import { ref } from "vue";
+import { ref, provide } from "vue";
 
   const openOnExpenseShare = ref(true);
 
@@ -178,8 +196,15 @@ import { ref } from "vue";
     if (e.target.checked) {
       openOnExpenseShare.value = false;
     } else {
+      selectMultiple.value = [];
       openOnExpenseShare.value = true;
     }
   }
+
+  const dropzoneSingleRef = ref();
+
+  provide("bind[dropzoneSingleRef]", (el) => {
+    dropzoneSingleRef.value = el;
+  });
       
 </script>

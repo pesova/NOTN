@@ -1,10 +1,10 @@
 <template>
-  <h2 class="intro-y text-lg font-medium mt-10">Manage Budget Head</h2>
+  <h2 class="intro-y text-lg font-medium mt-10">Manage Budget Category</h2>
   <div class="grid grid-cols-12 gap-6 mt-5">
     <div
       class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2"
     >
-      <button data-tw-toggle="modal" data-tw-target="#newBudgetHeadModal"  class="btn btn-primary shadow-md mr-2">Add Budget Head</button>
+      <button data-tw-toggle="modal" data-tw-target="#newBudgetHeadModal"  class="btn btn-primary shadow-md mr-2">Add Budget Category</button>
     </div>
     <!-- BEGIN: Users Layout -->
     <div
@@ -47,11 +47,6 @@
           <div>{{ budget.description }}</div>
         </div>
 
-        <div
-          class="text-center lg:text-right p-5"
-        >
-          <p>Total Expense: {{moneyFormat(budget.total_expense)}}</p>
-        </div>
         
       </div>
     </div>
@@ -69,7 +64,7 @@
             <!-- BEGIN: Modal Header -->
             <div class="modal-header">
                 <h2 class="font-medium text-base mr-auto">
-                    Create New Budget
+                    Create New Budget Category
                 </h2>
 
             </div>
@@ -95,6 +90,24 @@
                         class="form-control"
                         placeholder="Budget Head description"
                     ></textarea>
+                </div>
+
+                <div id="multiple-select" class="col-span-12 sm:col-span-12" >
+                  <label for="input-wizard-2" class="form-label">Departments</label>
+                    <TomSelect
+                      :options="{
+                        placeholder: 'Select department',
+                      }"
+                      class="w-full"
+                    >
+                      <option value="Finance">Finance</option>
+                      <option value="Policy Research / Analysis Advocacy">Policy Research / Analysis Advocacy</option>
+                      <option value="Free Trade Agreements">Free Trade Agreements</option>
+                      <option value="Trade in Goods">Trade in Goods</option>
+                      <option value="Trade in Services">Trade in Services</option>
+                      <option value="Adminstrative Department">Adminstrative Department</option>
+
+                    </TomSelect>
                 </div>
             </div>
             <div class="modal-footer">
@@ -126,7 +139,7 @@
             <CheckCircleIcon
               class="w-16 h-16 text-success mx-auto mt-3"
             />
-            <div class="text-3xl mt-5">Budget Head succesfully created</div>
+            <div class="text-xl mt-5">Budget Category succesfully created</div>
           </div>
           <div class="px-5 pb-8 text-center">
             <button
@@ -151,20 +164,17 @@ export default {
     setup() {
         const budget_heads = ref([{
           title: "Accessories",
-          description: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero. ",
-          total_expense: "100000",
+          description: "Lorem ipsum, dolor sit amet itia odio accusamus minima laboriosam vero. ",
           id: 1,
         },
         {
           title: "Housing",
-          description: "Housing Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia odio accusamus minima laboriosam vero.",
-          total_expense: "70000",
+          description: "Housing Lorem ipsum, dolor lit. Mollitia odio accusamus minima laboriosam vero.",
           id: 2,
         },
         {
           title: "Miscellenous",
-          description: "Miscellenous Lorem ipsum, dolor sit amet adipisicing elit. Mollitia odio accusamus minima laboriosam vero.",
-          total_expense: "340000",
+          description: "Miscellenous Lorem ipsum, ollitia odio accusamus minima laboriosam vero.",
           id: 3,
         }]);
         

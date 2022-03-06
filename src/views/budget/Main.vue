@@ -11,91 +11,70 @@
     </div>
   </div>
   <!-- BEGIN: HTML Table Data -->
-  <div class="intro-y box p-5 mt-5">
-    <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
-      <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
 
-        <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <select
-            id="tabulator-html-filter-field"
-            v-model="filter.field"
-            class="form-select w-full 2xl:w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto"
-          >
-            <option value="title">Title</option>
-            <option value="year">Year</option>
-          </select>
+    <div class="intro-y box p-5 mt-5" id="basic-table">
+      <div class="">
+        <div class="overflow-x-auto">
+          <table class="table sm:items-end xl:items-start" aria-describedby="budget list">
+            <thead>
+              <tr>
+                <th class="whitespace-nowrap">#</th>
+                <th class="whitespace-nowrap">Year</th>
+                <th class="whitespace-nowrap">Budget category</th>
+                <th class="whitespace-nowrap">Budget Amount</th>
+                <th class="whitespace-nowrap">Budget Balance</th>
+                <th class="whitespace-nowrap">Status</th>
+              </tr>
+            </thead>
 
-          <input
-            id="tabulator-html-filter-value"
-            v-model="filter.value"
-            type="text"
-            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
-            placeholder="Search..."
-          />
-        </div>
-        <div class="mt-2 xl:mt-0">
-          <button
-            id="tabulator-html-filter-go"
-            type="button"
-            class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
-          >
-            Go
-          </button>
-          <button
-            id="tabulator-html-filter-reset"
-            type="button"
-            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
-          >
-            Reset
-          </button>
-        </div>
-      </form>
-      <div class="flex mt-5 sm:mt-0">
-        <div class="dropdown w-1/2 sm:w-auto">
-          <button
-            class="dropdown-toggle btn btn-outline-secondary w-full sm:w-auto"
-            aria-expanded="false"
-            data-tw-toggle="dropdown"
-          >
-            <FileTextIcon class="w-4 h-4 mr-2" /> Export
-            <ChevronDownIcon class="w-4 h-4 ml-auto sm:ml-2" />
-          </button>
-          <div class="dropdown-menu w-40">
-            <ul class="dropdown-content">
-              <li>
-                <a
-                  id="tabulator-export-csv"
-                  href="javascript:;"
-                  class="dropdown-item"
-                  @click="onExportCsv"
-                >
-                  <FileTextIcon class="w-4 h-4 mr-2" /> Export CSV
-                </a>
-              </li>
-              <li>
-                <a
-                  id="tabulator-export-json"
-                  href="javascript:;"
-                  class="dropdown-item"
-                  @click="onExportJson"
-                >
-                  <FileTextIcon class="w-4 h-4 mr-2" /> Export JSON
-                </a>
-              </li>
-            </ul>
-          </div>
+            <tbody>
+              <tr v-for="(budget, index) in tabledata" :key="index">
+                <td>{{index}}</td>
+                <td>{{budget.year}}</td>
+                <td>{{budget.budget_category}}</td>
+                <td>{{moneyFormat(budget.budget_amount)}}</td>
+                <td>{{moneyFormat(budget.budget_balance)}}</td>
+                <td>
+                  <div class="dropdown ml-auto">
+                    <a class="dropdown-toggle w-7 h-7 "
+                      href="javascript:;"
+                      aria-expanded="false"
+                      data-tw-toggle="dropdown">
+                      <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
+                    </a>
+                    <div class="dropdown-menu w-56">
+                      <ul class="dropdown-content">               
+                          <li>
+                          <a data-tw-toggle="modal"
+                              data-tw-target="#editBudgetModal" href="javascript:;"
+                              class="dropdown-item">
+                              Edit
+                          </a>
+                          </li>
+                          <li>
+                          <a data-tw-toggle="modal"
+                              data-tw-target="#editBudgetModal" href="javascript:;"
+                              class="dropdown-item">
+                              View
+                          </a>
+                          </li>
+                          <li>
+                        <a href="javascript:;" class="dropdown-item">
+                              Clone
+                          </a>
+                          </li>
+                      </ul>
+                    </div>
+              
+                  </div>
+               </td>
+              </tr>
+            </tbody>
+          </table>
+          
         </div>
       </div>
-    </div>
-    <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
-    </div>
+   
   </div>
   <!-- END: HTML Table Data -->
 
@@ -118,21 +97,30 @@
             <!-- END: Modal Header -->
             <!-- BEGIN: Modal Body -->
             <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-1" class="form-label">Title</label>
-                    <input
-                        id="modal-form-1"
-                        type="text"
-                        class="form-control"
-                        placeholder="Title of budget"
+                 <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-7" class="form-label">Year</label>
+                    <input 
+                      type="text"
+                      class="form-control"
+                      readonly
+                      id="datepicker"
+                      :value="getYear()"
                     />
-                </div>
+                  </div>
+
+                  <div class="col-span-12 sm:col-span-6">
+                    <label for="modal-form-5" class="form-label">Budget Category</label>
+                    <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
+                        <option :value="category" v-for="(category, index) in budgetCategory" :key="index">{{category}}</option>
+                        <option value="custom">Create New Category</option>
+                    </select>
+                  </div>
                 
                 <div class="col-span-12 sm:col-span-6">
                     <label for="modal-form-3" class="form-label">Type</label
                     >
                     <select id="modal-form-6" class="form-select">
-                        <option>Copex</option>
+                        <option>Capex</option>
                         <option>Opex</option>
                     </select>
                 </div>
@@ -151,39 +139,6 @@
                         type="number"
                         class="form-control"
                     />
-                </div>
-
-                <div class="col-span-12 sm:col-span-6">
-                  <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-5" class="form-label">Budget Head Title</label>
-                    <select id="modal-form-6"  class="form-select sm:mr-2">
-                        <option>Accessories</option>
-                        <option>Housing</option>
-                        <option>Miscellenous</option>
-                        <option>Feeding</option>
-                    </select>
-                  </div>
-                  <div class="col-span-12 sm:col-span-12">
-                    <label for="modal-form-7" class="form-label mt-2">Year</label>
-                    <input 
-                      type="month"
-                      class="form-control"
-                      readonly
-                      id="datepicker"
-                      :value="getYearandMonth()"
-                    />
-                  </div>
-
-                </div>
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-2" class="form-label">Description</label>
-                    <textarea
-                        id="modal-form-2"
-                        maxlength="150"
-                        rows="5"
-                        type="text"
-                        class="form-control"
-                    ></textarea>
                 </div>
             </div>
             <!-- END: Modal Body -->
@@ -223,21 +178,32 @@
             <!-- END: Modal Header -->
             <!-- BEGIN: Modal Body -->
             <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                
                 <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-1" class="form-label">Title</label>
-                    <input
-                        id="modal-form-1"
-                        type="text"
-                        class="form-control"
-                        placeholder="Title of budget"
-                    />
+                  <label for="modal-form-7" class="form-label">Year</label>
+                  <input 
+                    type="text"
+                    class="form-control"
+                    readonly
+                    id="datepicker"
+                    :value="getYear()"
+                  />
+                </div>
+
+                <div class="col-span-12 sm:col-span-6">
+                  <label for="modal-form-5" class="form-label">Budget Category</label>
+                  <select id="modal-form-6"  class="form-select sm:mr-2">
+                      <option>Accessories</option>
+                      <option>Housing</option>
+                      <option>Miscellenous</option>
+                      <option>Feeding</option>
+                  </select>
                 </div>
                 
                 <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-3" class="form-label">Type</label
-                    >
+                    <label for="modal-form-3" class="form-label">Type</label>
                     <select id="modal-form-6" class="form-select">
-                        <option>Copex</option>
+                        <option>Capex</option>
                         <option>Opex</option>
                     </select>
                 </div>
@@ -256,39 +222,6 @@
                         type="number"
                         class="form-control"
                     />
-                </div>
-
-                <div class="col-span-12 sm:col-span-6">
-                  <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-5" class="form-label">Budget Head Title</label>
-                    <select id="modal-form-6"  class="form-select sm:mr-2">
-                        <option>Accessories</option>
-                        <option>Housing</option>
-                        <option>Miscellenous</option>
-                        <option>Feeding</option>
-                    </select>
-                  </div>
-                  <div class="col-span-12 sm:col-span-12">
-                    <label for="modal-form-7" class="form-label mt-2">Year</label>
-                    <input 
-                      type="month"
-                      class="form-control"
-                      readonly
-                      id="datepicker"
-                      :value="getYearandMonth()"
-                    />
-                  </div>
-
-                </div>
-                <div class="col-span-12 sm:col-span-6">
-                    <label for="modal-form-2" class="form-label">Description</label>
-                    <textarea
-                        id="modal-form-2"
-                        maxlength="150"
-                        rows="5"
-                        type="text"
-                        class="form-control"
-                    ></textarea>
                 </div>
             </div>
             <!-- END: Modal Body -->
@@ -338,12 +271,73 @@
       </div>
     </div>
   </div>
+
+  <!-- NEW Budget Category -->
+    <div
+        id="newBudgetCategory"
+        class="modal"
+        tabindex="-1"
+        aria-hidden="true"
+    >
+      
+        <div class="modal-dialog modal-sm">
+          <form @submit.prevent="getCategoryValues($event)">
+            <div class="modal-content">
+                <!-- BEGIN: Modal Header -->
+                <div class="modal-header">
+                    <h2 class="font-medium text-base mr-auto">
+                        Create New Budget Category
+                    </h2>
+                </div>
+                <!-- END: Modal Header -->
+                <!-- BEGIN: Modal Body -->
+                <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                    <div class="col-span-12 sm:col-span-12">
+                        <label for="modal-form-1" class="form-label">Title</label>
+                        <input
+                            id="modal-form-1"
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            placeholder="Title of budget"
+                        />
+                    </div>
+                    <div class="col-span-12 sm:col-span-12">
+                        <label for="modal-form-2" class="form-label">Description</label>
+                        <textarea
+                            id="modal-form-2"
+                            cols="3" rows="3"
+                            maxlength="150"
+                            name="description"
+                            type="text"
+                            class="form-control"
+                            placeholder="Budget Head description"
+                        ></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        data-tw-dismiss="modal"
+                        class="btn btn-outline-secondary w-20 mr-1"
+                    >
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary w-20">
+                        Create
+                    </button>
+                </div>
+            </div>
+            </form>
+        </div>
+      
+  </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
-import Tabulator from "tabulator-tables";
 
 const tableRef = ref();
 const tabulator = ref();
@@ -353,165 +347,26 @@ const filter = reactive({
   value: "",
 });
 
-const getYearandMonth = () => {
+const getYear = () => {
     const date = new Date();
   const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  if (month < 10) {
-    return `${year}-0${month}`;
-  }
-  return `${year}-${month}`;
+  return year;
 };
 
 let tabledata = [
-    {id: 1, title:"Build Road", description:"description of Build Road", year:2022, budget_head:"Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved"},
-    {id: 2, title:"Rent House", description:"description of Rent House", year:2022, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected"},
-    {id: 3, title:"IT specs", description:"description of IT specs", year:2022, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
-    {id: 4, title:"Company Rebrand", description:"description of Company Rebrand", year:2021, budget_head:"Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved"}
+    {id: 1, year:2022, budget_category:"Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved"},
+    {id: 2, year:2022, budget_category:"Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected"},
+    {id: 3, year:2022, budget_category:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
+    {id: 4, year:2021, budget_category:"Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved"}
 ];
 
-const initTabulator = () => {
-  tabulator.value = new Tabulator(tableRef.value, {
-    data: tabledata,
-    pagination: "local",
-    paginationSize: 10,
-    paginationSizeSelector: [10, 20, 30, 40],
-    layout: "fitColumns",
-    placeholder: "No matching records found",
-    columns: [
-      // For HTML table
-      {
-        title: "#",
-        field: "id",
-        vertAlign: "middle",
-        hozAlign:"right",
-        width: 40,
-      },
-      {
-        title: "Title",
-        field: "title",
-        vertAlign: "middle",
-      },
-      {
-        title: "Description",
-        field: "description",
-        formatter(cell) {
-          return ` ${truncate(cell.getData().description, 22)}`;
-        },
-      },
-      {
-        title: "Year",
-        field: "year",
-        width: 100,
-        hozAlign:"center",
-      },
-      {
-        title: "Budget Head",
-        field: "budget_head", 
-      },
-      {
-        title: "Budget Amount",
-        field: "budget_amount",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().budget_amount)}`;
-        },        
-      },
-      {
-        title: "Budget Balance",
-        field: "budget_balance",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().budget_balance)}`;
-        },
-        
-      },
-      {
-        title: "Status",
-        field: "status",
-        width: 120,
-        formatter(cell) {
-            if (cell.getData().status == 'approved') {
-                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
-            }
-            if (cell.getData().status == 'rejected') {
-                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
-            }
-          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
-        },
-        
-      },
-      {
-        title: "Action",
-        responsive: 1,
-        download: false,
-        formatter() {
-                return `<div class="dropdown ml-auto"">
-                <a class="dropdown-toggle w-7 h-7 "
-                    href="javascript:;"
-                    aria-expanded="false"
-                    data-tw-toggle="dropdown">
-                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
-                </a>
-                <div class="dropdown-menu w-56">
-                    <ul class="dropdown-content">               
-                        <li>
-                        <a data-tw-toggle="modal"
-                            data-tw-target="#editBudgetModal" href="javascript:;"
-                            class="dropdown-item">
-                            Edit
-                        </a>
-                        </li>
-                        <li>
-                        <a href="javascript:;" class="dropdown-item">
-                            Clone
-                        </a>
-                        </li>
-                    </ul>
-                </div>
-                
-              </div>`
-        },
-        
-      }
-    ],
-    renderComplete() {
-      feather.replace({
-        "stroke-width": 4,
-      });
-    },
-  });
-};
+let budgetCategory = ref([
+    "Accessories",
+    "Housing",
+    "Miscellenous",
+    "Accessories"
+]);
 
-// Redraw table onresize
-const reInitOnResizeWindow = () => {
-  window.addEventListener("resize", () => {
-    tabulator.value.redraw();
-    feather.replace({
-      "stroke-width": 4,
-    });
-  });
-};
-
-// Filter function
-const onFilter = () => {
-  tabulator.value.setFilter(filter.field, filter.type, filter.value);
-};
-
-// On reset filter
-const onResetFilter = () => {
-  filter.field = "title";
-  filter.type = "like";
-  filter.value = "";
-  onFilter();
-};
-
-// Export
-const onExportCsv = () => {
-  tabulator.value.download("csv", "data.csv");
-};
-
-const onExportJson = () => {
-  tabulator.value.download("json", "data.json");
-};
 
 const createdBudget = () => {
   const newBudget = document.querySelector("#newBudgetModal");
@@ -521,17 +376,39 @@ const createdBudget = () => {
   tailwind.Modal.getOrCreateInstance(budgetCreated).show();
 };
 
-
-const truncate = (str, n) => {
-    return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
-}
-
 const moneyFormat = (x) => {
     return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
+let selectedCategory = ref();
+
+const onCategoryChange = () => {
+    if (selectedCategory.value == 'custom') {
+      const newBudgetCategory = document.querySelector("#newBudgetCategory");
+      tailwind.Modal.getOrCreateInstance(newBudgetCategory).show();      
+    }
+}
+
+const getCategoryValues = (e) => {
+    budgetCategory.value.push(e.target.elements.title.value);
+    const newBudgetCategory = document.querySelector("#newBudgetCategory");
+    tailwind.Modal.getOrCreateInstance(newBudgetCategory).hide(); 
+    selectedCategory.value = e.target.elements.title.value;    
+}
+
+// Redraw table onresize
+const reInitOnResizeWindow = () => {
+  window.addEventListener("resize", () => {
+    feather.replace({
+      "stroke-width": 4,
+    });
+  });
+};
+
 onMounted(() => {
-  initTabulator();
+  feather.replace({
+    "stroke-width": 4,
+  });
   reInitOnResizeWindow();
 });
 </script>
