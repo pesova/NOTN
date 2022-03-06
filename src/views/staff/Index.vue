@@ -309,6 +309,20 @@
         <!-- BEGIN: Modal Body -->
         <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
           <div class="col-span-12 sm:col-span-12">
+            <label for="modal-form-6" class="form-label">Departments</label>
+            <TomSelect id="modal-form-6" class="form-select">
+              <option
+                v-for="(department, fakerKey) in $_.take(
+                  $f()[0].departments,
+                  9
+                )"
+                :key="fakerKey"
+              >
+                {{ department.name }}
+              </option>
+            </TomSelect>
+          </div>
+          <div class="col-span-12 sm:col-span-12">
             <label for="modal-form-6" class="form-label">Roles</label>
             <TomSelect id="modal-form-6" class="form-select">
               <option
@@ -327,20 +341,7 @@
               <option>Inactive</option>
             </TomSelect>
           </div>
-          <div class="col-span-12 sm:col-span-12">
-            <label for="modal-form-6" class="form-label">Departments</label>
-            <TomSelect id="modal-form-6" class="form-select">
-              <option
-                v-for="(department, fakerKey) in $_.take(
-                  $f()[0].departments,
-                  9
-                )"
-                :key="fakerKey"
-              >
-                {{ department.name }}
-              </option>
-            </TomSelect>
-          </div>
+          
         </div>
         <!-- END: Modal Body -->
         <!-- BEGIN: Modal Footer -->
