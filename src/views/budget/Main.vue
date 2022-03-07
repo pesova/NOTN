@@ -24,16 +24,24 @@
                 <th class="whitespace-nowrap">Budget Amount</th>
                 <th class="whitespace-nowrap">Budget Balance</th>
                 <th class="whitespace-nowrap">Status</th>
+                <th class="whitespace-nowrap">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               <tr v-for="(budget, index) in tabledata" :key="index">
-                <td>{{index}}</td>
+                <td>{{index + 1}}</td>
                 <td>{{budget.year}}</td>
                 <td>{{budget.budget_category}}</td>
                 <td>{{moneyFormat(budget.budget_amount)}}</td>
                 <td>{{moneyFormat(budget.budget_balance)}}</td>
+                <td> 
+                    <p class="text-sm inline-block font-bold" :class=" (budget.status == 'approved') ? 
+                      `text-primary` : 
+                      (budget.status == 'rejected') ? `text-danger` : `text-warning`"> 
+                      {{ capitalizeFirstLetter(budget.status) }} 
+                    </p>
+                </td>
                 <td>
                   <div class="dropdown ml-auto">
                     <a class="dropdown-toggle w-7 h-7 "
@@ -44,24 +52,22 @@
                     </a>
                     <div class="dropdown-menu w-56">
                       <ul class="dropdown-content">               
-                          <li>
-                          <a data-tw-toggle="modal"
-                              data-tw-target="#editBudgetModal" href="javascript:;"
-                              class="dropdown-item">
-                              Edit
-                          </a>
+                          <li :class="{'hidden': (budget.status == 'approved'),  '': (budget.status != 'approved')}">
+                            <a data-tw-toggle="modal"
+                                data-tw-target="#editBudgetModal" href="javascript:;"
+                                class="dropdown-item">
+                                Edit
+                            </a>
                           </li>
                           <li>
-                          <a data-tw-toggle="modal"
-                              data-tw-target="#editBudgetModal" href="javascript:;"
-                              class="dropdown-item">
-                              View
-                          </a>
+                            <router-link :to="{ name: 'budget-show', params: { id: budget.id } }" class="dropdown-item">
+                                View
+                            </router-link>
                           </li>
                           <li>
-                        <a href="javascript:;" class="dropdown-item">
-                              Clone
-                          </a>
+                            <a href="javascript:;" class="dropdown-item">
+                                Clone
+                            </a>
                           </li>
                       </ul>
                     </div>
@@ -335,6 +341,36 @@
   </div>
 </template>
 
+<script>
+  const tabledata = [
+    {id: 1, year:2022, budget_category:"Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
+        user: 'John doe', role: 'H.O.D', status: 'approved'},{
+        user: 'John doe', role: 'Finance Officer', status: 'approved'},{
+        user: 'John doe', role: 'Head of budget', status: 'approved'},{
+        user: 'John doe', role: 'D.G', status: 'approved'}
+      ]},
+    {id: 2, year:2022, budget_category:"Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
+        user: 'John doe', role: 'H.O.D', status: 'approved'},{
+        user: 'John doe', role: 'Finance Officer', status: 'approved'},{
+        user: 'John doe', role: 'Head of budget', status: 'rejected'}
+      ]},
+    {id: 3, year:2022, budget_category:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+        user: 'John doe', role: 'H.O.D', status: 'approved'},{
+        user: 'John doe', role: 'Finance Officer', status: 'approved'},{
+        user: 'John doe', role: 'Head of budget', status: 'approved'},{
+        user: 'John doe', role: 'D.G', status: 'pending'}
+      ]},
+    {id: 4, year:2021, budget_category:"Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved", type: "opex", quantity: 2, approved_level: [{
+        user: 'John doe', role: 'H.O.D', status: 'approved'},{
+        user: 'John doe', role: 'Finance Officer', status: 'approved'},{
+        user: 'John doe', role: 'Head of budget', status: 'approved'},{
+        user: 'John doe', role: 'D.G', status: 'approved'}
+      ]}
+];
+
+export { tabledata };
+</script>
+
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
@@ -349,16 +385,8 @@ const filter = reactive({
 
 const getYear = () => {
     const date = new Date();
-  const year = date.getFullYear();
-  return year;
+    return  date.getFullYear();
 };
-
-let tabledata = [
-    {id: 1, year:2022, budget_category:"Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved"},
-    {id: 2, year:2022, budget_category:"Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected"},
-    {id: 3, year:2022, budget_category:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
-    {id: 4, year:2021, budget_category:"Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved"}
-];
 
 let budgetCategory = ref([
     "Accessories",
@@ -378,6 +406,10 @@ const createdBudget = () => {
 
 const moneyFormat = (x) => {
     return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+const  capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 let selectedCategory = ref();

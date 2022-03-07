@@ -14,6 +14,7 @@ import ExpenseRequests from "../views/expense/requests/Main.vue";
 import Budget from "../views/budget/Main.vue";
 import BudgetHead from "../views/budget/budget-head.vue";
 import BudgetApprovalRequest from "../views/budget/approval-request.vue";
+import BudgetShowDetails from "../views/budget/budget-show.vue";
 
 import Auth from "../views/login/Main.vue";
 import Login from "../views/login/login.vue";
@@ -70,6 +71,11 @@ const routes = [
         path: "/budgets/categories",
         name: "budget-categories",
         component: BudgetHead,
+      },
+      {
+        path: "/budgets/show/:id",
+        name: "budget-show",
+        component: BudgetShowDetails,
       },
 
       /**
