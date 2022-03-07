@@ -117,7 +117,7 @@
                   <div class="col-span-12 sm:col-span-6">
                     <label for="modal-form-5" class="form-label">Budget Category</label>
                     <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
-                        <option :value="category" v-for="(category, index) in budgetCategory" :key="index">{{category}}</option>
+                        <option :value="category" v-for="(category, index) in ($f()[0].budgetCategory)" :key="index">{{category}}</option>
                         <option value="custom">Create New Category</option>
                     </select>
                   </div>
@@ -198,12 +198,10 @@
 
                 <div class="col-span-12 sm:col-span-6">
                   <label for="modal-form-5" class="form-label">Budget Category</label>
-                  <select id="modal-form-6"  class="form-select sm:mr-2">
-                      <option>Accessories</option>
-                      <option>Housing</option>
-                      <option>Miscellenous</option>
-                      <option>Feeding</option>
-                  </select>
+                  <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
+                        <option :value="category" v-for="(category, index) in ($f()[0].budgetCategory)" :key="index">{{category}}</option>
+                        <option value="custom">Create New Category</option>
+                    </select>
                 </div>
                 
                 <div class="col-span-12 sm:col-span-6">

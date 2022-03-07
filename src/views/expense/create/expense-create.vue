@@ -37,9 +37,9 @@
               id="update-profile-form-2"
               class="w-full"
             >
-              <option value="1">Accessories</option>
-              <option value="2">Office & Funitures</option>
-              <option value="3">Others</option>
+              <option > Select Category</option>
+              <option v-for="(category, fakerKey) in ($f()[0].budgetCategory)" :key="fakerKey" :value="fakerKey">{{category}}</option>
+
           </TomSelect>
         </div>
          <!-- FIle upload -->
