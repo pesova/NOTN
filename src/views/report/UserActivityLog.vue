@@ -1,4 +1,8 @@
 <template>
+
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto">User Activity Log</h2>
+    </div>
   <div class="grid grid-cols-12 gap-6 mt-5">
    <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
 
@@ -53,7 +57,6 @@
         />
       </div>
 
-      <div class="hidden md:block mx-auto text-slate-500">Showing 1 to 10 of 150 entries</div>
       <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
         <div class="w-56 relative text-slate-500">
           <input type="text" class="form-control w-56 box pr-10" placeholder="Search..." />
@@ -62,14 +65,12 @@
       </div>
     </div>
     <!-- BEGIN: Data List -->
-
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible text-center">{{ auditAction }}</div>
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
       <table class="table table-report -mt-2">
         <thead>
           <tr>
             <th class="whitespace-nowrap">ID</th>
-            <th class="whitespace-nowrap">MODEL</th>
+            <th class="whitespace-nowrap">MODULE</th>
             <th class="text-center whitespace-nowrap">IP ADDRESS</th>
             <th class="text-center whitespace-nowrap">URL</th>
             <th class="text-center whitespace-nowrap">USER</th>
@@ -108,7 +109,10 @@
     </div>
     <!-- END: Data List -->
     <!-- BEGIN: Pagination -->
+    
     <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+
+      <div class="hidden md:block text-slate-500">Showing 1 to 10 of 150 entries</div>
       <nav class="w-full sm:w-auto sm:mr-auto">
         <ul class="pagination">
           <li class="page-item">
@@ -148,6 +152,7 @@
           </li>
         </ul>
       </nav>
+      
       <select class="w-20 form-select box mt-3 sm:mt-0">
         <option>10</option>
         <option>25</option>

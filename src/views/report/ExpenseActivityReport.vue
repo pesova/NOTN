@@ -1,4 +1,7 @@
 <template>
+    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+        <h2 class="text-lg font-medium mr-auto">Expense Activity Report</h2>
+    </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
             <div class="dropdown sm:ml-auto mt-3 sm:mt-0 relative sm:mr-3">
@@ -76,11 +79,8 @@
                 </div>
             </div>
         </div>
+        
         <!-- BEGIN: Data List -->
-
-        <div
-            class="intro-y col-span-12 overflow-auto lg:overflow-visible text-center"
-        >{{ auditAction }}</div>
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
             <table class="table table-report -mt-2">
                 <thead>

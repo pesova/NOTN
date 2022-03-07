@@ -24,9 +24,8 @@ import resetPassword from "../views/forgot-password/reset-password.vue";
 
 import ErrorPage from "../views/error-page/Main.vue";
 
-import AuditReport from "../views/report/audit/Main.vue";
-import AllAuditReport from "../views/report/audit/AllActivies.vue";
-import ExpenseReport from "../views/report/Expense.vue";
+import UserActivityLog from "../views/report/UserActivityLog.vue";
+import ExpenseActivityReport from "../views/report/ExpenseActivityReport.vue";
 import ResponseTimeReport from "../views/report/ResponseTime.vue";
 
 const routes = [
@@ -128,17 +127,12 @@ const routes = [
       {
         path: "/reports/activity-log",
         name: "activity-log",
-        component: AuditReport,
-      },
-      {
-        path: "/reports/all-activity-log",
-        name: "all-activity-log",
-        component: AllAuditReport,
+        component: UserActivityLog,
       },
       {
         path: "/reports/expense-report",
         name: "expense-report",
-        component: ExpenseReport,
+        component: ExpenseActivityReport,
       },
     ],
   },
