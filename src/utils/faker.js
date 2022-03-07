@@ -305,15 +305,11 @@ const fakers = {
 
   fakeRoles() {
     const roles = [
-      {
-        name: "Departmental Budget Officer",
-        id: 1,
-        description: "role description ",
-      },
-      { name: "HOD", id: 2, description: "role description" },
-      { name: "Finance Officer", id: 2, description: "role description" },
-      { name: "Head Of Budget", id: 3, description: "role description" },
-      { name: "Head Of Budget", id: 4, description: "role description" },
+      { id: 1, name: "Departmental Budget Officer", description: "role description " },
+      { id: 2, name: "Head of Department", description: "role description" },
+      { id: 2, name: "Finance Officer", description: "role description" },
+      { id: 3, name: "Head Of Budget", description: "role description" },
+      { id: 4, name: "Director General", description: "role description" },
     ].map((v) => ({ ...v, status: this.fakeTrueFalse()[0] }));
     return _.shuffle(roles);
   },

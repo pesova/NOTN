@@ -246,7 +246,6 @@
       
     </div>
 
-
     <div
       class="report-box-4 w-full h-full grid grid-cols-12 gap-6 xl:absolute -mt-8 xl:mt-0 pb-6 xl:pb-0 top-0 right-0 z-30 xl:z-auto"
     >
@@ -422,11 +421,16 @@
         </div>
       </div>
     </div>
+
+    <div class="col-span-12 lg:col-span-12 mt-6">
+        <HorizontalBarChart :height="100"  />
+    </div>
   </div>
 
 </template>
 
 <script setup>
-import ReportDonutChart2 from "@/components/report-donut-chart-2/Main.vue";
 import ReportBarChart1 from "@/components/report-bar-chart-1/Main.vue";
+import ReportDonutChart2 from "@/components/report-donut-chart-2/Main.vue";
+import HorizontalBarChart from "@/components/horizontal-bar-chart/Main.vue";
 </script>
