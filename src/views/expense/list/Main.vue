@@ -236,77 +236,7 @@
           </div>
         </div>
       </div>
-      <!-- <div id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
-        <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <select
-            id="tabulator-html-filter-field"
-            v-model="filter.field"
-            class="form-select w-full 2xl:w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto"
-          >
-            <option value="title">Title</option>
-            <option value="year">Year</option>
-          </select>
-
-          <input
-            id="tabulator-html-filter-value"
-            v-model="filter.value"
-            type="text"
-            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
-            placeholder="Search..."
-          />
-        </div>
-        <div class="mt-2 xl:mt-0">
-          <button
-            id="tabulator-html-filter-go"
-            type="button"
-            class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
-          >Go</button>
-          <button
-            id="tabulator-html-filter-reset"
-            type="button"
-            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
-          >Reset</button>
-        </div>
-      </div>-->
-
-      <!-- <div class="flex mt-5 sm:mt-0">
-        <div class="dropdown w-1/2 sm:w-auto">
-          <button
-            class="dropdown-toggle btn btn-outline-secondary w-full sm:w-auto"
-            aria-expanded="false"
-            data-tw-toggle="dropdown"
-          >
-            <FileTextIcon class="w-4 h-4 mr-2" />Export
-            <ChevronDownIcon class="w-4 h-4 ml-auto sm:ml-2" />
-          </button>
-          <div class="dropdown-menu w-40">
-            <ul class="dropdown-content">
-              <li>
-                <a
-                  id="tabulator-export-csv"
-                  href="javascript:;"
-                  class="dropdown-item"
-                  @click="onExportCsv"
-                >
-                  <FileTextIcon class="w-4 h-4 mr-2" />Export CSV
-                </a>
-              </li>
-              <li>
-                <a
-                  id="tabulator-export-json"
-                  href="javascript:;"
-                  class="dropdown-item"
-                  @click="onExportJson"
-                >
-                  <FileTextIcon class="w-4 h-4 mr-2" />Export JSON
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>-->
+     
     </div>
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
     <div class="overflow-x-auto scrollbar-hidden">
