@@ -5,6 +5,190 @@ const imageAssets = import.meta.globEager(
   `/src/assets/images/*.{jpg,jpeg,png,svg}`
 );
 const fakers = {
+  fakeResponseTime() {
+    const responses = [
+      {
+        id: 1,
+        amount: 11000,
+        Action: "Approved",
+        ActionTaker: this.fakeStaff()[0].name,
+        department: this.fakeDepartments()[0].name,
+        ResponseTime: "0 hour(s)",
+      },
+      {
+        id: 2,
+        amount: 14000,
+        Action: "Approved",
+        ActionTaker: this.fakeStaff()[0].name,
+        department: this.fakeDepartments()[0].name,
+        ResponseTime: "3 hour(s)",
+      },
+      {
+        id: 3,
+        amount: 12000,
+        Action: "Approved",
+        ActionTaker: this.fakeStaff()[0].name,
+        department: this.fakeDepartments()[0].name,
+        ResponseTime: "1 hour(s)",
+      },
+      {
+        id: 4,
+        amount: 21000,
+        Action: "Approved",
+        ActionTaker: this.fakeStaff()[0].name,
+        department: this.fakeDepartments()[0].name,
+        ResponseTime: "2 hour(s)",
+      },
+    ];
+    return _.shuffle(responses);
+  },
+
+  fakeExpenseReport() {
+    const reports = [
+      {
+        initiator: "",
+        primaryDepartment: "",
+        expenseHead: "Accessories",
+        paymentType: "Transfer",
+        amountPaidOut: 40000,
+        description: "description of Build Road",
+        DBO: "",
+        HOD: "",
+        HOB: "",
+        DG: "",
+        date: "18-Feb-2022 11:21:39",
+      },
+      {
+        initiator: "",
+        primaryDepartment: "",
+        expenseHead: "Housing",
+        paymentType: "Transfer",
+        amountPaidOut: 140000,
+        description: "description of Housing",
+        DBO: "",
+        HOD: "",
+        HOB: "",
+        DG: "",
+        date: "19-Feb-2022 11:21:39",
+      },
+      {
+        initiator: "",
+        primaryDepartment: "",
+        expenseHead: "Miscellenous",
+        paymentType: "Transfer",
+        amountPaidOut: 540000,
+        description: "description of Miscellenous",
+        DBO: "",
+        HOD: "",
+        HOB: "",
+        DG: "",
+        date: "29-Feb-2022 11:21:39",
+      },
+    ].map((v) => ({
+      ...v,
+      initiator: this.fakeStaff()[0].name,
+      primaryDepartment: this.fakeDepartments()[0].name,
+      DBO: this.fakeStaff()[0].name,
+      HOD: this.fakeStaff()[0].name,
+      HOB: this.fakeStaff()[0].name,
+      DG: this.fakeStaff()[0].name,
+    }));
+
+    return _.shuffle(reports);
+  },
+  fakeAuditLogs() {
+    const audits = [
+      {
+        id: 1,
+        model: "budget",
+        ipAddress: "172.31.22.388",
+        url: "https://notn.ng/budget",
+        user: "Christian",
+        oldValue: { status: "inactive" },
+        newValue: { status: "active" },
+        userAgent:
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+        createdAt: "February 17th 2022, 2:14:54 pm",
+      },
+      {
+        id: 2,
+        model: "expense",
+        ipAddress: "172.31.22.388",
+        url: "https://notn.ng/expense",
+        user: "Donchi",
+        oldValue: { status: "inactive" },
+        newValue: { status: "active" },
+        userAgent:
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+        createdAt: "February 17th 2022, 2:14:54 pm",
+      },
+      {
+        id: 3,
+        model: "budget",
+        ipAddress: "172.31.22.388",
+        url: "https://notn.ng/budget",
+        user: "Chisom",
+        oldValue: { email: "chisom@gmail.com" },
+        newValue: { email: "chisom@1@gmail.com" },
+        userAgent:
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+        createdAt: "February 17th 2022, 2:14:54 pm",
+      },
+      {
+        id: 4,
+        model: "budget",
+        ipAddress: "172.31.22.388",
+        url: "https://notn.ng/budget",
+        user: "Chisom",
+        oldValue: { email: "chisom@gmail.com" },
+        newValue: { email: "chisom@1@gmail.com" },
+        userAgent:
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+        createdAt: "February 17th 2022, 2:14:54 pm",
+      },
+      {
+        id: 5,
+        model: "budget",
+        ipAddress: "172.31.22.388",
+        url: "https://notn.ng/budget",
+        user: "Chisom",
+        oldValue: { email: "chisom@gmail.com" },
+        newValue: { email: "chisom@1@gmail.com" },
+        userAgent:
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+        createdAt: "February 17th 2022, 2:14:54 pm",
+      },
+      {
+        id: 6,
+        model: "budget",
+        ipAddress: "172.31.22.388",
+        url: "https://notn.ng/budget",
+        user: "Chisom",
+        oldValue: { email: "chisom@gmail.com" },
+        newValue: { email: "chisom@1@gmail.com" },
+        userAgent:
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.80 Safari/537.36",
+        createdAt: "February 17th 2022, 2:14:54 pm",
+      },
+    ];
+    return audits.map((audit) => {
+      return {
+        id: audit.id,
+        model: audit.model,
+        ipAddress: audit.ipAddress,
+        user: audit.user,
+        url: audit.url,
+        email: `${audit.user}(${_.toLower(
+          _.replace(audit.user, / /g, "") + "@notn.com"
+        )})`,
+        oldValue: audit.oldValue,
+        newValue: audit.newValue,
+        userAgent: audit.userAgent,
+        createdAt: audit.createdAt,
+      };
+    });
+  },
+
   fakeStaff() {
     const staffData = [
       {
@@ -121,15 +305,11 @@ const fakers = {
 
   fakeRoles() {
     const roles = [
-      {
-        name: "Departmental Budget Officer",
-        id: 1,
-        description: "role description ",
-      },
-      { name: "HOD", id: 2, description: "role description" },
-      { name: "Finance Officer", id: 2, description: "role description" },
-      { name: "Head Of Budget", id: 3, description: "role description" },
-      { name: "Head Of Budget", id: 4, description: "role description" },
+      { id: 1, name: "Departmental Budget Officer", description: "role description " },
+      { id: 2, name: "Head of Department", description: "role description" },
+      { id: 2, name: "Finance Officer", description: "role description" },
+      { id: 3, name: "Head Of Budget", description: "role description" },
+      { id: 4, name: "Director General", description: "role description" },
     ].map((v) => ({ ...v, status: this.fakeTrueFalse()[0] }));
     return _.shuffle(roles);
   },
@@ -296,15 +476,11 @@ const fakers = {
             omission: "",
           }
         ),
-        shortContent: _.truncate(
-          "New expense request submitted by Christian",
-          {
-            length: 150,
-            omission: "",
-          }
-        ),
-        content:
-          "New expense request submitted by Christian",
+        shortContent: _.truncate("New expense request submitted by Christian", {
+          length: 150,
+          omission: "",
+        }),
+        content: "New expense request submitted by Christian",
       },
       {
         title: "New Budget Created",
@@ -322,27 +498,25 @@ const fakers = {
             omission: "",
           }
         ),
-        content:
-          "A budget creation request is awaiting your approval",
+        content: "A budget creation request is awaiting your approval",
       },
       {
         title: "You have a pending expense approval",
         superShortContent: _.truncate(
-          'You have a new expense approval pushed to your queue',
+          "You have a new expense approval pushed to your queue",
           {
             length: 30,
             omission: "",
           }
         ),
         shortContent: _.truncate(
-          'You have a new expense approval pushed to your queue',
+          "You have a new expense approval pushed to your queue",
           {
             length: 150,
             omission: "",
           }
         ),
-        content:
-          'You have a new expense approval pushed to your queue',
+        content: "You have a new expense approval pushed to your queue",
       },
       {
         title: "Christian submitted a budget for approval",
@@ -523,6 +697,9 @@ for (let i = 0; i < 20; i++) {
     roles: fakers.fakeRoles(),
     workflow: fakers.fakeWorkflows(),
     budgetCategory: fakers.fakeBudgetCategory(),
+    audits: fakers.fakeAuditLogs(),
+    expenseReports: fakers.fakeExpenseReport(),
+    responseTime: fakers.fakeResponseTime(),
   };
 }
 

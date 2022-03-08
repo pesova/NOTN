@@ -20,13 +20,17 @@
                     class="w-full lg:w-auto mt-6 lg:mt-0 pt-4 lg:pt-0 flex-1 flex items-center justify-evenly px-5 border-t lg:border-t-0 border-slate-200/60 dark:border-darkmode-400"
                 >
                     <div class="text-center w-auto py-2">
-                        <div class="text-slate-500">Budget Amount</div>
+                        <div class="text-slate-500">Quantity</div>
+                        <p class="font-medium text-primary text-xl"> {{ tabledata[budget_id].quantity }} </p>
+                    </div>
+                    <div class="text-center w-auto py-2">
+                        <div class="text-slate-500">Total Budget Amount</div>
                         <p class="font-medium text-primary text-xl"> {{ moneyFormat(tabledata[budget_id].budget_amount) }} </p>
                         
                     </div>
                     <div class="text-center w-auto py-2">
-                        <div class="text-slate-500">Quantity</div>
-                        <p class="font-medium text-primary text-xl"> {{ tabledata[budget_id].quantity }} </p>
+                        <div class="text-slate-500">Budget Spent</div>
+                        <p class="font-medium text-primary text-xl">{{ moneyFormat(tabledata[budget_id].budget_balance) }}</p>
                     </div>
                     <div class="text-center w-auto py-2">
                         <div class="text-slate-500">Budget Balance</div>
@@ -64,19 +68,18 @@
 
     <div class="intro-y box col-span-12 lg:col-span-6">
           <div
-            class="flex items-center px-5 py-5 sm:py-3 border-b border-slate-200/60 dark:border-darkmode-400"
+            class="flex items-center mt-6 px-5 py-5 sm:py-3 border-b border-slate-200/60 dark:border-darkmode-400"
           >
             <h2 class="font-medium text-base mr-auto">Budget Workflow Status</h2>
-            
-            
           </div>
+
           <div class="flex flex-wrap items-center">
-              <div v-for="(level, index) in tabledata[budget_id].approved_level" :key="index" class="flex items-center py-3 ml-1">
+              <div class="flex items-center px-3 py-3 ml-1" v-for="(level, index) in tabledata[budget_id].approved_level" :key="index">
                 <span class="px-1 " :class="(level.status == 'approved') ? 'text-lime-600' : (level.status == 'pending') ? 'text-warning' :'text-danger'">
                       {{ capitalizeFirstLetter(level.status) }} 
                 </span>
                 <span :class="(level.status == 'pending') ? 'hidden' : '' "> by </span>
-                <strong class="px-1" :class="(level.status == 'pending') ? 'hidden' : '' "> {{ level.user }} </strong> under {{ level.role }} 
+                <strong class="px-1" :class="(level.status == 'pending') ? 'hidden' : '' "> {{ level.user }} </strong> as <strong class="px-1"> {{ level.role }} </strong>
                 <ArrowRightIcon class="w-10 " v-if="index !== tabledata[budget_id].approved_level.length - 1" />
               </div>                
                 

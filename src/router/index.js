@@ -24,6 +24,10 @@ import resetPassword from "../views/forgot-password/reset-password.vue";
 
 import ErrorPage from "../views/error-page/Main.vue";
 
+import UserActivityLog from "../views/report/UserActivityLog.vue";
+import ExpenseActivityReport from "../views/report/ExpenseActivityReport.vue";
+import ResponseTimeReport from "../views/report/ResponseTime.vue";
+
 const routes = [
   {
     path: "/",
@@ -118,12 +122,17 @@ const routes = [
       {
         path: "/reports/response-time",
         name: "response-time",
-        component: DashboardOverview,
+        component: ResponseTimeReport,
       },
       {
         path: "/reports/activity-log",
         name: "activity-log",
-        component: DashboardOverview,
+        component: UserActivityLog,
+      },
+      {
+        path: "/reports/expense-report",
+        name: "expense-report",
+        component: ExpenseActivityReport,
       },
     ],
   },

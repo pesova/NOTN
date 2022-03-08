@@ -82,6 +82,11 @@ export const useSideMenuStore = defineStore("sideMenu", {
           },
           {
             icon: "",
+            pageName: "expense-report",
+            title: "Expense Activity",
+          },
+          {
+            icon: "",
             pageName: "activity-log",
             title: "Activity Log",
           }
