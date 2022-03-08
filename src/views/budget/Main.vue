@@ -9,9 +9,42 @@
       >Add New Budget</button>
     </div>
   </div>
-  <!-- BEGIN: HTML Table Data -->
-
+  
   <div class="intro-y box p-5 mt-5" id="basic-table">
+    <!-- BEGIN: HTML Table Data -->
+    <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+      <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
+
+        <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+          <input
+            id="tabulator-html-filter-value"
+            v-model="filter.value"
+            type="text"
+            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
+            placeholder="Search..."
+          />
+        </div>
+        <div class="mt-2 xl:mt-0">
+          <button
+            id="tabulator-html-filter-go"
+            type="button"
+            class="btn btn-primary w-full sm:w-16"
+            @click="onFilter"
+          >
+            Go
+          </button>
+          <button
+            id="tabulator-html-filter-reset"
+            type="button"
+            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
+            @click="onResetFilter"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </div>
+
     <div class>
       <div class="overflow-x-auto">
         <table class="table sm:items-end xl:items-start" aria-describedby="budget list">
@@ -19,6 +52,7 @@
             <tr>
               <th class="whitespace-nowrap">#</th>
               <th class="whitespace-nowrap">Year</th>
+              <th class="whitespace-nowrap">Department</th>
               <th class="whitespace-nowrap">Budget category</th>
               <th class="whitespace-nowrap">Budget Amount</th>
               <th class="whitespace-nowrap">Budget Balance</th>
@@ -31,6 +65,7 @@
             <tr v-for="(budget, index) in tabledata" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ budget.year }}</td>
+              <td>{{ budget.department }}</td>
               <td>{{ budget.budget_category }}</td>
               <td>{{ moneyFormat(budget.budget_amount) }}</td>
               <td>{{ moneyFormat(budget.budget_balance) }}</td>
@@ -60,7 +95,7 @@
                   <div class="dropdown-menu w-56">
                     <ul class="dropdown-content">
                       <li
-                        :class="{ 'hidden': (budget.status == 'approved'), '': (budget.status != 'approved') }"
+                        :class="{ 'hidden': (budget.status !== 'pending') }"
                       >
                         <a
                           data-tw-toggle="modal"
@@ -101,6 +136,21 @@
           <div class="col-span-12 sm:col-span-6">
             <label for="modal-form-7" class="form-label">Year</label>
             <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
+          </div>
+
+          <div class="col-span-12 sm:col-span-6">
+            <label for="modal-form-3" class="form-label">Department</label>
+            <TomSelect id="modal-form-3">
+              <option
+                v-for="(department, fakerKey) in $_.take(
+                  $f()[0].departments,
+                  9
+                )"
+                :key="fakerKey"
+              >
+                {{ department.name }}
+              </option>
+            </TomSelect>
           </div>
 
           <div class="col-span-12 sm:col-span-6">
@@ -276,7 +326,7 @@
 <script>
 const tabledata = [
   {
-    id: 1, year: 2022, budget_category: "Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
+    id: 1, year: 2022, department: "Finance", budget_category: "Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
       user: 'John doe', role: 'H.O.D', status: 'approved'
     }, {
       user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -288,7 +338,7 @@ const tabledata = [
     ]
   },
   {
-    id: 2, year: 2022, budget_category: "Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
+    id: 2, year: 2022, department: "Policy & Research", budget_category: "Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
       user: 'Mart doe', role: 'H.O.D', status: 'approved'
     }, {
       user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -298,7 +348,7 @@ const tabledata = [
     ]
   },
   {
-    id: 3, year: 2022, budget_category: "Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+    id: 3, year: 2022, department: "Trade in Service", budget_category: "Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
       user: 'John doe', role: 'H.O.D', status: 'approved'
     }, {
       user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -310,7 +360,7 @@ const tabledata = [
     ]
   },
   {
-    id: 4, year: 2021, budget_category: "Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved", type: "opex", quantity: 2, approved_level: [{
+    id: 4, year: 2021, department: "Free Trade Agreement", budget_category: "Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved", type: "opex", quantity: 2, approved_level: [{
       user: 'John doe', role: 'H.O.D', status: 'approved'
     }, {
       user: 'John doe', role: 'Finance Officer', status: 'approved'

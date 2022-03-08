@@ -77,13 +77,13 @@ export const useSideMenuStore = defineStore("sideMenu", {
         subMenu: [
           {
             icon: "",
-            pageName: "response-time",
-            title: "Response TIme",
+            pageName: "expense-report",
+            title: "Expense Activity",
           },
           {
             icon: "",
-            pageName: "expense-report",
-            title: "Expense Activity",
+            pageName: "response-time",
+            title: "Response TIme",
           },
           {
             icon: "",
