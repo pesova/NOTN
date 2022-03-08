@@ -175,10 +175,10 @@ const getYearandMonth = () => {
 };
 
 let tabledata = [
-    {id: 1, title:"Build Road", description:"description of Build Road", year:2022, expense_head:"Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved"},
-    {id: 2, title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected"},
-    {id: 3, title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
-    {id: 4, title:"Company Rebrand", description:"description of Company Rebrand", year:2021, expense_head:"Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved"}
+    {id: 1, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Build Road", description:"description of Build Road", year:2022, expense_head:"Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved"},
+    {id: 2, initiator: "John Doe", department: "Finance", createdAt: "01-26-2022", title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected"},
+    {id: 3, initiator: "John Doe", department: "Trade in Goods", createdAt: "01-26-2022", title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
+    {id: 4, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Company Rebrand", description:"description of Company Rebrand", year:2021, expense_head:"Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved"}
 ];
 
 const initTabulator = () => {
@@ -199,6 +199,22 @@ const initTabulator = () => {
         width: 40,
       },
       {
+        title: "Year",
+        field: "year",
+        width: 100,
+        hozAlign:"center",
+      },
+      {
+        title: "Initiator",
+        field: "initiator",
+        vertAlign: "left",
+      },
+      {
+        title: "Department",
+        field: "department",
+        vertAlign: "left",
+      },
+      {
         title: "Title",
         field: "title",
         vertAlign: "middle",
@@ -209,12 +225,6 @@ const initTabulator = () => {
         formatter(cell) {
           return ` ${truncate(cell.getData().description, 22)}`;
         },
-      },
-      {
-        title: "Year",
-        field: "year",
-        width: 100,
-        hozAlign:"center",
       },
       {
         title: "Expense Head",
@@ -249,6 +259,11 @@ const initTabulator = () => {
           return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
         },
         
+      },
+      {
+        title: "Created At",
+        field: "createdAt",
+        vertAlign: "center",
       },
       {
         title: "Action",
