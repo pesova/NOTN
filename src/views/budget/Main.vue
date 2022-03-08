@@ -18,7 +18,6 @@
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <input
             id="tabulator-html-filter-value"
-            v-model="filter.value"
             type="text"
             class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
             placeholder="Search..."
@@ -29,7 +28,6 @@
             id="tabulator-html-filter-go"
             type="button"
             class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
           >
             Go
           </button>
@@ -37,7 +35,6 @@
             id="tabulator-html-filter-reset"
             type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
           >
             Reset
           </button>
@@ -62,7 +59,7 @@
           </thead>
 
           <tbody>
-            <tr v-for="(budget, index) in tabledata" :key="index">
+            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index">
               <td>{{ index + 1 }}</td>
               <td>{{ budget.year }}</td>
               <td>{{ budget.department }}</td>
@@ -78,9 +75,12 @@
                   (budget.status == 'rejected') ? `text-danger` : `text-warning`"
                 >{{ capitalizeFirstLetter(budget.status) }}</p>
                 </a>
-                <div v-if="budget.status != 'approved'"
-                  class="text-slate-500 text-xs whitespace-nowrap mt-0.5"
-                ><span>{{  budget.approved_level[index].role }}</span></div>
+                <div v-if="budget.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in budget.approved_level" :key="levelKey" v-show="levelKey == budget.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
+                </div>
               </td>
               <td>
                 <div class="dropdown ml-auto">
@@ -92,7 +92,7 @@
                   >
                     <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
                   </a>
-                  <div class="dropdown-menu w-56">
+                  <div class="dropdown-menu w-56 toggleDropdownMenu">
                     <ul class="dropdown-content">
                       <li
                         :class="{ 'hidden': (budget.status !== 'pending') }"
@@ -344,83 +344,23 @@
   </div>
 </template>
 
-<script>
-const tabledata = [
-  {
-    id: 1, year: 2022, department: "Finance", budget_category: "Accessories", budget_amount: 40000, budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
-      user: 'John doe', role: 'H.O.D', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Finance Officer', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Head of budget', status: 'approved'
-    }, {
-      user: 'John doe', role: 'D.G', status: 'approved'
-    }
-    ]
-  },
-  {
-    id: 2, year: 2022, department: "Policy & Research", budget_category: "Housing", budget_amount: 140000, budget_balance: 500000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
-      user: 'Mart doe', role: 'H.O.D', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Finance Officer', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Head of budget', status: 'rejected'
-    }
-    ]
-  },
-  {
-    id: 3, year: 2022, department: "Trade in Service", budget_category: "Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
-      user: 'John doe', role: 'H.O.D', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Finance Officer', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Head of budget', status: 'approved'
-    }, {
-      user: 'John doe', role: 'D.G', status: 'pending'
-    }
-    ]
-  },
-  {
-    id: 4, year: 2021, department: "Free Trade Agreement", budget_category: "Accessories", budget_amount: 95000000, budget_balance: 50000000, status: "approved", type: "opex", quantity: 2, approved_level: [{
-      user: 'John doe', role: 'H.O.D', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Finance Officer', status: 'approved'
-    }, {
-      user: 'John doe', role: 'Head of budget', status: 'approved'
-    }, {
-      user: 'John doe', role: 'D.G', status: 'approved'
-    }
-    ]
-  }
-];
-
-export { tabledata };
-</script>
-
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
+import { useRouter} from 'vue-router';
 
-const tableRef = ref();
-const tabulator = ref();
-const filter = reactive({
-  field: "title",
-  type: "like",
-  value: "",
+const router = useRouter();
+
+router.beforeEach(() => {
+  if (document.querySelector('.toggleDropdownMenu')) {
+    (document.querySelectorAll(".toggleDropdownMenu")).forEach((el) => el.classList.remove("show"))
+  }
 });
 
 const getYear = () => {
   const date = new Date();
   return date.getFullYear();
 };
-
-let budgetCategory = ref([
-  "Accessories",
-  "Housing",
-  "Miscellenous",
-  "Accessories"
-]);
-
 
 const createdBudget = () => {
   const newBudget = document.querySelector("#newBudgetModal");

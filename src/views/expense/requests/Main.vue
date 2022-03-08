@@ -11,7 +11,6 @@
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <input
             id="tabulator-html-filter-value"
-            v-model="filter.value"
             type="text"
             class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
             placeholder="Search..."
@@ -22,7 +21,6 @@
             id="tabulator-html-filter-go"
             type="button"
             class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
           >
             Go
           </button>
@@ -30,7 +28,6 @@
             id="tabulator-html-filter-reset"
             type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
           >
             Reset
           </button>
@@ -38,12 +35,69 @@
       </form>
       
     </div>
-    <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+    <div class>
+      <div class="overflow-x-auto">
+        <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
+          <thead>
+            <tr>
+              <th class="whitespace-nowrap">#</th>
+              <th class="whitespace-nowrap">Year</th>
+              <th class="whitespace-nowrap">Initiator</th>
+              <th class="whitespace-nowrap">Department</th>
+              <th class="whitespace-nowrap">Title</th>
+              <th class="whitespace-nowrap">Expense Head</th>
+              <th class="whitespace-nowrap">Expense Amount</th>
+              <th v-show="false" class="whitespace-nowrap">Expense Balance</th>
+              <th class="whitespace-nowrap">Status</th>
+              <th class="whitespace-nowrap">Created At</th>
+              <th class="whitespace-nowrap">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index"  v-show="expense.status == 'pending'">
+              <td>{{ index + 1 }}</td>
+              <td>{{ expense.year }}</td>
+              <td>{{ expense.initiator }}</td>
+              <td>{{ expense.department }}</td>
+              <td>{{ expense.title }}</td>
+              <td>{{ expense.expense_head }}</td>
+              <td>{{ moneyFormat(expense.expense_amount) }}</td>
+              <td v-show="false" >{{ moneyFormat(expense.expense_balance) }}</td>
+              <td>
+                <a href class="font-medium whitespace-nowrap">
+                   <p
+                  class="text-sm inline-block font-bold"
+                  :class="(expense.status == 'approved') ?
+                  `text-primary` :
+                  (expense.status == 'rejected') ? `text-danger` : `text-warning`"
+                >{{ capitalizeFirstLetter(expense.status) }}</p>
+                </a>
+                
+              </td>
+              <td>{{ expense.created_at }}</td>
+              <td>
+                <div class="flex lg:justify-center items-center">
+                  <a 
+                    data-tw-toggle="modal"
+                    data-tw-target="#approveexpenseModal"  
+                    class="btn btn-success text-white w-24 inline-block mr-1" 
+                    href="javascript:;">
+                     Approve
+                  </a>
+                  <a 
+                    data-tw-toggle="modal"
+                    data-tw-target="#rejctexpenseModal" 
+                    class="btn btn-danger w-24 inline-block mr-1" 
+                    href="javascript:;">
+                     Reject
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <!-- END: HTML Table Data -->
@@ -154,163 +208,27 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import feather from "feather-icons";
-import Tabulator from "tabulator-tables";
 
-const tableRef = ref();
-const tabulator = ref();
-const filter = reactive({
-  field: "title",
-  type: "like",
-  value: "",
-});
 
-let actionType = ref();
-
-const rejectSuccess = () => {
-  actionType.value = 'rejected';
-  const rejectExpenseModal = document.querySelector("#rejctExpenseModal");
-  tailwind.Modal.getOrCreateInstance(rejectExpenseModal).hide();
-
-  const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
-  tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
+const getYearandMonth = () => {
+    const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  if (month < 10) {
+    return `${year}-0${month}`;
+  }
+  return `${year}-${month}`;
 };
 
 
-let tabledata = [
-    {id: 1,title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "pending"},
-    {id: 2,title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
-];
+const createdExpense = () => {
+  const newExpense = document.querySelector("#newExpenseModal");
+  tailwind.Modal.getOrCreateInstance(newExpense).hide();
 
-const initTabulator = () => {
-  tabulator.value = new Tabulator(tableRef.value, {
-    data: tabledata,
-    layout: "fitColumns",
-    placeholder: "No matching records found",
-    columns: [
-      // For HTML table
-      {
-        title: "#",
-        field: "id",
-        vertAlign: "middle",
-        hozAlign:"right",
-        width: 40,
-      },
-      {
-        title: "Title",
-        field: "title",
-        vertAlign: "middle",
-      },
-      {
-        title: "Description",
-        field: "description",
-        vertAlign: "middle",
-        formatter(cell) {
-          return ` ${truncate(cell.getData().description, 22)}`;
-        },
-      },
-      {
-        title: "Year",
-        field: "year",
-        width: 100,
-        hozAlign:"center",
-        vertAlign: "middle",
-      },
-      {
-        title: "Expense Head",
-        field: "expense_head",
-        vertAlign: "middle",
-      },
-      {
-        title: "Expense Amount",
-        field: "expense_amount",
-        vertAlign: "middle",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().expense_amount)}`;
-        },        
-      },
-      {
-        title: "Expense Balance",
-        field: "expense_balance",
-        vertAlign: "middle",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().expense_balance)}`;
-        },
-        
-      },
-      {
-        title: "Status",
-        field: "status",
-        vertAlign: "middle",
-        width: 120,
-        formatter(cell) {
-             if (cell.getData().status == 'approved') {
-                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
-            }
-            if (cell.getData().status == 'rejected') {
-                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
-            }
-          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
-        },
-        
-      },
-      {
-        title: "Action",
-        responsive: 1,
-        download: false,
-        width: 200,
-        formatter() {
-                return `
-                <div class="flex lg:justify-center items-center">
-                  <a 
-                    data-tw-toggle="modal"
-                    data-tw-target="#approveExpenseModal"  
-                    class="btn btn-success text-white w-24 inline-block mr-1" 
-                    href="javascript:;">
-                     Approve
-                  </a>
-                  <a 
-                    data-tw-toggle="modal"
-                    data-tw-target="#rejctExpenseModal" 
-                    class="btn btn-danger w-24 inline-block mr-1" 
-                    href="javascript:;">
-                     Reject
-                  </a>
-                </div>`
-        },
-        
-      }
-    ],
-    renderComplete() {
-      feather.replace({
-        "stroke-width": 4,
-      });
-    },
-  });
-};
-
-// Redraw table onresize
-const reInitOnResizeWindow = () => {
-  window.addEventListener("resize", () => {
-    tabulator.value.redraw();
-    feather.replace({
-      "stroke-width": 4,
-    });
-  });
-};
-
-// Filter function
-const onFilter = () => {
-  tabulator.value.setFilter(filter.field, filter.type, filter.value);
-};
-
-// On reset filter
-const onResetFilter = () => {
-  filter.field = "title";
-  filter.type = "like";
-  filter.value = "";
-  onFilter();
+  const expenseCreated = document.querySelector("#expenseCreated");
+  tailwind.Modal.getOrCreateInstance(expenseCreated).show();
 };
 
 
@@ -322,17 +240,13 @@ const moneyFormat = (x) => {
     return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const approvedSuccess = () => {
-    actionType.value = 'approved';
-  const approveExpenseModal = document.querySelector("#approveExpenseModal");
-  tailwind.Modal.getOrCreateInstance(approveExpenseModal).hide();
-
-  const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
-  tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
-};
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 onMounted(() => {
-  initTabulator();
-  reInitOnResizeWindow();
+  feather.replace({
+    "stroke-width": 4,
+  });
 });
 </script>

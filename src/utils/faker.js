@@ -672,6 +672,98 @@ const fakers = {
     ];
     return _.shuffle(budgetCategory);
   },
+  fakeBudgetTable() {
+    const budgetTable = [
+      {
+        id: 1, year: 2022, department: "Finance", budget_category: "Refurbishing Advances", budget_amount: 4000000, budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
+          user: 'John doe', role: 'H.O.D', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Finance Officer', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Head of budget', status: 'approved'
+        }, {
+          user: 'John doe', role: 'D.G', status: 'approved'
+        }
+        ]
+      },
+      {
+        id: 2, year: 2022, department: "Policy & Research", budget_category: "Subsidy To Private Companies", budget_amount: 140000, budget_balance: 65000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
+          user: 'Mart doe', role: 'H.O.D', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Finance Officer', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Head of budget', status: 'rejected'
+        }
+        ]
+      },
+      {
+        id: 3, year: 2022, department: "Trade in Service", budget_category: "Grant To Foreign Governments", budget_amount: 900000, budget_balance: 15000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+          user: 'John doe', role: 'H.O.D', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Finance Officer', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Head of budget', status: 'approved'
+        }, {
+          user: 'John doe', role: 'D.G', status: 'pending'
+        }
+        ]
+      },
+      {
+        id: 4, year: 2021, department: "Free Trade Agreement", budget_category: "Grant To Local Governments - Capital", budget_amount: 95000000, budget_balance: 500000, status: "approved", type: "opex", quantity: 2, approved_level: [{
+          user: 'John doe', role: 'H.O.D', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Finance Officer', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Head of budget', status: 'approved'
+        }, {
+          user: 'John doe', role: 'D.G', status: 'approved'
+        }
+        ]
+      },
+      {
+        id: 5, year: 2022, department: "Adminstrative Department", budget_category: "Promotion (Service Wide)", budget_amount: 30000, budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+          user: 'John doe', role: 'H.O.D', status: 'approved'
+        }, {
+          user: 'John doe', role: 'Finance Officer', status: 'pending'
+        }
+        ]
+      },
+      {
+        id: 6, year: 2022, department: "Trade in Service", budget_category: "Budget Preparation", budget_amount: 78000, budget_balance: 50000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+          user: 'John doe', role: 'H.O.D', status: 'pending'
+        }
+        ]
+      },
+    ];
+    return _.shuffle(budgetTable);
+  },
+  fakeExpenseTable() {
+    const expenseTable = [
+      {
+        id: 1, year: 2022, initiator: 'John Doe', department: 'FInance', title: 'Expense Title', expense_head: "Refurbishing Advances", expense_amount: 7000000, expense_balance: 150000, status: "approved", created_at: '01-26-2022', description: 'lorem ipsum methr ethnor irean', approved_level: [
+          { user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'},
+          { user: 'John doe', role: 'H.O.D', status: 'approved'}, 
+          { user: 'John doe', role: 'Head of budget', status: 'approved'}, 
+          { user: 'John doe', role: 'D.G', status: 'approved'}
+        ]
+      },
+      {
+        id: 2, year: 2022, initiator: 'John Doe', department: 'Trade in Services', title: 'Expense Title', expense_head: "Refurbishing Advances", expense_amount: 11000000, expense_balance: 150000, status: "pending", created_at: '02-26-2022', description: 'lorem ipsum methr ethnor irean', approved_level: [
+          {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'}, 
+          {user: 'John doe', role: 'H.O.D', status: 'pending'}
+        ]
+      },
+      {
+        id: 3, year: 2022, initiator: 'John Doe', department: 'Policy Research', title: 'Expense Title', expense_head: "Refurbishing Advances", expense_amount: 4900000, expense_balance: 15000, status: "approved", created_at: '01-26-2022', description: 'lorem ipsum methr ethnor irean', approved_level: [
+          {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'}, 
+          {user: 'John doe', role: 'H.O.D', status: 'approved'}, 
+          {user: 'John doe', role: 'Head of budget', status: 'rejected'}
+        ]
+      },
+      
+    ];
+    return _.shuffle(expenseTable);
+  },
 };
 
 const fakerData = [];
@@ -700,6 +792,8 @@ for (let i = 0; i < 20; i++) {
     audits: fakers.fakeAuditLogs(),
     expenseReports: fakers.fakeExpenseReport(),
     responseTime: fakers.fakeResponseTime(),
+    budgetTable: fakers.fakeBudgetTable(),
+    expenseTable: fakers.fakeExpenseTable(),
   };
 }
 

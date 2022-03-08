@@ -10,6 +10,7 @@ import ExpenseCreate from "../views/expense/create/Main.vue";
 import ExpenseMainCreate from "../views/expense/create/expense-create.vue";
 import ExpensePreviewCreate from "../views/expense/create/preview.vue";
 import ExpenseRequests from "../views/expense/requests/Main.vue";
+import ExpenseShowDetails from "../views/expense/show/Main.vue";
 
 import Budget from "../views/budget/Main.vue";
 import BudgetHead from "../views/budget/budget-head.vue";
@@ -105,6 +106,11 @@ const routes = [
         path: "/expense/approvals",
         name: "expense-approval-requests",
         component: ExpenseRequests,
+      },
+      {
+        path: "/expense/show/:id",
+        name: "expense-show",
+        component: ExpenseShowDetails,
       },
 
       /**

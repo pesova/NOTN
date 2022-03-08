@@ -10,7 +10,7 @@
               <div class="ml-auto"></div>
             </div>
             <div class="text-2xl font-medium leading-8 mt-6">3,721,000</div>
-            <div class="text-base text-slate-500 mt-1">Dept Budget Balance</div>
+            <div class="text-base text-slate-500 mt-1">Dept expense Balance</div>
           </div>
         </div>
       </div>
@@ -68,18 +68,9 @@
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
 
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <select
-            id="tabulator-html-filter-field"
-            v-model="filter.field"
-            class="form-select w-full 2xl:w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto"
-          >
-            <option value="title">Title</option>
-            <option value="year">Year</option>
-          </select>
 
           <input
             id="tabulator-html-filter-value"
-            v-model="filter.value"
             type="text"
             class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
             placeholder="Search..."
@@ -90,7 +81,6 @@
             id="tabulator-html-filter-go"
             type="button"
             class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
           >
             Go
           </button>
@@ -98,7 +88,6 @@
             id="tabulator-html-filter-reset"
             type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
           >
             Reset
           </button>
@@ -141,27 +130,98 @@
         </div>
       </div>
     </div>
-    <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+    <div class>
+      <div class="overflow-x-auto">
+        <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
+          <thead>
+            <tr>
+              <th class="whitespace-nowrap">#</th>
+              <th class="whitespace-nowrap">Year</th>
+              <th class="whitespace-nowrap">Initiator</th>
+              <th class="whitespace-nowrap">Department</th>
+              <th class="whitespace-nowrap">Title</th>
+              <th class="whitespace-nowrap">Expense Head</th>
+              <th class="whitespace-nowrap">Expense Amount</th>
+              <th class="whitespace-nowrap">Expense Balance</th>
+              <th class="whitespace-nowrap">Status</th>
+              <th class="whitespace-nowrap">Created At</th>
+              <th class="whitespace-nowrap">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" >
+              <td>{{ index + 1 }}</td>
+              <td>{{ expense.year }}</td>
+              <td>{{ expense.initiator }}</td>
+              <td>{{ expense.department }}</td>
+              <td>{{ expense.title }}</td>
+              <td>{{ expense.expense_head }}</td>
+              <td>{{ moneyFormat(expense.expense_amount) }}</td>
+              <td>{{ moneyFormat(expense.expense_balance) }}</td>
+              <td>
+                <a href class="font-medium whitespace-nowrap">
+                   <p
+                  class="text-sm inline-block font-bold"
+                  :class="(expense.status == 'approved') ?
+                  `text-primary` :
+                  (expense.status == 'rejected') ? `text-danger` : `text-warning`"
+                >{{ capitalizeFirstLetter(expense.status) }}</p>
+                </a>
+                
+              </td>
+              <td>{{ expense.created_at }}</td>
+              <td>
+                <div class="dropdown ml-auto">
+                  <a
+                    class="dropdown-toggle w-7 h-7"
+                    href="javascript:;"
+                    aria-expanded="false"
+                    data-tw-toggle="dropdown"
+                  >
+                    <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
+                  </a>
+                  <div class="dropdown-menu w-56 toggleDropdownMenu" id="dropdown-menu">
+                    <ul class="dropdown-content">
+                      <li
+                        :class="{ 'hidden': (expense.status !== 'pending') }"
+                      >
+                        <a
+                          data-tw-toggle="modal"
+                          data-tw-target="#editBudgetModal"
+                          href="javascript:;"
+                          class="dropdown-item"
+                        >Edit</a>
+                      </li>
+                      <li>
+                        <router-link
+                          :to="{ name: 'expense-show', params: { id: expense.id } }"
+                          class="dropdown-item"
+                        >View</router-link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useRouter} from 'vue-router';
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
-import Tabulator from "tabulator-tables";
 
-const tableRef = ref();
-const tabulator = ref();
-const filter = reactive({
-  field: "title",
-  type: "like",
-  value: "",
+const router = useRouter();
+
+router.beforeEach(() => {
+  if (document.querySelector('.toggleDropdownMenu')) {
+    (document.querySelectorAll(".toggleDropdownMenu")).forEach((el) => el.classList.remove("show"))
+  }
 });
 
 const getYearandMonth = () => {
@@ -174,170 +234,6 @@ const getYearandMonth = () => {
   return `${year}-${month}`;
 };
 
-let tabledata = [
-    {id: 1, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Build Road", description:"description of Build Road", year:2022, expense_head:"Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved"},
-    {id: 2, initiator: "John Doe", department: "Finance", createdAt: "01-26-2022", title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected"},
-    {id: 3, initiator: "John Doe", department: "Trade in Goods", createdAt: "01-26-2022", title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
-    {id: 4, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Company Rebrand", description:"description of Company Rebrand", year:2021, expense_head:"Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved"}
-];
-
-const initTabulator = () => {
-  tabulator.value = new Tabulator(tableRef.value, {
-    data: tabledata,
-    pagination: "local",
-    paginationSize: 10,
-    paginationSizeSelector: [10, 20, 30, 40],
-    layout: "fitColumns",
-    placeholder: "No matching records found",
-    columns: [
-      // For HTML table
-      {
-        title: "#",
-        field: "id",
-        vertAlign: "middle",
-        hozAlign:"right",
-        width: 40,
-      },
-      {
-        title: "Year",
-        field: "year",
-        width: 100,
-        hozAlign:"center",
-      },
-      {
-        title: "Initiator",
-        field: "initiator",
-        vertAlign: "left",
-      },
-      {
-        title: "Department",
-        field: "department",
-        vertAlign: "left",
-      },
-      {
-        title: "Title",
-        field: "title",
-        vertAlign: "middle",
-      },
-      {
-        title: "Description",
-        field: "description",
-        formatter(cell) {
-          return ` ${truncate(cell.getData().description, 22)}`;
-        },
-      },
-      {
-        title: "Expense Head",
-        field: "expense_head", 
-      },
-      {
-        title: "Expense Amount",
-        field: "expense_amount",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().expense_amount)}`;
-        },        
-      },
-      {
-        title: "Expense Balance",
-        field: "expense_balance",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().expense_balance)}`;
-        },
-        
-      },
-      {
-        title: "Status",
-        field: "status",
-        width: 120,
-        formatter(cell) {
-            if (cell.getData().status == 'approved') {
-                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
-            }
-            if (cell.getData().status == 'rejected') {
-                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
-            }
-          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
-        },
-        
-      },
-      {
-        title: "Created At",
-        field: "createdAt",
-        vertAlign: "center",
-      },
-      {
-        title: "Action",
-        responsive: 1,
-        download: false,
-        formatter() {
-                return `<div class="dropdown ml-auto"">
-                <a class="dropdown-toggle w-7 h-7 "
-                    href="javascript:;"
-                    aria-expanded="false"
-                    data-tw-toggle="dropdown">
-                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
-                </a>
-                <div class="dropdown-menu w-56">
-                    <ul class="dropdown-content">               
-                        <li>
-                        <a data-tw-toggle="modal"
-                            data-tw-target="#editExpenseModal" href="javascript:;"
-                            class="dropdown-item">
-                            Edit
-                        </a>
-                        </li>
-                        <li>
-                        <a href="javascript:;" class="dropdown-item">
-                            Clone
-                        </a>
-                        </li>
-                    </ul>
-                </div>
-                
-              </div>`
-        },
-        
-      }
-    ],
-    renderComplete() {
-      feather.replace({
-        "stroke-width": 4,
-      });
-    },
-  });
-};
-
-// Redraw table onresize
-const reInitOnResizeWindow = () => {
-  window.addEventListener("resize", () => {
-    tabulator.value.redraw();
-    feather.replace({
-      "stroke-width": 4,
-    });
-  });
-};
-
-// Filter function
-const onFilter = () => {
-  tabulator.value.setFilter(filter.field, filter.type, filter.value);
-};
-
-// On reset filter
-const onResetFilter = () => {
-  filter.field = "title";
-  filter.type = "like";
-  filter.value = "";
-  onFilter();
-};
-
-// Export
-const onExportCsv = () => {
-  tabulator.value.download("csv", "data.csv");
-};
-
-const onExportJson = () => {
-  tabulator.value.download("json", "data.json");
-};
 
 const createdExpense = () => {
   const newExpense = document.querySelector("#newExpenseModal");
@@ -356,8 +252,13 @@ const moneyFormat = (x) => {
     return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 onMounted(() => {
-  initTabulator();
-  reInitOnResizeWindow();
+  feather.replace({
+    "stroke-width": 4,
+  });
 });
 </script>
