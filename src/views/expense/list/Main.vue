@@ -52,21 +52,191 @@
       </div>
     </div>
   </div>
-  
+
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Expense List</h2>
+
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <router-link :to="{name: 'create-expense'}"
-        class="btn btn-primary shadow-md mr-2">
-        Add New Expense
-      </router-link>
+      <router-link
+        :to="{ name: 'create-expense' }"
+        class="btn btn-primary shadow-md mr-2"
+      >Add New Expense</router-link>
     </div>
   </div>
   <!-- BEGIN: HTML Table Data -->
   <div class="intro-y box p-5 mt-5">
-    <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
-      <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
+    <div class="grid grid-cols-12 gap-6 mt-5">
+      <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+        <!-- BEGIN: Filter -->
+        <div class="dropdown w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto">
+          <div class="preview">
+            <div class="text-center">
+              <div class="dropdown inline-block" data-tw-placement="bottom-start">
+                <button class="dropdown-toggle btn" aria-expanded="false" data-tw-toggle="dropdown">
+                  Filter
+                  <FilterIcon class="w-4 h-4 ml-2" />
+                </button>
+                <div class="dropdown-menu">
+                  <div class="dropdown-content">
+                    <div class="p-2">
+                      <div class="mt-3">
+                        <div class="text-xs">Date Range</div>
+                        <div class="form-control flex-1 sm:ml-auto sm:mt-0 relative text-slate-500">
+                          <CalendarIcon
+                            class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
+                          />
+                          <Litepicker
+                            v-model="salesReportFilter"
+                            :options="{
+                              autoApply: false,
+                              singleMode: false,
+                              numberOfColumns: 2,
+                              numberOfMonths: 2,
+                              showWeekNumbers: true,
+                              dropdowns: {
+                                minYear: 2020,
+                                maxYear: null,
+                                months: true,
+                                years: true,
+                              },
+                            }"
+                            class="form-control sm:w-56 pl-10 mt-2 flex-1"
+                          />
+                        </div>
+                      </div>
+                      <div class="mt-3">
+                        <div class="text-xs">Email</div>
+                        <input
+                          type="text"
+                          class="form-control sm:w-56 pl-10 mt-2 flex-1"
+                          placeholder="example@gmail.com"
+                        />
+                      </div>
+                      <div class="mt-3">
+                        <div class="text-xs">Status</div>
+                        <TomSelect class="form-control sm:w-56 mt-2 flex-1">
+                          <option>Active</option>
+                          <option>Inactive</option>
+                        </TomSelect>
+                      </div>
+                      <div class="mt-3">
+                        <div class="text-xs">Date</div>
+                        <div class="form-control flex-1 sm:ml-auto sm:mt-0 relative text-slate-500">
+                          <CalendarIcon
+                            class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
+                          />
+                          <Litepicker
+                            v-model="date"
+                            :options="{
+                              autoApply: false,
+                              showWeekNumbers: true,
+                              dropdowns: {
+                                minYear: 1990,
+                                maxYear: null,
+                                months: true,
+                                years: true,
+                              },
+                            }"
+                            class="form-control sm:w-56 pl-10 mt-2 flex-1"
+                          />
+                        </div>
+                      </div>
+                      <div class="flex items-center mt-2">
+                        <button data-tw-dismiss="dropdown" class="btn btn-secondary w-28">Close</button>
+                        <button class="btn btn-primary w-28 ml-2">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="source-code hidden">
+            <button
+              data-target="#copy-button-dropdown"
+              class="copy-code btn py-1 px-2 btn-outline-secondary"
+            >
+              <FileIcon class="w-4 h-4 mr-2" />Copy example code
+            </button>
+            <div class="overflow-y-auto mt-3 rounded-md">
+              <Highlight id="copy-button-dropdown" class="source-preview">
+                <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
+                  <textarea>
+                    <div class="text-center">
+                        <div class="dropdown inline-block" data-tw-placement="bottom-start">
+                            <button class="dropdown-toggle btn btn-primary" aria-expanded="false" data-tw-toggle="dropdown">
+                                Filter Dropdown <ChevronDownIcon class="w-4 h-4 ml-2" />
+                            </button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-content">
+                                    <div class="p-2">
+                                        <div>
+                                            <div class="text-xs">From</div>
+                                            <input type="text" class="form-control mt-2 flex-1" placeholder="example@gmail.com"/>
+                                        </div>
+                                        <div class="mt-3">
+                                            <div class="text-xs">To</div>
+                                            <input type="text" class="form-control mt-2 flex-1" placeholder="example@gmail.com"/>
+                                        </div>
+                                        <div class="flex items-center mt-3">
+                                            <button data-tw-dismiss="dropdown" class="btn btn-secondary w-32 ml-auto">Close</button>
+                                            <button class="btn btn-primary w-32 ml-2">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  </textarea>
+                </code>
+              </Highlight>
+            </div>
+          </div>
+        </div>
+        <!-- END: Filter -->
 
+        <div class="w-full 2xl:w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+          <div class="w-56 relative text-slate-500">
+            <input type="text" class="form-control w-56 box pr-10" placeholder="Search..." />
+            <SearchIcon class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" />
+          </div>
+        </div>
+        <div class="dropdown w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+          <button
+            class="dropdown-toggle btn btn-outline-secondary w-full sm:w-auto"
+            aria-expanded="false"
+            data-tw-toggle="dropdown"
+          >
+            <FileTextIcon class="w-4 h-4 mr-2" />Export
+            <ChevronDownIcon class="w-4 h-4 ml-auto sm:ml-2" />
+          </button>
+          <div class="dropdown-menu w-40">
+            <ul class="dropdown-content">
+              <li>
+                <a
+                  id="tabulator-export-csv"
+                  href="javascript:;"
+                  class="dropdown-item"
+                  @click="onExportCsv"
+                >
+                  <FileTextIcon class="w-4 h-4 mr-2" />Export CSV
+                </a>
+              </li>
+              <li>
+                <a
+                  id="tabulator-export-json"
+                  href="javascript:;"
+                  class="dropdown-item"
+                  @click="onExportJson"
+                >
+                  <FileTextIcon class="w-4 h-4 mr-2" />Export JSON
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- <div id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <select
             id="tabulator-html-filter-field"
@@ -91,27 +261,24 @@
             type="button"
             class="btn btn-primary w-full sm:w-16"
             @click="onFilter"
-          >
-            Go
-          </button>
+          >Go</button>
           <button
             id="tabulator-html-filter-reset"
             type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
             @click="onResetFilter"
-          >
-            Reset
-          </button>
+          >Reset</button>
         </div>
-      </form>
-      <div class="flex mt-5 sm:mt-0">
+      </div>-->
+
+      <!-- <div class="flex mt-5 sm:mt-0">
         <div class="dropdown w-1/2 sm:w-auto">
           <button
             class="dropdown-toggle btn btn-outline-secondary w-full sm:w-auto"
             aria-expanded="false"
             data-tw-toggle="dropdown"
           >
-            <FileTextIcon class="w-4 h-4 mr-2" /> Export
+            <FileTextIcon class="w-4 h-4 mr-2" />Export
             <ChevronDownIcon class="w-4 h-4 ml-auto sm:ml-2" />
           </button>
           <div class="dropdown-menu w-40">
@@ -123,7 +290,7 @@
                   class="dropdown-item"
                   @click="onExportCsv"
                 >
-                  <FileTextIcon class="w-4 h-4 mr-2" /> Export CSV
+                  <FileTextIcon class="w-4 h-4 mr-2" />Export CSV
                 </a>
               </li>
               <li>
@@ -133,20 +300,17 @@
                   class="dropdown-item"
                   @click="onExportJson"
                 >
-                  <FileTextIcon class="w-4 h-4 mr-2" /> Export JSON
+                  <FileTextIcon class="w-4 h-4 mr-2" />Export JSON
                 </a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
     <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
     </div>
   </div>
 </template>
@@ -156,6 +320,7 @@ import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
 import Tabulator from "tabulator-tables";
 
+const salesReportFilter = ref();
 const tableRef = ref();
 const tabulator = ref();
 const filter = reactive({
@@ -165,7 +330,7 @@ const filter = reactive({
 });
 
 const getYearandMonth = () => {
-    const date = new Date();
+  const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   if (month < 10) {
@@ -195,7 +360,7 @@ const initTabulator = () => {
         title: "#",
         field: "id",
         vertAlign: "middle",
-        hozAlign:"right",
+        hozAlign: "right",
         width: 40,
       },
       {
@@ -228,14 +393,14 @@ const initTabulator = () => {
       },
       {
         title: "Expense Head",
-        field: "expense_head", 
+        field: "expense_head",
       },
       {
         title: "Expense Amount",
         field: "expense_amount",
         formatter(cell) {
           return ` ${moneyFormat(cell.getData().expense_amount)}`;
-        },        
+        },
       },
       {
         title: "Expense Balance",
@@ -243,22 +408,22 @@ const initTabulator = () => {
         formatter(cell) {
           return ` ${moneyFormat(cell.getData().expense_balance)}`;
         },
-        
+
       },
       {
         title: "Status",
         field: "status",
         width: 120,
         formatter(cell) {
-            if (cell.getData().status == 'approved') {
-                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
-            }
-            if (cell.getData().status == 'rejected') {
-                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
-            }
+          if (cell.getData().status == 'approved') {
+            return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
+          }
+          if (cell.getData().status == 'rejected') {
+            return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
+          }
           return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
         },
-        
+
       },
       {
         title: "Created At",
@@ -270,7 +435,7 @@ const initTabulator = () => {
         responsive: 1,
         download: false,
         formatter() {
-                return `<div class="dropdown ml-auto"">
+          return `<div class="dropdown ml-auto"">
                 <a class="dropdown-toggle w-7 h-7 "
                     href="javascript:;"
                     aria-expanded="false"
@@ -296,7 +461,7 @@ const initTabulator = () => {
                 
               </div>`
         },
-        
+
       }
     ],
     renderComplete() {
@@ -349,11 +514,11 @@ const createdExpense = () => {
 
 
 const truncate = (str, n) => {
-    return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
+  return (str.length > n) ? str.substr(0, n - 1) + '&hellip;' : str;
 }
 
 const moneyFormat = (x) => {
-    return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return '₦' + x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
 onMounted(() => {
