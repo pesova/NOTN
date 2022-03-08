@@ -138,53 +138,54 @@
             <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
           </div>
 
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-3" class="form-label">Department</label>
-            <TomSelect id="modal-form-3">
-              <option
-                v-for="(department, fakerKey) in $_.take(
-                  $f()[0].departments,
-                  9
-                )"
-                :key="fakerKey"
-              >
-                {{ department.name }}
-              </option>
-            </TomSelect>
-          </div>
-
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-5" class="form-label">Budget Category</label>
-            <select
-              id="modal-form-6"
-              v-model="selectedCategory"
-              @change="onCategoryChange"
-              class="form-select sm:mr-2"
-            >
-              <option
-                :value="category"
-                v-for="(category, index) in budgetCategory"
-                :key="index"
-              >{{ category }}</option>
-              <option value="custom">Create New Category</option>
-            </select>
-          </div>
-
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-3" class="form-label">Type</label>
-            <select id="modal-form-6" class="form-select">
-              <option>Capex</option>
-              <option>Opex</option>
-            </select>
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-4" class="form-label">Quantity</label>
-            <input id="modal-form-4" type="number" class="form-control" />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
-            <input id="modal-form-4" type="number" class="form-control" />
-          </div>
+              <div class="col-span-12 sm:col-span-6">
+                <label for="modal-form-5" class="form-label">Budget Category</label>
+                <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
+                    <option :value="category" v-for="(category, index) in ($f()[0].budgetCategory)" :key="index">{{category}}</option>
+                    <option value="custom">Create New Category</option>
+                </select>
+              </div>
+              
+              <div class="col-span-12 sm:col-span-6">
+                  <label for="modal-form-3" class="form-label">Type</label
+                  >
+                  <select id="modal-form-6" class="form-select">
+                      <option>Capex</option>
+                      <option>Opex</option>
+                  </select>
+              </div>
+              <div class="col-span-12 sm:col-span-6">
+                <label for="modal-form-4" class="form-label">Quantity</label>
+                <input
+                    id="modal-form-4"
+                    type="number"
+                    class="form-control"
+                />
+              </div>
+              <div class="col-span-12 sm:col-span-6">
+                  <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
+                  <input
+                      id="modal-form-4"
+                      type="number"
+                      class="form-control"
+                  />
+              </div>
+            </div>
+            <!-- END: Modal Body -->
+            <!-- BEGIN: Modal Footer -->
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    data-tw-dismiss="modal"
+                    class="btn btn-outline-secondary w-20 mr-1"
+                >
+                    Cancel
+                </button>
+                <button @click="createdBudget" type="button" class="btn btn-primary w-20">
+                    Create
+                </button>
+            </div>
+            <!-- END: Modal Footer -->
         </div>
         <!-- END: Modal Body -->
         <!-- BEGIN: Modal Footer -->
@@ -198,7 +199,6 @@
         </div>
         <!-- END: Modal Footer -->
       </div>
-    </div>
   </div>
 
   <div id="editBudgetModal" class="modal" tabindex="-1" aria-hidden="true">
@@ -210,37 +210,59 @@
         </div>
         <!-- END: Modal Header -->
         <!-- BEGIN: Modal Body -->
-        <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-7" class="form-label">Year</label>
-            <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
-          </div>
+          <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-7" class="form-label">Year</label>
+              <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
+            </div>
 
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-5" class="form-label">Budget Category</label>
-            <select id="modal-form-6" class="form-select sm:mr-2">
-              <option>Accessories</option>
-              <option>Housing</option>
-              <option>Miscellenous</option>
-              <option>Feeding</option>
-            </select>
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-5" class="form-label">Budget Category</label>
+              <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
+                    <option :value="category" v-for="(category, index) in ($f()[0].budgetCategory)" :key="index">{{category}}</option>
+                    <option value="custom">Create New Category</option>
+                </select>
+            </div>
+            
+            <div class="col-span-12 sm:col-span-6">
+                <label for="modal-form-3" class="form-label">Type</label>
+                <select id="modal-form-6" class="form-select">
+                    <option>Capex</option>
+                    <option>Opex</option>
+                </select>
+            </div>
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-4" class="form-label">Quantity</label>
+              <input
+                  id="modal-form-4"
+                  type="number"
+                  class="form-control"
+              />
+            </div>
+            <div class="col-span-12 sm:col-span-6">
+                <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
+                <input
+                    id="modal-form-4"
+                    type="number"
+                    class="form-control"
+                />
+            </div>
           </div>
-
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-3" class="form-label">Type</label>
-            <select id="modal-form-6" class="form-select">
-              <option>Capex</option>
-              <option>Opex</option>
-            </select>
+            <!-- END: Modal Body -->
+            <!-- BEGIN: Modal Footer -->
+          <div class="modal-footer">
+              <button
+                  type="button"
+                  data-tw-dismiss="modal"
+                  class="btn btn-outline-secondary w-20 mr-1"
+              >
+                  Cancel
+              </button>
+              <button type="button" class="btn btn-primary w-20">
+                  Update
+              </button>
           </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-4" class="form-label">Quantity</label>
-            <input id="modal-form-4" type="number" class="form-control" />
-          </div>
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
-            <input id="modal-form-4" type="number" class="form-control" />
-          </div>
+            <!-- END: Modal Footer -->
         </div>
         <!-- END: Modal Body -->
         <!-- BEGIN: Modal Footer -->
@@ -253,7 +275,6 @@
           <button type="button" class="btn btn-primary w-20">Update</button>
         </div>
         <!-- END: Modal Footer -->
-      </div>
     </div>
   </div>
 

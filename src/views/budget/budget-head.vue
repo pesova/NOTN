@@ -6,51 +6,61 @@
     >
       <button data-tw-toggle="modal" data-tw-target="#newBudgetHeadModal"  class="btn btn-primary shadow-md mr-2">Add Budget Category</button>
     </div>
-    <!-- BEGIN: Users Layout -->
-    <div
-      v-for="(budget, index) in budget_heads"
-      :key="index"
-      class="intro-y col-span-12 md:col-span-6 lg:col-span-4"
-    >
-      <div class="box">
-        <div class="flex items-start px-5 pt-5">
-          <div class="w-full flex flex-col lg:flex-row items-center">
-          
-            <div class="lg:ml-4 text-center lg:text-left mt-3 lg:mt-0">
-              <div class="text-lg mt-0.5 font-bold">
-                {{ budget.title }}
-              </div>
-            </div>
-          </div>
-          <div class="absolute right-0 top-0 mr-5 mt-3 dropdown">
-            <a
-              class="dropdown-toggle w-5 h-5 block"
-              href="javascript:;"
-              aria-expanded="false"
-              data-tw-toggle="dropdown"
-            >
-              <MoreHorizontalIcon class="w-5 h-5 text-slate-500" />
-            </a>
-            <div class="dropdown-menu w-40">
-              <div class="dropdown-content">
-                <a href="javascript:;" class="dropdown-item">
-                  <Edit2Icon class="w-4 h-4 mr-2" /> Edit
+    <!-- BEGIN: Budget Category Layout -->
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+      <table class="table table-report -mt-2">
+        <thead>
+          <tr>
+            <th class="">ID</th>
+            <th class="">Budget Category</th>
+            <th class="text-left ">Account Code</th>
+            <th class="text-left ">Fund Code</th>
+            <th class="text-center ">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(category, fakerKey) in $_.take($f()[0].budgetCategory, 40)"
+            :key="fakerKey"
+            class="intro-x"
+          >
+            <td>{{ fakerKey + 1 }}</td>
+            <td>
+              <p class="font-medium whitespace-nowrap">{{
+                category
+              }}</p>
+            </td>
+            <td >
+              {{ generateRandomNumber(8) }}
+            </td>
+            <td >
+              {{ generateRandomNumber(5) }}
+            </td>
+            <td class="table-report__action w-56">
+              <div class="flex justify-center items-center">
+                <a
+                  class="flex items-center mr-3"
+                  href="javascript:;"
+                  data-tw-toggle="modal"
+                  data-tw-target="#edit-confirmation-modal"
+                >
+                  <CheckSquareIcon class="w-4 h-4 mr-1" /> Edit
                 </a>
-                <a href="javascript:;" class="dropdown-item">
-                  <TrashIcon class="w-4 h-4 mr-2" /> Delete
+                <a
+                  class="flex items-center text-danger"
+                  href="javascript:;"
+                  data-tw-toggle="modal"
+                  data-tw-target="#delete-confirmation-modal"
+                >
+                  <Trash2Icon class="w-4 h-4 mr-1" /> Delete
                 </a>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="text-center lg:text-left p-5">
-          <div>{{ budget.description }}</div>
-        </div>
-
-        
-      </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <!-- END: Users Layout -->
+    <!-- END: Budget Category Layout -->
   </div>
   <!-- MODAL -->
     <div
@@ -77,19 +87,26 @@
                         id="modal-form-1"
                         type="text"
                         class="form-control"
-                        placeholder="Title of budget"
+                        placeholder="Title of budget category"
                     />
                 </div>
                 <div class="col-span-12 sm:col-span-12">
-                    <label for="modal-form-2" class="form-label">Description</label>
-                    <textarea
-                        id="modal-form-2"
-                        cols="3" rows="3"
-                        maxlength="150"
+                    <label for="modal-form-1" class="form-label">Account Code</label>
+                    <input
+                        id="modal-form-1"
                         type="text"
                         class="form-control"
-                        placeholder="Budget Head description"
-                    ></textarea>
+                        placeholder="account code"
+                    />
+                </div>
+                <div class="col-span-12 sm:col-span-12">
+                    <label for="modal-form-1" class="form-label">Fund Code</label>
+                    <input
+                        id="modal-form-1"
+                        type="text"
+                        class="form-control"
+                        placeholder="fund code"
+                    />
                 </div>
 
                 <div id="multiple-select" class="col-span-12 sm:col-span-12" >
@@ -153,7 +170,7 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -161,27 +178,6 @@ import { ref } from "vue";
 
 export default {
     name: 'App',
-    setup() {
-        const budget_heads = ref([{
-          title: "Accessories",
-          description: "Lorem ipsum, dolor sit amet itia odio accusamus minima laboriosam vero. ",
-          id: 1,
-        },
-        {
-          title: "Housing",
-          description: "Housing Lorem ipsum, dolor lit. Mollitia odio accusamus minima laboriosam vero.",
-          id: 2,
-        },
-        {
-          title: "Miscellenous",
-          description: "Miscellenous Lorem ipsum, ollitia odio accusamus minima laboriosam vero.",
-          id: 3,
-        }]);
-        
-        return {
-            budget_heads
-        };
-    },
     methods: {
       moneyFormat(x) {
         return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -192,10 +188,12 @@ export default {
 
         const budgetHeadCreated = document.querySelector("#budgetHeadCreated");
         tailwind.Modal.getOrCreateInstance(budgetHeadCreated).show();
+      },
+      generateRandomNumber(lenght) {
+        return Math.random().toString().substr(2, lenght)
       }
     }
 }
-
 
 
 </script>
