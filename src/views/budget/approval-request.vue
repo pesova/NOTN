@@ -11,7 +11,6 @@
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <input
             id="tabulator-html-filter-value"
-            v-model="filter.value"
             type="text"
             class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
             placeholder="Search..."
@@ -22,7 +21,6 @@
             id="tabulator-html-filter-go"
             type="button"
             class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
           >
             Go
           </button>
@@ -30,7 +28,6 @@
             id="tabulator-html-filter-reset"
             type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
           >
             Reset
           </button>
@@ -38,12 +35,69 @@
       </form>
       
     </div>
-    <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+    <div class>
+      <div class="overflow-x-auto">
+        <table class="table sm:items-end xl:items-start" aria-describedby="budget list">
+          <thead>
+            <tr>
+              <th class="whitespace-nowrap">#</th>
+              <th class="whitespace-nowrap">Year</th>
+              <th class="whitespace-nowrap">Department</th>
+              <th class="whitespace-nowrap">Budget category</th>
+              <th class="whitespace-nowrap">Budget Amount</th>
+              <th class="whitespace-nowrap">Budget Balance</th>
+              <th class="whitespace-nowrap">Status</th>
+              <th class="whitespace-nowrap">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index"  v-show="budget.status == 'pending'">
+              <td>{{ index + 1 }}</td>
+              <td>{{ budget.year }}</td>
+              <td>{{ budget.department }}</td>
+              <td>{{ budget.budget_category }}</td>
+              <td>{{ moneyFormat(budget.budget_amount) }}</td>
+              <td>{{ moneyFormat(budget.budget_balance) }}</td>
+              <td>
+                <a href class="font-medium whitespace-nowrap">
+                   <p
+                  class="text-sm inline-block font-bold"
+                  :class="(budget.status == 'approved') ?
+                  `text-primary` :
+                  (budget.status == 'rejected') ? `text-danger` : `text-warning`"
+                >{{ capitalizeFirstLetter(budget.status) }}</p>
+                </a>
+                <div v-if="budget.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in budget.approved_level" :key="levelKey" v-show="levelKey == budget.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
+                </div>
+
+              </td>
+              <td>
+                <div class="flex lg:justify-center items-center">
+                  <a 
+                    data-tw-toggle="modal"
+                    data-tw-target="#approveBudgetModal"  
+                    class="btn btn-success text-white w-24 inline-block mr-1" 
+                    href="javascript:;">
+                     Approve
+                  </a>
+                  <a 
+                    data-tw-toggle="modal"
+                    data-tw-target="#rejctBudgetModal" 
+                    class="btn btn-danger w-24 inline-block mr-1" 
+                    href="javascript:;">
+                     Reject
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
   <!-- END: HTML Table Data -->
@@ -123,7 +177,7 @@
       </div>
     </div>
 
-  <div
+    <div
     id="approvedSuccessModal"
     class="modal"
     tabindex="-1"
@@ -150,21 +204,12 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import feather from "feather-icons";
-import Tabulator from "tabulator-tables";
-
-const tableRef = ref();
-const tabulator = ref();
-const filter = reactive({
-  field: "title",
-  type: "like",
-  value: "",
-});
 
 let actionType = ref();
 
@@ -177,149 +222,13 @@ const rejectSuccess = () => {
   tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
 };
 
-
-let tabledata = [
-    {id: 1,title:"Rent House", description:"description of Rent House", year:2022, budget_head:"Housing", budget_amount: 140000, budget_balance: 500000, status: "pending"},
-    {id: 2,title:"IT specs", description:"description of IT specs", year:2022, budget_head:"Miscellenous", budget_amount: 3000, budget_balance: 5000, status: "pending"},
-];
-
-const initTabulator = () => {
-  tabulator.value = new Tabulator(tableRef.value, {
-    data: tabledata,
-    layout: "fitColumns",
-    placeholder: "No matching records found",
-    columns: [
-      // For HTML table
-      {
-        title: "#",
-        field: "id",
-        vertAlign: "middle",
-        hozAlign:"right",
-        width: 40,
-      },
-      {
-        title: "Title",
-        field: "title",
-        vertAlign: "middle",
-      },
-      {
-        title: "Description",
-        field: "description",
-        vertAlign: "middle",
-        formatter(cell) {
-          return ` ${truncate(cell.getData().description, 22)}`;
-        },
-      },
-      {
-        title: "Year",
-        field: "year",
-        width: 100,
-        hozAlign:"center",
-        vertAlign: "middle",
-      },
-      {
-        title: "Budget Head",
-        field: "budget_head",
-        vertAlign: "middle",
-      },
-      {
-        title: "Budget Amount",
-        field: "budget_amount",
-        vertAlign: "middle",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().budget_amount)}`;
-        },        
-      },
-      {
-        title: "Budget Balance",
-        field: "budget_balance",
-        vertAlign: "middle",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().budget_balance)}`;
-        },
-        
-      },
-      {
-        title: "Status",
-        field: "status",
-        vertAlign: "middle",
-        width: 120,
-        formatter(cell) {
-             if (cell.getData().status == 'approved') {
-                return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
-            }
-            if (cell.getData().status == 'rejected') {
-                return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
-            }
-          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
-        },
-        
-      },
-      {
-        title: "Action",
-        responsive: 1,
-        download: false,
-        width: 200,
-        formatter() {
-                return `
-                <div class="flex lg:justify-center items-center">
-                  <a 
-                    data-tw-toggle="modal"
-                    data-tw-target="#approveBudgetModal"  
-                    class="btn btn-success text-white w-24 inline-block mr-1" 
-                    href="javascript:;">
-                     Approve
-                  </a>
-                  <a 
-                    data-tw-toggle="modal"
-                    data-tw-target="#rejctBudgetModal" 
-                    class="btn btn-danger w-24 inline-block mr-1" 
-                    href="javascript:;">
-                     Reject
-                  </a>
-                </div>`
-        },
-        
-      }
-    ],
-    renderComplete() {
-      feather.replace({
-        "stroke-width": 4,
-      });
-    },
-  });
-};
-
-// Redraw table onresize
-const reInitOnResizeWindow = () => {
-  window.addEventListener("resize", () => {
-    tabulator.value.redraw();
-    feather.replace({
-      "stroke-width": 4,
-    });
-  });
-};
-
-// Filter function
-const onFilter = () => {
-  tabulator.value.setFilter(filter.field, filter.type, filter.value);
-};
-
-// On reset filter
-const onResetFilter = () => {
-  filter.field = "title";
-  filter.type = "like";
-  filter.value = "";
-  onFilter();
-};
-
-
-const truncate = (str, n) => {
-    return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
-}
-
 const moneyFormat = (x) => {
     return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 const approvedSuccess = () => {
@@ -332,7 +241,8 @@ const approvedSuccess = () => {
 };
 
 onMounted(() => {
-  initTabulator();
-  reInitOnResizeWindow();
+  feather.replace({
+    "stroke-width": 4,
+  });
 });
 </script>

@@ -10,7 +10,7 @@
               <div class="ml-auto"></div>
             </div>
             <div class="text-2xl font-medium leading-8 mt-6">3,721,000</div>
-            <div class="text-base text-slate-500 mt-1">Dept Budget Balance</div>
+            <div class="text-base text-slate-500 mt-1">Dept expense Balance</div>
           </div>
         </div>
       </div>
@@ -65,141 +65,33 @@
   </div>
   <!-- BEGIN: HTML Table Data -->
   <div class="intro-y box p-5 mt-5">
-    <div class="grid grid-cols-12 gap-6 mt-5">
-      <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-        <!-- BEGIN: Filter -->
-        <div class="dropdown w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto">
-          <div class="preview">
-            <div class="text-center">
-              <div class="dropdown inline-block" data-tw-placement="bottom-start">
-                <button class="dropdown-toggle btn" aria-expanded="false" data-tw-toggle="dropdown">
-                  Filter
-                  <FilterIcon class="w-4 h-4 ml-2" />
-                </button>
-                <div class="dropdown-menu">
-                  <div class="dropdown-content">
-                    <div class="p-2">
-                      <div class="mt-3">
-                        <div class="text-xs">Date Range</div>
-                        <div class="form-control flex-1 sm:ml-auto sm:mt-0 relative text-slate-500">
-                          <CalendarIcon
-                            class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                          />
-                          <Litepicker
-                            v-model="salesReportFilter"
-                            :options="{
-                              autoApply: false,
-                              singleMode: false,
-                              numberOfColumns: 2,
-                              numberOfMonths: 2,
-                              showWeekNumbers: true,
-                              dropdowns: {
-                                minYear: 2020,
-                                maxYear: null,
-                                months: true,
-                                years: true,
-                              },
-                            }"
-                            class="form-control sm:w-56 pl-10 mt-2 flex-1"
-                          />
-                        </div>
-                      </div>
-                      <div class="mt-3">
-                        <div class="text-xs">Email</div>
-                        <input
-                          type="text"
-                          class="form-control sm:w-56 pl-10 mt-2 flex-1"
-                          placeholder="example@gmail.com"
-                        />
-                      </div>
-                      <div class="mt-3">
-                        <div class="text-xs">Status</div>
-                        <TomSelect class="form-control sm:w-56 mt-2 flex-1">
-                          <option>Active</option>
-                          <option>Inactive</option>
-                        </TomSelect>
-                      </div>
-                      <div class="mt-3">
-                        <div class="text-xs">Date</div>
-                        <div class="form-control flex-1 sm:ml-auto sm:mt-0 relative text-slate-500">
-                          <CalendarIcon
-                            class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                          />
-                          <Litepicker
-                            v-model="date"
-                            :options="{
-                              autoApply: false,
-                              showWeekNumbers: true,
-                              dropdowns: {
-                                minYear: 1990,
-                                maxYear: null,
-                                months: true,
-                                years: true,
-                              },
-                            }"
-                            class="form-control sm:w-56 pl-10 mt-2 flex-1"
-                          />
-                        </div>
-                      </div>
-                      <div class="flex items-center mt-2">
-                        <button data-tw-dismiss="dropdown" class="btn btn-secondary w-28">Close</button>
-                        <button class="btn btn-primary w-28 ml-2">Search</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="source-code hidden">
-            <button
-              data-target="#copy-button-dropdown"
-              class="copy-code btn py-1 px-2 btn-outline-secondary"
-            >
-              <FileIcon class="w-4 h-4 mr-2" />Copy example code
-            </button>
-            <div class="overflow-y-auto mt-3 rounded-md">
-              <Highlight id="copy-button-dropdown" class="source-preview">
-                <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                  <textarea>
-                    <div class="text-center">
-                        <div class="dropdown inline-block" data-tw-placement="bottom-start">
-                            <button class="dropdown-toggle btn btn-primary" aria-expanded="false" data-tw-toggle="dropdown">
-                                Filter Dropdown <ChevronDownIcon class="w-4 h-4 ml-2" />
-                            </button>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-content">
-                                    <div class="p-2">
-                                        <div>
-                                            <div class="text-xs">From</div>
-                                            <input type="text" class="form-control mt-2 flex-1" placeholder="example@gmail.com"/>
-                                        </div>
-                                        <div class="mt-3">
-                                            <div class="text-xs">To</div>
-                                            <input type="text" class="form-control mt-2 flex-1" placeholder="example@gmail.com"/>
-                                        </div>
-                                        <div class="flex items-center mt-3">
-                                            <button data-tw-dismiss="dropdown" class="btn btn-secondary w-32 ml-auto">Close</button>
-                                            <button class="btn btn-primary w-32 ml-2">Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  </textarea>
-                </code>
-              </Highlight>
-            </div>
-          </div>
-        </div>
-        <!-- END: Filter -->
+    <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+      <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
 
-        <div class="w-full 2xl:w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-          <div class="w-56 relative text-slate-500">
-            <input type="text" class="form-control w-56 box pr-10" placeholder="Search..." />
-            <SearchIcon class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" />
-          </div>
+        <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+
+          <input
+            id="tabulator-html-filter-value"
+            type="text"
+            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
+            placeholder="Search..."
+          />
+        </div>
+        <div class="mt-2 xl:mt-0">
+          <button
+            id="tabulator-html-filter-go"
+            type="button"
+            class="btn btn-primary w-full sm:w-16"
+          >
+            Go
+          </button>
+          <button
+            id="tabulator-html-filter-reset"
+            type="button"
+            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
+          >
+            Reset
+          </button>
         </div>
         <div class="dropdown w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
           <button
@@ -235,28 +127,105 @@
             </ul>
           </div>
         </div>
-      </div>
-     
+      </form>
     </div>
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
-    <div class="overflow-x-auto scrollbar-hidden">
-      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
+     
+     
+  </div>
+  <div class>
+    <div class="overflow-x-auto">
+      <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
+        <thead>
+          <tr>
+            <th class="whitespace-nowrap">#</th>
+            <th class="whitespace-nowrap">Initiator</th>
+            <th class="whitespace-nowrap">Title</th>
+            <th class="whitespace-nowrap">Expense Category</th>
+            <th class="whitespace-nowrap">Beneficiary</th>
+            <th class="whitespace-nowrap">Expense Amount</th>
+            <th class="whitespace-nowrap">Status</th>
+            <th class="whitespace-nowrap">Created At</th>
+            <th class="whitespace-nowrap">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" >
+            <td>{{ index + 1 }}</td>
+            <td>{{ expense.initiator }}</td>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.expense_head }}</td>
+            <td>{{ expense.beneficiary }} <small>({{expense.beneficiary_account_number}})</small></td>
+            <td>{{ moneyFormat(expense.expense_amount) }}</td>
+            <td>
+              <a href class="font-medium whitespace-nowrap">
+                  <p
+                class="text-sm inline-block font-bold"
+                :class="(expense.status == 'approved') ?
+                `text-primary` :
+                (expense.status == 'rejected') ? `text-danger` : `text-warning`"
+              >{{ capitalizeFirstLetter(expense.status) }}</p>
+              </a>
+                <div v-if="expense.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in expense.approved_level" :key="levelKey" v-show="levelKey == expense.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
+                </div>
+
+              
+            </td>
+            <td>{{ expense.created_at }}</td>
+            <td>
+              <div class="dropdown ml-auto">
+                <a
+                  class="dropdown-toggle w-7 h-7"
+                  href="javascript:;"
+                  aria-expanded="false"
+                  data-tw-toggle="dropdown"
+                >
+                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
+                </a>
+                <div class="dropdown-menu w-56 toggleDropdownMenu" id="dropdown-menu">
+                  <ul class="dropdown-content">
+                    <li
+                      :class="{ 'hidden': (expense.status !== 'pending') }"
+                    >
+                      <a
+                        data-tw-toggle="modal"
+                        data-tw-target="#editexpenseModal"
+                        href="javascript:;"
+                        class="dropdown-item"
+                      >Edit</a>
+                    </li>
+                    <li>
+                      <router-link
+                        :to="{ name: 'expense-show', params: { id: expense.id } }"
+                        class="dropdown-item"
+                      >View</router-link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useRouter} from 'vue-router';
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
-import Tabulator from "tabulator-tables";
 
-const salesReportFilter = ref();
-const tableRef = ref();
-const tabulator = ref();
-const filter = reactive({
-  field: "title",
-  type: "like",
-  value: "",
+const router = useRouter();
+
+router.beforeEach(() => {
+  if (document.querySelector('.toggleDropdownMenu')) {
+    (document.querySelectorAll(".toggleDropdownMenu")).forEach((el) => el.classList.remove("show"))
+  }
 });
 
 const getYearandMonth = () => {
@@ -269,170 +238,6 @@ const getYearandMonth = () => {
   return `${year}-${month}`;
 };
 
-let tabledata = [
-    {id: 1, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Build Road", description:"description of Build Road", year:2022, expense_head:"Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved"},
-    {id: 2, initiator: "John Doe", department: "Finance", createdAt: "01-26-2022", title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected"},
-    {id: 3, initiator: "John Doe", department: "Trade in Goods", createdAt: "01-26-2022", title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
-    {id: 4, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Company Rebrand", description:"description of Company Rebrand", year:2021, expense_head:"Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved"}
-];
-
-const initTabulator = () => {
-  tabulator.value = new Tabulator(tableRef.value, {
-    data: tabledata,
-    pagination: "local",
-    paginationSize: 10,
-    paginationSizeSelector: [10, 20, 30, 40],
-    layout: "fitColumns",
-    placeholder: "No matching records found",
-    columns: [
-      // For HTML table
-      {
-        title: "#",
-        field: "id",
-        vertAlign: "middle",
-        hozAlign: "right",
-        width: 40,
-      },
-      {
-        title: "Year",
-        field: "year",
-        width: 100,
-        hozAlign:"center",
-      },
-      {
-        title: "Initiator",
-        field: "initiator",
-        vertAlign: "left",
-      },
-      {
-        title: "Department",
-        field: "department",
-        vertAlign: "left",
-      },
-      {
-        title: "Title",
-        field: "title",
-        vertAlign: "middle",
-      },
-      {
-        title: "Description",
-        field: "description",
-        formatter(cell) {
-          return ` ${truncate(cell.getData().description, 22)}`;
-        },
-      },
-      {
-        title: "Expense Head",
-        field: "expense_head",
-      },
-      {
-        title: "Expense Amount",
-        field: "expense_amount",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().expense_amount)}`;
-        },
-      },
-      {
-        title: "Expense Balance",
-        field: "expense_balance",
-        formatter(cell) {
-          return ` ${moneyFormat(cell.getData().expense_balance)}`;
-        },
-
-      },
-      {
-        title: "Status",
-        field: "status",
-        width: 120,
-        formatter(cell) {
-          if (cell.getData().status == 'approved') {
-            return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
-          }
-          if (cell.getData().status == 'rejected') {
-            return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
-          }
-          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
-        },
-
-      },
-      {
-        title: "Created At",
-        field: "createdAt",
-        vertAlign: "center",
-      },
-      {
-        title: "Action",
-        responsive: 1,
-        download: false,
-        formatter() {
-          return `<div class="dropdown ml-auto"">
-                <a class="dropdown-toggle w-7 h-7 "
-                    href="javascript:;"
-                    aria-expanded="false"
-                    data-tw-toggle="dropdown">
-                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
-                </a>
-                <div class="dropdown-menu w-56">
-                    <ul class="dropdown-content">               
-                        <li>
-                        <a data-tw-toggle="modal"
-                            data-tw-target="#editExpenseModal" href="javascript:;"
-                            class="dropdown-item">
-                            Edit
-                        </a>
-                        </li>
-                        <li>
-                        <a href="javascript:;" class="dropdown-item">
-                            Clone
-                        </a>
-                        </li>
-                    </ul>
-                </div>
-                
-              </div>`
-        },
-
-      }
-    ],
-    renderComplete() {
-      feather.replace({
-        "stroke-width": 4,
-      });
-    },
-  });
-};
-
-// Redraw table onresize
-const reInitOnResizeWindow = () => {
-  window.addEventListener("resize", () => {
-    tabulator.value.redraw();
-    feather.replace({
-      "stroke-width": 4,
-    });
-  });
-};
-
-// Filter function
-const onFilter = () => {
-  tabulator.value.setFilter(filter.field, filter.type, filter.value);
-};
-
-// On reset filter
-const onResetFilter = () => {
-  filter.field = "title";
-  filter.type = "like";
-  filter.value = "";
-  onFilter();
-};
-
-// Export
-const onExportCsv = () => {
-  tabulator.value.download("csv", "data.csv");
-};
-
-const onExportJson = () => {
-  tabulator.value.download("json", "data.json");
-};
 
 const createdExpense = () => {
   const newExpense = document.querySelector("#newExpenseModal");
@@ -451,8 +256,13 @@ const moneyFormat = (x) => {
   return '₦' + x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 onMounted(() => {
-  initTabulator();
-  reInitOnResizeWindow();
+  feather.replace({
+    "stroke-width": 4,
+  });
 });
 </script>
