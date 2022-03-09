@@ -68,7 +68,13 @@
                   (budget.status == 'rejected') ? `text-danger` : `text-warning`"
                 >{{ capitalizeFirstLetter(budget.status) }}</p>
                 </a>
-                
+                <div v-if="budget.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in budget.approved_level" :key="levelKey" v-show="levelKey == budget.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
+                </div>
+
               </td>
               <td>
                 <div class="flex lg:justify-center items-center">

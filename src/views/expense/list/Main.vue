@@ -52,14 +52,15 @@
       </div>
     </div>
   </div>
-  
+
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Expense List</h2>
+
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <router-link :to="{name: 'create-expense'}"
-        class="btn btn-primary shadow-md mr-2">
-        Add New Expense
-      </router-link>
+      <router-link
+        :to="{ name: 'create-expense' }"
+        class="btn btn-primary shadow-md mr-2"
+      >Add New Expense</router-link>
     </div>
   </div>
   <!-- BEGIN: HTML Table Data -->
@@ -92,15 +93,13 @@
             Reset
           </button>
         </div>
-      </form>
-      <div class="flex mt-5 sm:mt-0">
-        <div class="dropdown w-1/2 sm:w-auto">
+        <div class="dropdown w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
           <button
             class="dropdown-toggle btn btn-outline-secondary w-full sm:w-auto"
             aria-expanded="false"
             data-tw-toggle="dropdown"
           >
-            <FileTextIcon class="w-4 h-4 mr-2" /> Export
+            <FileTextIcon class="w-4 h-4 mr-2" />Export
             <ChevronDownIcon class="w-4 h-4 ml-auto sm:ml-2" />
           </button>
           <div class="dropdown-menu w-40">
@@ -112,7 +111,7 @@
                   class="dropdown-item"
                   @click="onExportCsv"
                 >
-                  <FileTextIcon class="w-4 h-4 mr-2" /> Export CSV
+                  <FileTextIcon class="w-4 h-4 mr-2" />Export CSV
                 </a>
               </li>
               <li>
@@ -122,91 +121,96 @@
                   class="dropdown-item"
                   @click="onExportJson"
                 >
-                  <FileTextIcon class="w-4 h-4 mr-2" /> Export JSON
+                  <FileTextIcon class="w-4 h-4 mr-2" />Export JSON
                 </a>
               </li>
             </ul>
           </div>
         </div>
-      </div>
+      </form>
     </div>
-    <div class>
-      <div class="overflow-x-auto">
-        <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
-          <thead>
-            <tr>
-              <th class="whitespace-nowrap">#</th>
-              <th class="whitespace-nowrap">Year</th>
-              <th class="whitespace-nowrap">Initiator</th>
-              <th class="whitespace-nowrap">Department</th>
-              <th class="whitespace-nowrap">Title</th>
-              <th class="whitespace-nowrap">Expense Head</th>
-              <th class="whitespace-nowrap">Expense Amount</th>
-              <th class="whitespace-nowrap">Expense Balance</th>
-              <th class="whitespace-nowrap">Status</th>
-              <th class="whitespace-nowrap">Created At</th>
-              <th class="whitespace-nowrap">Actions</th>
-            </tr>
-          </thead>
+     
+     
+  </div>
+  <div class>
+    <div class="overflow-x-auto">
+      <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
+        <thead>
+          <tr>
+            <th class="whitespace-nowrap">#</th>
+            <th class="whitespace-nowrap">Initiator</th>
+            <th class="whitespace-nowrap">Title</th>
+            <th class="whitespace-nowrap">Expense Category</th>
+            <th class="whitespace-nowrap">Beneficiary</th>
+            <th class="whitespace-nowrap">Expense Amount</th>
+            <th class="whitespace-nowrap">Status</th>
+            <th class="whitespace-nowrap">Created At</th>
+            <th class="whitespace-nowrap">Actions</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" >
-              <td>{{ index + 1 }}</td>
-              <td>{{ expense.year }}</td>
-              <td>{{ expense.initiator }}</td>
-              <td>{{ expense.department }}</td>
-              <td>{{ expense.title }}</td>
-              <td>{{ expense.expense_head }}</td>
-              <td>{{ moneyFormat(expense.expense_amount) }}</td>
-              <td>{{ moneyFormat(expense.expense_balance) }}</td>
-              <td>
-                <a href class="font-medium whitespace-nowrap">
-                   <p
-                  class="text-sm inline-block font-bold"
-                  :class="(expense.status == 'approved') ?
-                  `text-primary` :
-                  (expense.status == 'rejected') ? `text-danger` : `text-warning`"
-                >{{ capitalizeFirstLetter(expense.status) }}</p>
-                </a>
-                
-              </td>
-              <td>{{ expense.created_at }}</td>
-              <td>
-                <div class="dropdown ml-auto">
-                  <a
-                    class="dropdown-toggle w-7 h-7"
-                    href="javascript:;"
-                    aria-expanded="false"
-                    data-tw-toggle="dropdown"
-                  >
-                    <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
-                  </a>
-                  <div class="dropdown-menu w-56 toggleDropdownMenu" id="dropdown-menu">
-                    <ul class="dropdown-content">
-                      <li
-                        :class="{ 'hidden': (expense.status !== 'pending') }"
-                      >
-                        <a
-                          data-tw-toggle="modal"
-                          data-tw-target="#editBudgetModal"
-                          href="javascript:;"
-                          class="dropdown-item"
-                        >Edit</a>
-                      </li>
-                      <li>
-                        <router-link
-                          :to="{ name: 'expense-show', params: { id: expense.id } }"
-                          class="dropdown-item"
-                        >View</router-link>
-                      </li>
-                    </ul>
-                  </div>
+        <tbody>
+          <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" >
+            <td>{{ index + 1 }}</td>
+            <td>{{ expense.initiator }}</td>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.expense_head }}</td>
+            <td>{{ expense.beneficiary }} <small>({{expense.beneficiary_account_number}})</small></td>
+            <td>{{ moneyFormat(expense.expense_amount) }}</td>
+            <td>
+              <a href class="font-medium whitespace-nowrap">
+                  <p
+                class="text-sm inline-block font-bold"
+                :class="(expense.status == 'approved') ?
+                `text-primary` :
+                (expense.status == 'rejected') ? `text-danger` : `text-warning`"
+              >{{ capitalizeFirstLetter(expense.status) }}</p>
+              </a>
+                <div v-if="expense.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in expense.approved_level" :key="levelKey" v-show="levelKey == expense.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
                 </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+              
+            </td>
+            <td>{{ expense.created_at }}</td>
+            <td>
+              <div class="dropdown ml-auto">
+                <a
+                  class="dropdown-toggle w-7 h-7"
+                  href="javascript:;"
+                  aria-expanded="false"
+                  data-tw-toggle="dropdown"
+                >
+                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
+                </a>
+                <div class="dropdown-menu w-56 toggleDropdownMenu" id="dropdown-menu">
+                  <ul class="dropdown-content">
+                    <li
+                      :class="{ 'hidden': (expense.status !== 'pending') }"
+                    >
+                      <a
+                        data-tw-toggle="modal"
+                        data-tw-target="#editexpenseModal"
+                        href="javascript:;"
+                        class="dropdown-item"
+                      >Edit</a>
+                    </li>
+                    <li>
+                      <router-link
+                        :to="{ name: 'expense-show', params: { id: expense.id } }"
+                        class="dropdown-item"
+                      >View</router-link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -225,7 +229,7 @@ router.beforeEach(() => {
 });
 
 const getYearandMonth = () => {
-    const date = new Date();
+  const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
   if (month < 10) {
@@ -245,11 +249,11 @@ const createdExpense = () => {
 
 
 const truncate = (str, n) => {
-    return (str.length > n) ? str.substr(0, n-1) + '&hellip;' : str;
+  return (str.length > n) ? str.substr(0, n - 1) + '&hellip;' : str;
 }
 
 const moneyFormat = (x) => {
-    return '₦'+ x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return '₦' + x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const capitalizeFirstLetter = (string) => {

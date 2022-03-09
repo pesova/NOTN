@@ -41,11 +41,10 @@
           <thead>
             <tr>
               <th class="whitespace-nowrap">#</th>
-              <th class="whitespace-nowrap">Year</th>
               <th class="whitespace-nowrap">Initiator</th>
-              <th class="whitespace-nowrap">Department</th>
               <th class="whitespace-nowrap">Title</th>
-              <th class="whitespace-nowrap">Expense Head</th>
+              <th class="whitespace-nowrap">Expense Category</th>
+              <th class="whitespace-nowrap">Beneficiary</th>
               <th class="whitespace-nowrap">Expense Amount</th>
               <th v-show="false" class="whitespace-nowrap">Expense Balance</th>
               <th class="whitespace-nowrap">Status</th>
@@ -57,11 +56,10 @@
           <tbody>
             <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index"  v-show="expense.status == 'pending'">
               <td>{{ index + 1 }}</td>
-              <td>{{ expense.year }}</td>
               <td>{{ expense.initiator }}</td>
-              <td>{{ expense.department }}</td>
               <td>{{ expense.title }}</td>
               <td>{{ expense.expense_head }}</td>
+              <td>{{ expense.beneficiary }} <small>({{expense.beneficiary_account_number}})</small></td>
               <td>{{ moneyFormat(expense.expense_amount) }}</td>
               <td v-show="false" >{{ moneyFormat(expense.expense_balance) }}</td>
               <td>
@@ -73,6 +71,14 @@
                   (expense.status == 'rejected') ? `text-danger` : `text-warning`"
                 >{{ capitalizeFirstLetter(expense.status) }}</p>
                 </a>
+
+                <div v-if="expense.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in expense.approved_level" :key="levelKey" v-show="levelKey == expense.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
+                </div>
+
                 
               </td>
               <td>{{ expense.created_at }}</td>

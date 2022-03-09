@@ -78,7 +78,7 @@
             </div>
         </div>
         <!-- BEGIN: Data List -->
-        <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+        <div class="intro-y col-span-12 overflow-auto lg:overflow-scroll">
             <table class="table table-report -mt-2">
                 <thead>
                     <tr>

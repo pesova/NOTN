@@ -740,7 +740,8 @@ const fakers = {
   fakeExpenseTable() {
     const expenseTable = [
       {
-        id: 1, year: 2022, initiator: 'John Doe', department: 'FInance', title: 'Expense Title', expense_head: "Refurbishing Advances", expense_amount: 7000000, expense_balance: 150000, status: "approved", created_at: '01-26-2022', description: 'lorem ipsum methr ethnor irean', approved_level: [
+        id: 1, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 7000000, status: "approved", created_at: 'Feb 2, 2017 2:39:58 AM', department: 'FInance', beneficiary_account_number: "0293846352", expense_balance: 150000,
+        expense_balance: 150000, description: 'lorem ipsum methr ethnor irean', approved_level: [
           { user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'},
           { user: 'John doe', role: 'H.O.D', status: 'approved'}, 
           { user: 'John doe', role: 'Head of budget', status: 'approved'}, 
@@ -748,13 +749,13 @@ const fakers = {
         ]
       },
       {
-        id: 2, year: 2022, initiator: 'John Doe', department: 'Trade in Services', title: 'Expense Title', expense_head: "Refurbishing Advances", expense_amount: 11000000, expense_balance: 150000, status: "pending", created_at: '02-26-2022', description: 'lorem ipsum methr ethnor irean', approved_level: [
+        id: 2, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 11000000, status: "pending", created_at: 'Dec 2, 2022 2:39:58 AM', department: 'Trade in Services', beneficiary_account_number: "0293846352", description: 'lorem ipsum methr ethnor irean', approved_level: [
           {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'}, 
           {user: 'John doe', role: 'H.O.D', status: 'pending'}
         ]
       },
       {
-        id: 3, year: 2022, initiator: 'John Doe', department: 'Policy Research', title: 'Expense Title', expense_head: "Refurbishing Advances", expense_amount: 4900000, expense_balance: 15000, status: "approved", created_at: '01-26-2022', description: 'lorem ipsum methr ethnor irean', approved_level: [
+        id: 3, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 4900000, status: "rejected", created_at: 'Jun 2, 2017 3:39:58 AM', department: 'Policy Research', beneficiary_account_number: "0293846352", expense_balance: 15000, description: 'lorem ipsum methr ethnor irean', approved_level: [
           {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'}, 
           {user: 'John doe', role: 'H.O.D', status: 'approved'}, 
           {user: 'John doe', role: 'Head of budget', status: 'rejected'}
