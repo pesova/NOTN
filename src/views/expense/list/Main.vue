@@ -10,7 +10,7 @@
               <div class="ml-auto"></div>
             </div>
             <div class="text-2xl font-medium leading-8 mt-6">3,721,000</div>
-            <div class="text-base text-slate-500 mt-1">Dept Budget Balance</div>
+            <div class="text-base text-slate-500 mt-1">Dept expense Balance</div>
           </div>
         </div>
       </div>
@@ -71,11 +71,30 @@
        <Filter filterModel="salesReportFilter" />
         <!-- END: Filter -->
 
-        <div class="w-full 2xl:w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
-          <div class="w-56 relative text-slate-500">
-            <input type="text" class="form-control w-56 box pr-10" placeholder="Search..." />
-            <SearchIcon class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" />
-          </div>
+        <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+
+          <input
+            id="tabulator-html-filter-value"
+            type="text"
+            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
+            placeholder="Search..."
+          />
+        </div>
+        <div class="mt-2 xl:mt-0">
+          <button
+            id="tabulator-html-filter-go"
+            type="button"
+            class="btn btn-primary w-full sm:w-16"
+          >
+            Go
+          </button>
+          <button
+            id="tabulator-html-filter-reset"
+            type="button"
+            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
+          >
+            Reset
+          </button>
         </div>
         <div class="dropdown w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
           <button
@@ -113,25 +132,103 @@
         </div>
       </div>
     </div>
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
-    <div class="overflow-x-auto scrollbar-hidden">
-      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
+     
+     
+  </div>
+  <div class>
+    <div class="overflow-x-auto">
+      <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
+        <thead>
+          <tr>
+            <th class="whitespace-nowrap">#</th>
+            <th class="whitespace-nowrap">Initiator</th>
+            <th class="whitespace-nowrap">Title</th>
+            <th class="whitespace-nowrap">Expense Category</th>
+            <th class="whitespace-nowrap">Beneficiary</th>
+            <th class="whitespace-nowrap">Expense Amount</th>
+            <th class="whitespace-nowrap">Status</th>
+            <th class="whitespace-nowrap">Created At</th>
+            <th class="whitespace-nowrap">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" >
+            <td>{{ index + 1 }}</td>
+            <td>{{ expense.initiator }}</td>
+            <td>{{ expense.title }}</td>
+            <td>{{ expense.expense_head }}</td>
+            <td>{{ expense.beneficiary }} <small>({{expense.beneficiary_account_number}})</small></td>
+            <td>{{ moneyFormat(expense.expense_amount) }}</td>
+            <td>
+              <a href class="font-medium whitespace-nowrap">
+                  <p
+                class="text-sm inline-block font-bold"
+                :class="(expense.status == 'approved') ?
+                `text-primary` :
+                (expense.status == 'rejected') ? `text-danger` : `text-warning`"
+              >{{ capitalizeFirstLetter(expense.status) }}</p>
+              </a>
+                <div v-if="expense.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                    <div v-for="(level, levelKey) in expense.approved_level" :key="levelKey" v-show="levelKey == expense.approved_level.length - 1">
+                        <span>{{ level.role }}</span>
+                    </div>
+                    
+                </div>
+
+              
+            </td>
+            <td>{{ expense.created_at }}</td>
+            <td>
+              <div class="dropdown ml-auto">
+                <a
+                  class="dropdown-toggle w-7 h-7"
+                  href="javascript:;"
+                  aria-expanded="false"
+                  data-tw-toggle="dropdown"
+                >
+                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
+                </a>
+                <div class="dropdown-menu w-56 toggleDropdownMenu" id="dropdown-menu">
+                  <ul class="dropdown-content">
+                    <li
+                      :class="{ 'hidden': (expense.status !== 'pending') }"
+                    >
+                      <a
+                        data-tw-toggle="modal"
+                        data-tw-target="#editexpenseModal"
+                        href="javascript:;"
+                        class="dropdown-item"
+                      >Edit</a>
+                    </li>
+                    <li>
+                      <router-link
+                        :to="{ name: 'expense-show', params: { id: expense.id } }"
+                        class="dropdown-item"
+                      >View</router-link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
 
 <script setup>
+import { useRouter} from 'vue-router';
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
-import Tabulator from "tabulator-tables";
 
-const salesReportFilter = ref();
-const tableRef = ref();
-const tabulator = ref();
-const filter = reactive({
-  field: "title",
-  type: "like",
-  value: "",
+const router = useRouter();
+
+router.beforeEach(() => {
+  if (document.querySelector('.toggleDropdownMenu')) {
+    (document.querySelectorAll(".toggleDropdownMenu")).forEach((el) => el.classList.remove("show"))
+  }
 });
 
 const getYearandMonth = () => {
@@ -326,8 +423,13 @@ const moneyFormat = (x) => {
   return '₦' + x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 onMounted(() => {
-  initTabulator();
-  reInitOnResizeWindow();
+  feather.replace({
+    "stroke-width": 4,
+  });
 });
 </script>

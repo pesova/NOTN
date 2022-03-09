@@ -66,7 +66,7 @@ export const useSideMenuStore = defineStore("sideMenu", {
             icon: "",
             pageName: "expense-approval-requests",
             title: "Approval Requests",
-          }
+          },
         ],
       },
       'divider',
