@@ -4,7 +4,8 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <div class="dropdown sm:ml-auto mt-3 sm:mt-0 relative sm:mr-3">
+            <Filter filterModel="salesReportFilter" />
+            <div class="dropdown w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto">
                 <button
                     class="dropdown-toggle btn box"
                     aria-expanded="false"
@@ -52,7 +53,10 @@
                     class="form-control sm:w-56 box pl-10"
                 />
             </div>
-
+            <div class="sm:ml-auto mt-3 sm:mt-0 mr-3 text-center">
+                <span class="text-center mr-2">Average Response Time</span>
+                <span class="text-black">0.00</span>
+            </div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 mr-3">
                 <div class="w-56 relative text-slate-500">
                     <TomSelect
@@ -63,10 +67,12 @@
                         class="w-full"
                         multiple
                     >
-                        <option v-for="(role, fakerKey) in $_.take($f()[0].roles, 9)"
-                        :key="fakerKey" :value="fakerKey">{{ role.name}}</option>
+                        <option
+                            v-for="(role, fakerKey) in $_.take($f()[0].roles, 9)"
+                            :key="fakerKey"
+                            :value="fakerKey"
+                        >{{ role.name }}</option>
                     </TomSelect>
-                    
                 </div>
             </div>
 
@@ -88,7 +94,6 @@
                         <th class="text-center whitespace-nowrap">ACTION TAKER</th>
                         <th class="text-center whitespace-nowrap">DEPARTMENT</th>
                         <th class="text-center whitespace-nowrap">RESPONSE TIME</th>
-                        
                     </tr>
                 </thead>
                 <tbody>

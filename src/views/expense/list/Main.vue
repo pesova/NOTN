@@ -65,8 +65,11 @@
   </div>
   <!-- BEGIN: HTML Table Data -->
   <div class="intro-y box p-5 mt-5">
-    <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
-      <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
+    <div class="grid grid-cols-12 gap-6 mt-5">
+      <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+        <!-- BEGIN: Filter -->
+       <Filter filterModel="salesReportFilter" />
+        <!-- END: Filter -->
 
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
 
@@ -127,7 +130,7 @@
             </ul>
           </div>
         </div>
-      </form>
+      </div>
     </div>
      
      
@@ -238,6 +241,170 @@ const getYearandMonth = () => {
   return `${year}-${month}`;
 };
 
+let tabledata = [
+  { id: 1, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title: "Build Road", description: "description of Build Road", year: 2022, expense_head: "Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved" },
+  { id: 2, initiator: "John Doe", department: "Finance", createdAt: "01-26-2022", title: "Rent House", description: "description of Rent House", year: 2022, expense_head: "Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected" },
+  { id: 3, initiator: "John Doe", department: "Trade in Goods", createdAt: "01-26-2022", title: "IT specs", description: "description of IT specs", year: 2022, expense_head: "Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending" },
+  { id: 4, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title: "Company Rebrand", description: "description of Company Rebrand", year: 2021, expense_head: "Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved" }
+];
+
+const initTabulator = () => {
+  tabulator.value = new Tabulator(tableRef.value, {
+    data: tabledata,
+    pagination: "local",
+    paginationSize: 10,
+    paginationSizeSelector: [10, 20, 30, 40],
+    layout: "fitColumns",
+    placeholder: "No matching records found",
+    columns: [
+      // For HTML table
+      {
+        title: "#",
+        field: "id",
+        vertAlign: "middle",
+        hozAlign: "right",
+        width: 40,
+      },
+      {
+        title: "Year",
+        field: "year",
+        width: 100,
+        hozAlign: "center",
+      },
+      {
+        title: "Initiator",
+        field: "initiator",
+        vertAlign: "left",
+      },
+      {
+        title: "Department",
+        field: "department",
+        vertAlign: "left",
+      },
+      {
+        title: "Title",
+        field: "title",
+        vertAlign: "middle",
+      },
+      {
+        title: "Description",
+        field: "description",
+        formatter(cell) {
+          return ` ${truncate(cell.getData().description, 22)}`;
+        },
+      },
+      {
+        title: "Expense Head",
+        field: "expense_head",
+      },
+      {
+        title: "Expense Amount",
+        field: "expense_amount",
+        formatter(cell) {
+          return ` ${moneyFormat(cell.getData().expense_amount)}`;
+        },
+      },
+      {
+        title: "Expense Balance",
+        field: "expense_balance",
+        formatter(cell) {
+          return ` ${moneyFormat(cell.getData().expense_balance)}`;
+        },
+
+      },
+      {
+        title: "Status",
+        field: "status",
+        width: 120,
+        formatter(cell) {
+          if (cell.getData().status == 'approved') {
+            return `<p class="text-sm inline-block font-bold text-primary"> Approved </p>`
+          }
+          if (cell.getData().status == 'rejected') {
+            return `<p class="text-sm inline-block font-bold text-danger"> Rejected </p>`
+          }
+          return `<p class="text-sm inline-block font-bold text-pending"> Pending </p>`;
+        },
+
+      },
+      {
+        title: "Created At",
+        field: "createdAt",
+        vertAlign: "center",
+      },
+      {
+        title: "Action",
+        responsive: 1,
+        download: false,
+        formatter() {
+          return `<div class="dropdown ml-auto"">
+                <a class="dropdown-toggle w-7 h-7 "
+                    href="javascript:;"
+                    aria-expanded="false"
+                    data-tw-toggle="dropdown">
+                  <i data-feather="more-horizontal" class="w-8 h-8 mr-1"></i>
+                </a>
+                <div class="dropdown-menu w-56">
+                    <ul class="dropdown-content">               
+                        <li>
+                        <a data-tw-toggle="modal"
+                            data-tw-target="#editExpenseModal" href="javascript:;"
+                            class="dropdown-item">
+                            Edit
+                        </a>
+                        </li>
+                        <li>
+                        <a href="javascript:;" class="dropdown-item">
+                            Clone
+                        </a>
+                        </li>
+                    </ul>
+                </div>
+                
+              </div>`
+        },
+
+      }
+    ],
+    renderComplete() {
+      feather.replace({
+        "stroke-width": 4,
+      });
+    },
+  });
+};
+
+// Redraw table onresize
+const reInitOnResizeWindow = () => {
+  window.addEventListener("resize", () => {
+    tabulator.value.redraw();
+    feather.replace({
+      "stroke-width": 4,
+    });
+  });
+};
+
+// Filter function
+const onFilter = () => {
+  tabulator.value.setFilter(filter.field, filter.type, filter.value);
+};
+
+// On reset filter
+const onResetFilter = () => {
+  filter.field = "title";
+  filter.type = "like";
+  filter.value = "";
+  onFilter();
+};
+
+// Export
+const onExportCsv = () => {
+  tabulator.value.download("csv", "data.csv");
+};
+
+const onExportJson = () => {
+  tabulator.value.download("json", "data.json");
+};
 
 const createdExpense = () => {
   const newExpense = document.querySelector("#newExpenseModal");

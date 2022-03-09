@@ -14,6 +14,7 @@
     <!-- BEGIN: HTML Table Data -->
     <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
+         <Filter filterModel="salesReportFilter" />
 
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <input

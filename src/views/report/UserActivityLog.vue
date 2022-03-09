@@ -1,43 +1,36 @@
 <template>
-
-    <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">User Activity Log</h2>
-    </div>
+  <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
+    <h2 class="text-lg font-medium mr-auto">User Activity Log</h2>
+  </div>
   <div class="grid grid-cols-12 gap-6 mt-5">
-   <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-
-      <div class="dropdown sm:ml-auto mt-3 sm:mt-0  ">
-        <button
-          class="dropdown-toggle btn box "
-          aria-expanded="false"
-          data-tw-toggle="dropdown"
-        >
-           <FileIcon class="w-4 h-4 mr-2" /> Export
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
+      <Filter filterModel="salesReportFilter" />
+      <div class="dropdown w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto">
+        <button class="dropdown-toggle btn box" aria-expanded="false" data-tw-toggle="dropdown">
+          <FileIcon class="w-4 h-4 mr-2" />Export
         </button>
         <div class="dropdown-menu w-40">
           <ul class="dropdown-content">
             <li>
-              <a href="" class="dropdown-item">
-                <PrinterIcon class="w-4 h-4 mr-2" /> Print
+              <a href class="dropdown-item">
+                <PrinterIcon class="w-4 h-4 mr-2" />Print
               </a>
             </li>
             <li>
-              <a href="" class="dropdown-item">
-                <FileTextIcon class="w-4 h-4 mr-2" /> Export to Excel
+              <a href class="dropdown-item">
+                <FileTextIcon class="w-4 h-4 mr-2" />Export to Excel
               </a>
             </li>
             <li>
-              <a href="" class="dropdown-item">
-                <FileTextIcon class="w-4 h-4 mr-2" /> Export to PDF
+              <a href class="dropdown-item">
+                <FileTextIcon class="w-4 h-4 mr-2" />Export to PDF
               </a>
             </li>
           </ul>
         </div>
       </div>
       <div class="sm:ml-auto mt-3 sm:mt-0 relative text-slate-500">
-        <CalendarIcon
-          class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-        />
+        <CalendarIcon class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0" />
         <Litepicker
           v-model="salesReportFilter"
           :options="{
@@ -97,9 +90,7 @@
             <!-- <td class="text-center table-report__action w-4">{{ audit.oldValue }}</td> -->
             <!-- <td class="text-center table-report__action w-4">{{ audit.newValue }}</td> -->
 
-            <td class="text-center table-report__action w-4">
-              {{ audit.userAgent }}
-            </td>
+            <td class="text-center table-report__action w-4">{{ audit.userAgent }}</td>
             <td class="table-report__action w-56">
               <div class="flex justify-center items-center">{{ audit.createdAt }}</div>
             </td>
@@ -109,9 +100,8 @@
     </div>
     <!-- END: Data List -->
     <!-- BEGIN: Pagination -->
-    
-    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
 
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
       <div class="hidden md:block text-slate-500">Showing 1 to 10 of 150 entries</div>
       <nav class="w-full sm:w-auto sm:mr-auto">
         <ul class="pagination">
@@ -152,7 +142,7 @@
           </li>
         </ul>
       </nav>
-      
+
       <select class="w-20 form-select box mt-3 sm:mt-0">
         <option>10</option>
         <option>25</option>
@@ -162,8 +152,6 @@
     </div>
     <!-- END: Pagination -->
   </div>
-
- 
 </template>
 <script setup>
 import { ref } from "vue";

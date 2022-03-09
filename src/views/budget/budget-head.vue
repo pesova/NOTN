@@ -4,6 +4,7 @@
     <div
       class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2"
     >
+     <Filter filterModel="salesReportFilter" />
       <button data-tw-toggle="modal" data-tw-target="#newBudgetHeadModal"  class="btn btn-primary shadow-md mr-2">Add Budget Category</button>
     </div>
     <!-- BEGIN: Budget Category Layout -->

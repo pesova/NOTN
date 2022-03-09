@@ -51,6 +51,9 @@
     <div
       class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2"
     >
+       <!-- BEGIN: Filter -->
+       <Filter filterModel="salesReportFilter" />
+        <!-- END: Filter -->
       <a
         href="javascript:;"
         data-tw-toggle="modal"
