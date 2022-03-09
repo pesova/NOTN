@@ -53,7 +53,10 @@
                     class="form-control sm:w-56 box pl-10"
                 />
             </div>
-
+            <div class="sm:ml-auto mt-3 sm:mt-0 mr-3 text-center">
+                <span class="text-center mr-2">Average Response Time</span>
+                <span class="text-black">0.00</span>
+            </div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0 mr-3">
                 <div class="w-56 relative text-slate-500">
                     <TomSelect
