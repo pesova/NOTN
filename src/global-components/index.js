@@ -16,7 +16,7 @@ import Dropzone from "./dropzone/Main.vue";
 // import FullCalendar from "./calendar/Main.vue";
 // import FullCalendarDraggable from "./calendar/Draggable.vue";
 import * as featherIcons from "@zhuowenli/vue-feather-icons";
-
+import Filter from "./filter/Main.vue";
 export default (app) => {
   app.component("Chart", Chart);
   app.component("GoogleMapLoader", GoogleMapLoader);
@@ -29,6 +29,7 @@ export default (app) => {
   app.component("TinySlider", TinySlider);
   app.component("Dropzone", Dropzone);
   app.component("ClassicEditor", ClassicEditor);
+  app.component("Filter", Filter);
   // app.component('BalloonBlockEditor', BalloonBlockEditor)
   // app.component('BalloonEditor', BalloonEditor)
   // app.component('DocumentEditor', DocumentEditor)

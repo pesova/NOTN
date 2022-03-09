@@ -68,131 +68,7 @@
     <div class="grid grid-cols-12 gap-6 mt-5">
       <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
         <!-- BEGIN: Filter -->
-        <div class="dropdown w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto">
-          <div class="preview">
-            <div class="text-center">
-              <div class="dropdown inline-block" data-tw-placement="bottom-start">
-                <button class="dropdown-toggle btn" aria-expanded="false" data-tw-toggle="dropdown">
-                  Filter
-                  <FilterIcon class="w-4 h-4 ml-2" />
-                </button>
-                <div class="dropdown-menu">
-                  <div class="dropdown-content">
-                    <div class="p-2">
-                      <div class="mt-3">
-                        <div class="text-xs">Date Range</div>
-                        <div class="form-control flex-1 sm:ml-auto sm:mt-0 relative text-slate-500">
-                          <CalendarIcon
-                            class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                          />
-                          <Litepicker
-                            v-model="salesReportFilter"
-                            :options="{
-                              autoApply: false,
-                              singleMode: false,
-                              numberOfColumns: 2,
-                              numberOfMonths: 2,
-                              showWeekNumbers: true,
-                              dropdowns: {
-                                minYear: 2020,
-                                maxYear: null,
-                                months: true,
-                                years: true,
-                              },
-                            }"
-                            class="form-control sm:w-56 pl-10 mt-2 flex-1"
-                          />
-                        </div>
-                      </div>
-                      <div class="mt-3">
-                        <div class="text-xs">Email</div>
-                        <input
-                          type="text"
-                          class="form-control sm:w-56 pl-10 mt-2 flex-1"
-                          placeholder="example@gmail.com"
-                        />
-                      </div>
-                      <div class="mt-3">
-                        <div class="text-xs">Status</div>
-                        <TomSelect class="form-control sm:w-56 mt-2 flex-1">
-                          <option>Active</option>
-                          <option>Inactive</option>
-                        </TomSelect>
-                      </div>
-                      <div class="mt-3">
-                        <div class="text-xs">Date</div>
-                        <div class="form-control flex-1 sm:ml-auto sm:mt-0 relative text-slate-500">
-                          <CalendarIcon
-                            class="w-4 h-4 z-10 absolute my-auto inset-y-0 ml-3 left-0"
-                          />
-                          <Litepicker
-                            v-model="date"
-                            :options="{
-                              autoApply: false,
-                              showWeekNumbers: true,
-                              dropdowns: {
-                                minYear: 1990,
-                                maxYear: null,
-                                months: true,
-                                years: true,
-                              },
-                            }"
-                            class="form-control sm:w-56 pl-10 mt-2 flex-1"
-                          />
-                        </div>
-                      </div>
-                      <div class="flex items-center mt-2">
-                        <button data-tw-dismiss="dropdown" class="btn btn-secondary w-28">Close</button>
-                        <button class="btn btn-primary w-28 ml-2">Search</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="source-code hidden">
-            <button
-              data-target="#copy-button-dropdown"
-              class="copy-code btn py-1 px-2 btn-outline-secondary"
-            >
-              <FileIcon class="w-4 h-4 mr-2" />Copy example code
-            </button>
-            <div class="overflow-y-auto mt-3 rounded-md">
-              <Highlight id="copy-button-dropdown" class="source-preview">
-                <code class="text-xs p-0 rounded-md html pl-5 pt-8 pb-4 -mb-10 -mt-10">
-                  <textarea>
-                    <div class="text-center">
-                        <div class="dropdown inline-block" data-tw-placement="bottom-start">
-                            <button class="dropdown-toggle btn btn-primary" aria-expanded="false" data-tw-toggle="dropdown">
-                                Filter Dropdown <ChevronDownIcon class="w-4 h-4 ml-2" />
-                            </button>
-                            <div class="dropdown-menu">
-                                <div class="dropdown-content">
-                                    <div class="p-2">
-                                        <div>
-                                            <div class="text-xs">From</div>
-                                            <input type="text" class="form-control mt-2 flex-1" placeholder="example@gmail.com"/>
-                                        </div>
-                                        <div class="mt-3">
-                                            <div class="text-xs">To</div>
-                                            <input type="text" class="form-control mt-2 flex-1" placeholder="example@gmail.com"/>
-                                        </div>
-                                        <div class="flex items-center mt-3">
-                                            <button data-tw-dismiss="dropdown" class="btn btn-secondary w-32 ml-auto">Close</button>
-                                            <button class="btn btn-primary w-32 ml-2">Search</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                  </textarea>
-                </code>
-              </Highlight>
-            </div>
-          </div>
-        </div>
+       <Filter filterModel="salesReportFilter" />
         <!-- END: Filter -->
 
         <div class="w-full 2xl:w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
@@ -236,7 +112,6 @@
           </div>
         </div>
       </div>
-     
     </div>
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible"></div>
     <div class="overflow-x-auto scrollbar-hidden">
@@ -270,10 +145,10 @@ const getYearandMonth = () => {
 };
 
 let tabledata = [
-    {id: 1, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Build Road", description:"description of Build Road", year:2022, expense_head:"Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved"},
-    {id: 2, initiator: "John Doe", department: "Finance", createdAt: "01-26-2022", title:"Rent House", description:"description of Rent House", year:2022, expense_head:"Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected"},
-    {id: 3, initiator: "John Doe", department: "Trade in Goods", createdAt: "01-26-2022", title:"IT specs", description:"description of IT specs", year:2022, expense_head:"Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending"},
-    {id: 4, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title:"Company Rebrand", description:"description of Company Rebrand", year:2021, expense_head:"Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved"}
+  { id: 1, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title: "Build Road", description: "description of Build Road", year: 2022, expense_head: "Accessories", expense_amount: 40000, expense_balance: 150000, status: "approved" },
+  { id: 2, initiator: "John Doe", department: "Finance", createdAt: "01-26-2022", title: "Rent House", description: "description of Rent House", year: 2022, expense_head: "Housing", expense_amount: 140000, expense_balance: 500000, status: "rejected" },
+  { id: 3, initiator: "John Doe", department: "Trade in Goods", createdAt: "01-26-2022", title: "IT specs", description: "description of IT specs", year: 2022, expense_head: "Miscellenous", expense_amount: 3000, expense_balance: 5000, status: "pending" },
+  { id: 4, initiator: "John Doe", department: "Policy & Research", createdAt: "01-26-2022", title: "Company Rebrand", description: "description of Company Rebrand", year: 2021, expense_head: "Accessories", expense_amount: 95000000, expense_balance: 50000000, status: "approved" }
 ];
 
 const initTabulator = () => {
@@ -297,7 +172,7 @@ const initTabulator = () => {
         title: "Year",
         field: "year",
         width: 100,
-        hozAlign:"center",
+        hozAlign: "center",
       },
       {
         title: "Initiator",

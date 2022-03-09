@@ -4,7 +4,8 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <div class="dropdown sm:ml-auto mt-3 sm:mt-0 relative sm:mr-3">
+            <Filter filterModel="salesReportFilter" />
+            <div class="dropdown w-full mt-2 sm:mt-0 lg:mr-2 sm:w-auto">
                 <button
                     class="dropdown-toggle btn box"
                     aria-expanded="false"
@@ -63,10 +64,12 @@
                         class="w-full"
                         multiple
                     >
-                        <option v-for="(role, fakerKey) in $_.take($f()[0].roles, 9)"
-                        :key="fakerKey" :value="fakerKey">{{ role.name}}</option>
+                        <option
+                            v-for="(role, fakerKey) in $_.take($f()[0].roles, 9)"
+                            :key="fakerKey"
+                            :value="fakerKey"
+                        >{{ role.name }}</option>
                     </TomSelect>
-                    
                 </div>
             </div>
 
@@ -88,7 +91,6 @@
                         <th class="text-center whitespace-nowrap">ACTION TAKER</th>
                         <th class="text-center whitespace-nowrap">DEPARTMENT</th>
                         <th class="text-center whitespace-nowrap">RESPONSE TIME</th>
-                        
                     </tr>
                 </thead>
                 <tbody>
