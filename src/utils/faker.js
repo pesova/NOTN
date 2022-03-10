@@ -675,7 +675,7 @@ const fakers = {
   fakeBudgetTable() {
     const budgetTable = [
       {
-        id: 1, year: 2022, department: "Finance", budget_category: "Refurbishing Advances", budget_amount: 4000000, budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
+        id: 1, year: 2022, department: "Finance", budget_category: "Refurbishing Advances", budget_amount: 4000000, created_at: 'Aug 2, 2022 2:39:58 AM', budget_balance: 150000, status: "approved", type: "capex", quantity: 7, approved_level: [{
           user: 'John doe', role: 'H.O.D', status: 'approved'
         }, {
           user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -687,7 +687,7 @@ const fakers = {
         ]
       },
       {
-        id: 2, year: 2022, department: "Policy & Research", budget_category: "Subsidy To Private Companies", budget_amount: 140000, budget_balance: 65000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
+        id: 2, year: 2022, department: "Policy & Research", budget_category: "Subsidy To Private Companies", budget_amount: 140000, created_at: 'Mar 2, 2022 2:39:58 AM', budget_balance: 65000, status: "rejected", type: "opex", quantity: 4, approved_level: [{
           user: 'Mart doe', role: 'H.O.D', status: 'approved'
         }, {
           user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -697,7 +697,7 @@ const fakers = {
         ]
       },
       {
-        id: 3, year: 2022, department: "Trade in Service", budget_category: "Grant To Foreign Governments", budget_amount: 900000, budget_balance: 15000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+        id: 3, year: 2022, department: "Trade in Service", budget_category: "Grant To Foreign Governments", budget_amount: 900000, created_at: 'Feb 2, 2022 2:39:58 PM', budget_balance: 15000, status: "pending", type: "capex", quantity: 1, approved_level: [{
           user: 'John doe', role: 'H.O.D', status: 'approved'
         }, {
           user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -709,7 +709,7 @@ const fakers = {
         ]
       },
       {
-        id: 4, year: 2021, department: "Free Trade Agreement", budget_category: "Grant To Local Governments - Capital", budget_amount: 95000000, budget_balance: 500000, status: "approved", type: "opex", quantity: 2, approved_level: [{
+        id: 4, year: 2021, department: "Free Trade Agreement", budget_category: "Grant To Local Governments - Capital", budget_amount: 95000000, created_at: 'Feb 2, 2022 2:39:58 AM', budget_balance: 500000, status: "approved", type: "opex", quantity: 2, approved_level: [{
           user: 'John doe', role: 'H.O.D', status: 'approved'
         }, {
           user: 'John doe', role: 'Finance Officer', status: 'approved'
@@ -721,7 +721,7 @@ const fakers = {
         ]
       },
       {
-        id: 5, year: 2022, department: "Adminstrative Department", budget_category: "Promotion (Service Wide)", budget_amount: 30000, budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+        id: 5, year: 2022, department: "Adminstrative Department", budget_category: "Promotion (Service Wide)", budget_amount: 30000, created_at: 'Feb 2, 2022 2:39:58 AM', budget_balance: 5000, status: "pending", type: "capex", quantity: 1, approved_level: [{
           user: 'John doe', role: 'H.O.D', status: 'approved'
         }, {
           user: 'John doe', role: 'Finance Officer', status: 'pending'
@@ -729,7 +729,7 @@ const fakers = {
         ]
       },
       {
-        id: 6, year: 2022, department: "Trade in Service", budget_category: "Budget Preparation", budget_amount: 78000, budget_balance: 50000, status: "pending", type: "capex", quantity: 1, approved_level: [{
+        id: 6, year: 2022, department: "Trade in Service", budget_category: "Budget Preparation", budget_amount: 78000, created_at: 'Feb 2, 2022 2:39:58 AM', budget_balance: 50000, status: "pending", type: "capex", quantity: 1, approved_level: [{
           user: 'John doe', role: 'H.O.D', status: 'pending'
         }
         ]
@@ -740,25 +740,33 @@ const fakers = {
   fakeExpenseTable() {
     const expenseTable = [
       {
-        id: 1, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 7000000, status: "approved", created_at: 'Feb 2, 2017 2:39:58 AM', department: 'FInance', beneficiary_account_number: "0293846352", expense_balance: 150000,
-        expense_balance: 150000, description: 'lorem ipsum methr ethnor irean', approved_level: [
-          { user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'},
-          { user: 'John doe', role: 'H.O.D', status: 'approved'}, 
-          { user: 'John doe', role: 'Head of budget', status: 'approved'}, 
-          { user: 'John doe', role: 'D.G', status: 'approved'}
+        id: 1, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 7000000, status: "approved", created_at: 'Feb 2, 2022 2:39:58 AM', department: 'FInance', beneficiary_account_number: "0293846352", expense_balance: 150000, description: 'lorem ipsum methr ethnor irean', type: 'individual', expense_receipt: 'receipt.png', beneficiary_bank: 'GT Bank', other_department: [
+          {department_name: 'Policy Research', amount: 70000},
+          {department_name: 'Adminstrative', amount: 35000}
+        ],  approved_level: [
+          { user: 'John doe', role: 'Departmental Budget Officer', status: 'approved', approved_at: 'Feb 2, 2022 2:39:58 AM'},
+          { user: 'John doe', role: 'H.O.D', status: 'approved', approved_at: 'Feb 2, 2018 2:39:58 AM'}, 
+          { user: 'John doe', role: 'Head of budget', status: 'approved', approved_at: 'Feb 2, 2021 2:39:58 AM'}, 
+          { user: 'John doe', role: 'D.G', status: 'approved', approved_at: 'Jan 5, 2019 2:39:58 AM'}
         ]
       },
       {
-        id: 2, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 11000000, status: "pending", created_at: 'Dec 2, 2022 2:39:58 AM', department: 'Trade in Services', beneficiary_account_number: "0293846352", description: 'lorem ipsum methr ethnor irean', approved_level: [
-          {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'}, 
-          {user: 'John doe', role: 'H.O.D', status: 'pending'}
+        id: 2, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 11000000, status: "pending", created_at: 'Dec 2, 2022 2:39:58 AM', department: 'Trade in Services', beneficiary_account_number: "0293846352", expense_balance: 15000, description: 'lorem ipsum methr ethnor irean', type: 'individual', expense_receipt: 'receipt.png', beneficiary_bank: 'Access Bank', other_department: [
+          {department_name: 'Policy Research', amount: 50000},
+          {department_name: 'Finance', amount: 30000}
+        ],  approved_level: [
+          {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved', approved_at: 'Aug 2, 2019 2:39:58 AM'}, 
+          {user: 'John doe', role: 'H.O.D', status: 'approved', approved_at: 'Aug 24, 2019 2:39:58 AM'},
+          {user: 'John doe', role: 'Head of budget', status: 'pending', approved_at: 'Feb 2, 2020 2:39:58 AM'}, 
         ]
       },
       {
-        id: 3, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 4900000, status: "rejected", created_at: 'Jun 2, 2017 3:39:58 AM', department: 'Policy Research', beneficiary_account_number: "0293846352", expense_balance: 15000, description: 'lorem ipsum methr ethnor irean', approved_level: [
-          {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved'}, 
-          {user: 'John doe', role: 'H.O.D', status: 'approved'}, 
-          {user: 'John doe', role: 'Head of budget', status: 'rejected'}
+        id: 3, initiator: 'John Doe',  title: 'Expense Title', expense_head: "Refurbishing Advances", beneficiary: "John Doe", expense_amount: 4900000, status: "rejected", created_at: 'Jun 2, 2022 3:39:58 AM', department: 'Policy Research', beneficiary_account_number: "0293846352", expense_balance: 15000, description: 'lorem ipsum methr ethnor irean', type: 'individual', expense_receipt: 'receipt.png', beneficiary_bank: 'First Bank', other_department: [
+          {department_name: 'Policy Research', amount: 30000}
+        ],  approved_level: [
+          {user: 'John doe', role: 'Departmental Budget Officer', status: 'approved', approved_at: 'Feb 2, 2022 2:39:58 AM'}, 
+          {user: 'John doe', role: 'H.O.D', status: 'approved', approved_at: 'Feb 2, 2022 2:39:58 AM'}, 
+          {user: 'John doe', role: 'Head of budget', status: 'rejected', approved_at: 'Feb 2, 2022 2:39:58 AM'}
         ]
       },
       

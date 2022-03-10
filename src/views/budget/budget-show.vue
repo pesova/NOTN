@@ -44,11 +44,11 @@
                 <div
                     class="w-full sm:w-auto flex justify-center sm:justify-start items-center border-b sm:border-b-0 border-slate-200/60 dark:border-darkmode-400 pb-5 sm:pb-0"
                 >
-                    <div class="text-slate-500">Year of Release</div>
+                    <div class="text-slate-500">Created AT</div>
                     <div
                         class="px-3 py-2 text-primary bg-primary/10 dark:bg-darkmode-400 dark:text-slate-300 rounded font-medium ml-3"
                     >
-                        {{ budget.year }}
+                        {{ budget.created_at }}
                     </div>
                 
                 </div>
@@ -65,26 +65,71 @@
     </div>
 
 
+<div class="grid grid-cols-12 gap-4 gap-y-5 mt-5">
 
-    <div class="intro-y box col-span-12 lg:col-span-6">
+    <div class="intro-y box col-span-12 sm:col-span-5">
           <div
-            class="flex items-center mt-6 px-5 py-5 sm:py-3 border-b border-slate-200/60 dark:border-darkmode-400"
+            class="flex items-center mt-1 px-5 py-5 sm:py-3 border-b border-slate-200/60 dark:border-darkmode-400"
           >
             <h2 class="font-medium text-base mr-auto">Budget Workflow Status</h2>
           </div>
 
-          <div class="flex flex-wrap items-center">
-              <div class="flex items-center py-3 ml-1" v-for="(level, index) in budget.approved_level" :key="index">
-                <span :class="[(level.status == 'approved') ? 'text-lime-600' : (level.status == 'pending') ? 'text-warning' :'text-danger' , (index == 0 ) ? 'px-3' : 'px-1' ]">
-                      {{ capitalizeFirstLetter(level.status) }} 
-                </span>
-                <span :class="(level.status == 'pending') ? 'hidden' : '' "> by </span>
-                <strong class="px-1" :class="(level.status == 'pending') ? 'hidden' : '' "> {{ level.user }} </strong> as <strong class="px-1"> {{ level.role }} </strong>
-                <ArrowRightIcon class="w-10 " v-if="index !== budget.approved_level.length - 1" />
-              </div>                
-                
-          </div>
+          <div>
+            <div class="flex flex-col items-center justify-items-center py-2 " v-for="(level, index) in budget.approved_level" :key="index">
+                <div class="px-2 lg:px-0">
+                    <span :class="[(level.status == 'approved') ? 'text-lime-600' : (level.status == 'pending') ? 'text-warning' :'text-danger' ]">
+                            {{ capitalizeFirstLetter(level.status) }} 
+                    </span>
+                    <span :class="(level.status == 'pending') ? 'hidden' : '' "> by </span>
+                    <strong  :class="(level.status == 'pending') ? 'hidden' : '' "> {{ level.user }} </strong> as <strong > {{ level.role }} </strong>
+                </div>
+                <div class="mx-auto" :class="(level.status == 'pending') ? 'hidden' : '' ">
+                     <ArrowDownIcon class="mx-auto" v-if="index !== budget.approved_level.length - 1" />
+                </div>
+            </div>
+            
         </div>
+    </div>
+
+    <div class="intro-y box col-span-12 sm:col-span-7">
+        <div
+            class="flex items-center mt-1 px-5 py-5 sm:py-3 border-b border-slate-200/60 dark:border-darkmode-400"
+        >
+            <h2 class="font-medium text-base mr-auto">Expenses under this budget</h2>
+        </div>
+
+    <div class>
+        <div class="overflow-x-auto p-1" >
+        <table class="table sm:items-end xl:items-start" aria-describedby="expense list">
+            <thead>
+            <tr>
+                <th class="whitespace-nowrap">#</th>
+                <th class="whitespace-nowrap">Initiator</th>
+                <th class="whitespace-nowrap">Title</th>
+                <th class="whitespace-nowrap">Beneficiary</th>
+                <th class="whitespace-nowrap">Expense Amount</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" v-show="expense.status == 'approved'" >
+                <td>{{ index + 1 }}</td>
+                <td>{{ expense.initiator }}</td>
+                <td>{{ expense.title }}</td>
+                <td>{{ expense.beneficiary }} <small>({{expense.beneficiary_account_number}})</small></td>
+                <td>{{ moneyFormat(expense.expense_amount) }}</td>
+
+            </tr>
+            </tbody>
+        </table>
+        </div>
+  </div>
+
+
+    </div>
+
+
+</div>
         
 </template>
 

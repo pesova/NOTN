@@ -153,7 +153,7 @@
         </thead>
 
         <tbody>
-          <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" >
+          <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index" v-show="expense.status != 'pending'" >
             <td>{{ index + 1 }}</td>
             <td>{{ expense.initiator }}</td>
             <td>{{ expense.title }}</td>
@@ -207,6 +207,7 @@
                         class="dropdown-item"
                       >View</router-link>
                     </li>
+                    <a href="javascript:;" class="dropdown-item">Clone</a>                
                   </ul>
                 </div>
               </div>
