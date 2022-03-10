@@ -52,7 +52,7 @@
           </thead>
 
           <tbody>
-            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index"  v-show="budget.status == 'pending'">
+            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index"  v-show="budget.status == 'pending'" style="cursor:pointer" @click="viewBudget(budget.id)">
               <td>{{ index + 1 }}</td>
               <td>{{ budget.year }}</td>
               <td>{{ budget.department }}</td>
@@ -210,6 +210,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import feather from "feather-icons";
+import { useRouter} from 'vue-router';
+
+const router = useRouter();
 
 let actionType = ref();
 
@@ -239,6 +242,10 @@ const approvedSuccess = () => {
   const approvedSuccessModal = document.querySelector("#approvedSuccessModal");
   tailwind.Modal.getOrCreateInstance(approvedSuccessModal).show();
 };
+
+const viewBudget = (budgetId) => {
+  router.push({name: 'budget-show', params: {id: budgetId}});
+}
 
 onMounted(() => {
   feather.replace({

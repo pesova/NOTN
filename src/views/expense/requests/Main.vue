@@ -54,7 +54,7 @@
           </thead>
 
           <tbody>
-            <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index"  v-show="expense.status == 'pending'">
+            <tr v-for="(expense, index) in ($f()[0].expenseTable)" :key="index"  v-show="expense.status == 'pending'" style="cursor:pointer" @click="viewExpense(expense.id)">
               <td>{{ index + 1 }}</td>
               <td>{{ expense.initiator }}</td>
               <td>{{ expense.title }}</td>
@@ -216,6 +216,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import feather from "feather-icons";
+import { useRouter} from 'vue-router';
+
+const router = useRouter();
 
 
 const getYearandMonth = () => {
@@ -248,6 +251,10 @@ const moneyFormat = (x) => {
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const viewExpense = (budgetId) => {
+  router.push({name: 'expense-show', params: {id: budgetId}});
 }
 
 onMounted(() => {

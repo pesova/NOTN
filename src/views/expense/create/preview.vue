@@ -10,9 +10,6 @@
                     <div class="text-slate-500">Expense Title:</div>
                     <div class="mt-1">Title of expense</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 <div
                     class="flex items-center border-b border-slate-200 dark:border-darkmode-400 py-5"
@@ -21,9 +18,6 @@
                     <div class="text-slate-500">Expense Type:</div>
                     <div class="mt-1">Individual</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 <div
                     class="flex items-center border-b border-slate-200 dark:border-darkmode-400 py-5"
@@ -32,18 +26,12 @@
                     <div class="text-slate-500">Description:</div>
                     <div class="mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. </div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 <div class="flex items-center pt-5">
                     <div>
                     <div class="text-slate-500">Budget Category:</div>
                     <div class="mt-1">Office & Funitures</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 <div
                     class="flex items-center border-b border-slate-200 dark:border-darkmode-400 py-5"
@@ -52,9 +40,6 @@
                     <div class="text-slate-500">Quantity:</div>
                     <div class="mt-1">3</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
               </div>
             </div>
@@ -69,9 +54,6 @@
                     <div class="text-slate-500">Amount:</div>
                     <div class="mt-1">₦50,000</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 
                 <div
@@ -81,27 +63,18 @@
                     <div class="text-slate-500">Beneficiary Name:</div>
                     <div class="mt-1">John Doe</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 <div class="flex items-center pt-5">
                     <div>
                     <div class="text-slate-500">Beneficiary Bank:</div>
                     <div class="mt-1">GTBank</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 <div class="flex items-center pt-5">
                     <div>
                     <div class="text-slate-500">Account No.:</div>
                     <div class="mt-1">12345678910</div>
                     </div>
-                    <a title="edit" class="w-4 h-4 text-slate-500 ml-auto" href="javascript:;">
-                        <i data-feather="edit-3" class="w-4 h-4"></i>
-                    </a>
                 </div>
                 </div>
             </div>

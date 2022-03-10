@@ -59,7 +59,7 @@
           </thead>
 
           <tbody>
-            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index">
+            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index" v-show="budget.status != 'pending'">
               <td>{{ index + 1 }}</td>
               <td>{{ budget.year }}</td>
               <td>{{ budget.department }}</td>
