@@ -9,12 +9,12 @@
       >Add New Budget</button>
     </div>
   </div>
-  
+
   <div class="intro-y box p-5 mt-5" id="basic-table">
     <!-- BEGIN: HTML Table Data -->
     <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
-         <Filter filterModel="salesReportFilter" />
+        <Filter filterModel="salesReportFilter" />
 
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <input
@@ -29,16 +29,12 @@
             id="tabulator-html-filter-go"
             type="button"
             class="btn btn-primary w-full sm:w-16"
-          >
-            Go
-          </button>
+          >Go</button>
           <button
             id="tabulator-html-filter-reset"
             type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-          >
-            Reset
-          </button>
+          >Reset</button>
         </div>
       </form>
     </div>
@@ -69,18 +65,24 @@
               <td>{{ moneyFormat(budget.budget_balance) }}</td>
               <td>
                 <a href class="font-medium whitespace-nowrap">
-                   <p
-                  class="text-sm inline-block font-bold"
-                  :class="(budget.status == 'approved') ?
-                  `text-primary` :
-                  (budget.status == 'rejected') ? `text-danger` : `text-warning`"
-                >{{ capitalizeFirstLetter(budget.status) }}</p>
+                  <p
+                    class="text-sm inline-block font-bold"
+                    :class="(budget.status == 'approved') ?
+                    `text-primary` :
+                    (budget.status == 'rejected') ? `text-danger` : `text-warning`"
+                  >{{ capitalizeFirstLetter(budget.status) }}</p>
                 </a>
-                <div v-if="budget.status != 'approved'" class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                    <div v-for="(level, levelKey) in budget.approved_level" :key="levelKey" v-show="levelKey == budget.approved_level.length - 1">
-                        <span>{{ level.role }}</span>
-                    </div>
-                    
+                <div
+                  v-if="budget.status != 'approved'"
+                  class="text-slate-500 text-xs whitespace-nowrap mt-0.5"
+                >
+                  <div
+                    v-for="(level, levelKey) in budget.approved_level"
+                    :key="levelKey"
+                    v-show="levelKey == budget.approved_level.length - 1"
+                  >
+                    <span>{{ level.role }}</span>
+                  </div>
                 </div>
               </td>
               <td>
@@ -95,9 +97,7 @@
                   </a>
                   <div class="dropdown-menu w-56 toggleDropdownMenu">
                     <ul class="dropdown-content">
-                      <li
-                        :class="{ 'hidden': (budget.status !== 'pending') }"
-                      >
+                      <li :class="{ 'hidden': (budget.status !== 'pending') }">
                         <a
                           data-tw-toggle="modal"
                           data-tw-target="#editBudgetModal"
@@ -130,63 +130,82 @@
         <!-- BEGIN: Modal Header -->
         <div class="modal-header">
           <h2 class="font-medium text-base mr-auto">Create New Budget</h2>
+          <div class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0">
+            <label class="form-check-label ml-0" for="show-example-2">Switch to Bulk Upload</label>
+            <input
+              id="show-example-2"
+              data-target="#bulkUploadPanel"
+              class="show-code form-check-input mr-0 ml-3"
+              type="checkbox"
+            />
+          </div>
         </div>
         <!-- END: Modal Header -->
         <!-- BEGIN: Modal Body -->
-        <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
-          <div class="col-span-12 sm:col-span-6">
-            <label for="modal-form-7" class="form-label">Year</label>
-            <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
-          </div>
+        <div class="modal-body grid" id="bulkUploadPanel">
+          <div class="grid-cols-12 gap-4 gap-y-3 preview">
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-7" class="form-label">Year</label>
+              <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
+            </div>
 
-              <div class="col-span-12 sm:col-span-6">
-                <label for="modal-form-5" class="form-label">Budget Category</label>
-                <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
-                    <option :value="category" v-for="(category, index) in ($f()[0].budgetCategory)" :key="index">{{category}}</option>
-                    <option value="custom">Create New Category</option>
-                </select>
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-5" class="form-label">Budget Category</label>
+              <select
+                id="modal-form-6"
+                v-model="selectedCategory"
+                @change="onCategoryChange"
+                class="form-select sm:mr-2"
+              >
+                <option
+                  :value="category"
+                  v-for="(category, index) in ($f()[0].budgetCategory)"
+                  :key="index"
+                >{{ category }}</option>
+                <option value="custom">Create New Category</option>
+              </select>
+            </div>
+
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-3" class="form-label">Type</label>
+              <select id="modal-form-6" class="form-select">
+                <option>Capex</option>
+                <option>Opex</option>
+              </select>
+            </div>
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-4" class="form-label">Quantity</label>
+              <input id="modal-form-4" type="number" class="form-control" />
+            </div>
+            <div class="col-span-12 sm:col-span-6">
+              <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
+              <input id="modal-form-4" type="number" class="form-control" />
+            </div>
+          </div>
+          <div class="grid-cols-12 gap-4 gap-y-3 p-5 source-code hidden">
+            <div class="col-span-12 sm:col-span-6">
+              <div class="mt-3">
+                <label for="modal-form-7" class="form-label">Upload Budget Document</label>
+
+                <div class="border-2 border-dashed dark:border-darkmode-400 rounded-md pt-4">
+                  <div class="flex flex-wrap px-4"></div>
+                  <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                    <ImageIcon class="w-4 h-4 mr-2" />
+                    <span class="text-primary mr-1">Upload a file</span> or
+                    drag and drop
+                    <input
+                      type="file"
+                      class="w-full h-full top-0 left-0 absolute opacity-0"
+                    />
+                  </div>
+                </div>
               </div>
-              
               <div class="col-span-12 sm:col-span-6">
-                  <label for="modal-form-3" class="form-label">Type</label
-                  >
-                  <select id="modal-form-6" class="form-select">
-                      <option>Capex</option>
-                      <option>Opex</option>
-                  </select>
-              </div>
-              <div class="col-span-12 sm:col-span-6">
-                <label for="modal-form-4" class="form-label">Quantity</label>
-                <input
-                    id="modal-form-4"
-                    type="number"
-                    class="form-control"
-                />
-              </div>
-              <div class="col-span-12 sm:col-span-6">
-                  <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
-                  <input
-                      id="modal-form-4"
-                      type="number"
-                      class="form-control"
-                  />
+                <label for="modal-form-7" class="form-label">Year</label>
+                <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
               </div>
             </div>
-            <!-- END: Modal Body -->
-            <!-- BEGIN: Modal Footer -->
-            <div class="modal-footer">
-                <button
-                    type="button"
-                    data-tw-dismiss="modal"
-                    class="btn btn-outline-secondary w-20 mr-1"
-                >
-                    Cancel
-                </button>
-                <button @click="createdBudget" type="button" class="btn btn-primary w-20">
-                    Create
-                </button>
-            </div>
-            <!-- END: Modal Footer -->
+          </div>
         </div>
         <!-- END: Modal Body -->
         <!-- BEGIN: Modal Footer -->
@@ -200,6 +219,8 @@
         </div>
         <!-- END: Modal Footer -->
       </div>
+      <!-- END: Modal Body -->
+    </div>
   </div>
 
   <div id="editBudgetModal" class="modal" tabindex="-1" aria-hidden="true">
@@ -211,59 +232,44 @@
         </div>
         <!-- END: Modal Header -->
         <!-- BEGIN: Modal Body -->
-          <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
-            <div class="col-span-12 sm:col-span-6">
-              <label for="modal-form-7" class="form-label">Year</label>
-              <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
-            </div>
+        <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+          <div class="col-span-12 sm:col-span-6">
+            <label for="modal-form-7" class="form-label">Year</label>
+            <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
+          </div>
 
-            <div class="col-span-12 sm:col-span-6">
-              <label for="modal-form-5" class="form-label">Budget Category</label>
-              <select id="modal-form-6" v-model="selectedCategory" @change="onCategoryChange"  class="form-select sm:mr-2">
-                    <option :value="category" v-for="(category, index) in ($f()[0].budgetCategory)" :key="index">{{category}}</option>
-                    <option value="custom">Create New Category</option>
-                </select>
-            </div>
-            
-            <div class="col-span-12 sm:col-span-6">
-                <label for="modal-form-3" class="form-label">Type</label>
-                <select id="modal-form-6" class="form-select">
-                    <option>Capex</option>
-                    <option>Opex</option>
-                </select>
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-              <label for="modal-form-4" class="form-label">Quantity</label>
-              <input
-                  id="modal-form-4"
-                  type="number"
-                  class="form-control"
-              />
-            </div>
-            <div class="col-span-12 sm:col-span-6">
-                <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
-                <input
-                    id="modal-form-4"
-                    type="number"
-                    class="form-control"
-                />
-            </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="modal-form-5" class="form-label">Budget Category</label>
+            <select
+              id="modal-form-6"
+              v-model="selectedCategory"
+              @change="onCategoryChange"
+              class="form-select sm:mr-2"
+            >
+              <option
+                :value="category"
+                v-for="(category, index) in ($f()[0].budgetCategory)"
+                :key="index"
+              >{{ category }}</option>
+              <option value="custom">Create New Category</option>
+            </select>
           </div>
-            <!-- END: Modal Body -->
-            <!-- BEGIN: Modal Footer -->
-          <div class="modal-footer">
-              <button
-                  type="button"
-                  data-tw-dismiss="modal"
-                  class="btn btn-outline-secondary w-20 mr-1"
-              >
-                  Cancel
-              </button>
-              <button type="button" class="btn btn-primary w-20">
-                  Update
-              </button>
+
+          <div class="col-span-12 sm:col-span-6">
+            <label for="modal-form-3" class="form-label">Type</label>
+            <select id="modal-form-6" class="form-select">
+              <option>Capex</option>
+              <option>Opex</option>
+            </select>
           </div>
-            <!-- END: Modal Footer -->
+          <div class="col-span-12 sm:col-span-6">
+            <label for="modal-form-4" class="form-label">Quantity</label>
+            <input id="modal-form-4" type="number" class="form-control" />
+          </div>
+          <div class="col-span-12 sm:col-span-6">
+            <label for="modal-form-4" class="form-label">Budget Amount (NGN)</label>
+            <input id="modal-form-4" type="number" class="form-control" />
+          </div>
         </div>
         <!-- END: Modal Body -->
         <!-- BEGIN: Modal Footer -->
@@ -276,6 +282,18 @@
           <button type="button" class="btn btn-primary w-20">Update</button>
         </div>
         <!-- END: Modal Footer -->
+      </div>
+      <!-- END: Modal Body -->
+      <!-- BEGIN: Modal Footer -->
+      <div class="modal-footer">
+        <button
+          type="button"
+          data-tw-dismiss="modal"
+          class="btn btn-outline-secondary w-20 mr-1"
+        >Cancel</button>
+        <button type="button" class="btn btn-primary w-20">Update</button>
+      </div>
+      <!-- END: Modal Footer -->
     </div>
   </div>
 
@@ -348,7 +366,7 @@
 <script setup>
 import { ref, reactive, onMounted } from "vue";
 import feather from "feather-icons";
-import { useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
