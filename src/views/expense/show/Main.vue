@@ -154,7 +154,7 @@
         
     </div>
     <div class="intro-y  col-span-12 sm:col-span-2">
-          <button class="btn btn-primary text-white " data-tw-toggle="modal" data-tw-target="#viewReceipt" >View Receipt</button>      
+          <button class="btn btn-primary" data-tw-toggle="modal" data-tw-target="#viewReceipt" >View Receipt</button>      
     </div>
     <div class="intro-y  col-span-12 sm:col-span-1">
           <button class="btn btn-primary" data-tw-toggle="modal" data-tw-target="#commentReceipt" >Comment</button>      
