@@ -56,7 +56,11 @@
           </thead>
 
           <tbody>
-            <tr v-for="(budget, index) in ($f()[0].budgetTable)" :key="index" v-show="budget.status != 'pending'">
+            <tr
+              v-for="(budget, index) in ($f()[0].budgetTable)"
+              :key="index"
+              v-show="budget.status != 'pending'"
+            >
               <td>{{ index + 1 }}</td>
               <td>{{ budget.year }}</td>
               <td>{{ budget.department }}</td>
@@ -128,7 +132,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <!-- BEGIN: Modal Header -->
-        <div class="modal-header">
+        <div class="modal-header intro-y box mt-5 flex flex-col sm:flex-row items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
           <h2 class="font-medium text-base mr-auto">Create New Budget</h2>
           <div class="form-check form-switch w-full sm:w-auto sm:ml-auto mt-3 sm:mt-0">
             <label class="form-check-label ml-0" for="show-example-2">Switch to Bulk Upload</label>
@@ -184,6 +188,10 @@
           </div>
           <div class="grid-cols-12 gap-4 gap-y-3 p-5 source-code hidden">
             <div class="col-span-12 sm:col-span-6">
+              <div class="col-span-12 sm:col-span-6">
+                <label for="modal-form-7" class="form-label">Year</label>
+                <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
+              </div>
               <div class="mt-3">
                 <label for="modal-form-7" class="form-label">Upload Budget Document</label>
 
@@ -199,10 +207,6 @@
                     />
                   </div>
                 </div>
-              </div>
-              <div class="col-span-12 sm:col-span-6">
-                <label for="modal-form-7" class="form-label">Year</label>
-                <input type="text" class="form-control" readonly id="datepicker" :value="getYear()" />
               </div>
             </div>
           </div>
